@@ -1,0 +1,6 @@
+setuptools>=0.8
+Django==1.9
+coverage==3.7
+factory-boy==2.2.1
+Sphinx==1.2b3
+mock==1.0.1
