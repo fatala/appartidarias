@@ -13,7 +13,9 @@ logger = logging.getLogger('mdb')
 def get(candidate, j):
     response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/2016/71072/2/candidato/{}'.format(candidate.get('id')))
     response_json = response.json()
-    if 'FEM' == response_json.get('descricaoSexo'):
+    stdout.write("\r\t\t\t\t%s " % (response_json.get('descricaoSexo')))
+    stdout.flush()
+    if 'FEM.' == response_json.get('descricaoSexo'):
         political_party, created = PoliticalParty.objects.get_or_create(initials=candidate.get('partido').get('sigla'))
 
         candidate_to_save = Candidate()
@@ -32,7 +34,7 @@ class Command(BaseCommand):
         print "FILL\t\t\tConsume"
         i = 0
         response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/listar/2016/71072/2/13/candidatos').json()
-        for candidate in response.get('candidatos')[:100]:  # Remove `[:100]` to import all
+        for candidate in response.get('candidatos'):  # Remove `[:100]` to import all
             i = i + 1
             stdout.write("\r%s" % i)
             stdout.flush()
