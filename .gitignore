@@ -1,0 +1,7 @@
+*.pyc
+
+# Mac OSX
+*.DS_Store
+
+# Logfiles
+*.log

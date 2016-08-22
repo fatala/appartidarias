@@ -1,14 +1,14 @@
+# coding: utf-8
 from django.db import models
-
 
 class PoliticalParty(models.Model):
     initials = models.CharField(max_length=128, verbose_name='sigla')
     name = models.CharField(max_length=128, verbose_name='nome')
     number = models.IntegerField(verbose_name='numero')
-    directory_national = models.TextField(verbose_name='diretório nacional')
-    directory_state = models.TextField(verbose_name='diretório estadual')
-    directory_city = models.TextField(verbose_name='diretório municipal')
-    obs = models.TextField()
+    directory_national = models.TextField(verbose_name='diretório nacional', null=True)
+    directory_state = models.TextField(verbose_name='diretório estadual', null=True)
+    directory_city = models.TextField(verbose_name='diretório municipal', null=True)
+    obs = models.TextField(null=True)
 
     class Meta:
         verbose_name = 'partido político'
@@ -47,17 +47,60 @@ class Candidate(models.Model):
         (FEMALE, 'Feminino'),
         (MALE, 'Masculino')
     )
-    political_party = models.ForeignKey(PoliticalParty, verbose_name='partido')
+
+    PENDING = 'P'
+    APPROVED = 'A'
+    DENIED = 'D'
+    STATUS_CHOICES = (
+        (PENDING, 'Pendente'),
+        (APPROVED, 'Aprovado'),
+        (DENIED, 'Negado')
+    )
+
+    id_tse = models.IntegerField(verbose_name='ID do TSE')
     name = models.CharField(max_length=128, verbose_name='Nome')
-    number = models.IntegerField(verbose_name='numero')
+    name_ballot = models.CharField(max_length=128, verbose_name='Nome urna')
+    number = models.IntegerField(verbose_name='Numero')
     job_role = models.ForeignKey(JobRole, verbose_name='Cargo')
-    picture_url = models.CharField(max_length=256, verbose_name='URL da foto')
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=FEMALE, verbose_name='sexo')
-    agenda = models.ForeignKey(Agenda, verbose_name='Pauta')
-    projects = models.TextField(verbose_name='Projetos')
+    political_party = models.ForeignKey(PoliticalParty, verbose_name='Partido')
+    coalition = models.CharField(max_length=128, verbose_name='Coligação')
+    picture_url = models.URLField(verbose_name='URL da foto')
+    budget_1t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Orçamento 1.o turno')
+    budget_2t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Orçamento 2.o turno')
+    agenda = models.ForeignKey(Agenda, verbose_name='Pauta', null=True)
+    projects = models.TextField(verbose_name='Projetos', blank=True)
+    reelection = models.BooleanField(blank=True, verbose_name='Re-eleição?', default=False)
+    elected = models.BooleanField(blank=True, verbose_name='Eleita antes de 2012?', default=False)
+
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=FEMALE, verbose_name='Sexo')
+    birth_date = models.DateField(verbose_name='Data de nascimento', auto_now=False, auto_now_add=False, blank=True)
+    marital_status = models.CharField(max_length=128, verbose_name='Estado civil')
+    education = models.CharField(max_length=128, verbose_name='Nível escolaridade')
+    job = models.CharField(max_length=128, verbose_name='Ocupação')
+    property_value = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total de bens', default=0)
+    twitter = models.URLField(verbose_name='Twitter', blank=True)
+    facebook = models.URLField(verbose_name='Facebook', blank=True)
+    instagram = models.URLField(verbose_name='Instagram', blank=True)
+
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING, verbose_name='Aprovação candidatura Mulheres do Brasil')
 
     class Meta:
         verbose_name = 'candidato'
+
+    def __str__(self):
+        return self.name
+
+
+class Comments(models.Model):
+    facebook_id = models.IntegerField(verbose_name='Facebook')
+    name = models.CharField('Nome', max_length=128)
+    comment = models.TextField(verbose_name='Comentário', blank=True)
+    candidate = models.ForeignKey(Candidate, verbose_name='Candidata')
+    timestamp = models.DateTimeField()
+
+    class Meta:
+        verbose_name = 'Comentário'
+        verbose_name_plural = 'Comentários'
 
     def __str__(self):
         return self.name
