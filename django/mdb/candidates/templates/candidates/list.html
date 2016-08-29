@@ -3,8 +3,8 @@
 
 {% block content %}
     <ul>
-    {% for party in object_list %}
-        <li>{{ party.name }}</li>
+    {% for candidates in candidates_list %}
+        <li>{{ candidates.name_ballot }}</li>
     {% endfor %}
     </ul>
 {% endblock content %}

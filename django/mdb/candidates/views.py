@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework import viewsets
@@ -22,11 +21,11 @@ class PoliticalPartyCandidates(TemplateView):
     template_name = 'candidates/list.html'
 
     def get_context_data(self, **kwargs):
-
         context = super(PoliticalPartyCandidates, self).get_context_data(**kwargs)
-        context['object_list'] = PoliticalParty.objects.order_by('name')
+        context['candidates_list'] = Candidate.objects.filter(political_party__id=kwargs['political_party_id'])
 
-        return context
+        #return context
+        return HttpResponse(kwargs['political_party_id'])
 
 def hello(request):
     return HttpResponse("Hello world")
