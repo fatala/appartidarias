@@ -18,16 +18,15 @@ class CandidateList(APIView):
         return Response(serializer.data)
 
 
-def hello(request):
-    return HttpResponse("Hello world")
-
-
-class ExampleView(TemplateView):
+class PoliticalPartyCandidates(TemplateView):
     template_name = 'candidates/list.html'
 
     def get_context_data(self, **kwargs):
 
-        context = super(ExampleView, self).get_context_data(**kwargs)
-        context['object_list'] = PoliticalParty.objects.all()
+        context = super(PoliticalPartyCandidates, self).get_context_data(**kwargs)
+        context['object_list'] = PoliticalParty.objects.order_by('name')
 
         return context
+
+def hello(request):
+    return HttpResponse("Hello world")
