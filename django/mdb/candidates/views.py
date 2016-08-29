@@ -18,14 +18,22 @@ class CandidateList(APIView):
 
 
 class PoliticalPartyCandidates(TemplateView):
-    template_name = 'candidates/list.html'
+    template_name = 'candidates/political_party_candidates_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(PoliticalPartyCandidates, self).get_context_data(**kwargs)
         context['candidates_list'] = Candidate.objects.filter(political_party__id=kwargs['political_party_id'])
 
-        #return context
-        return HttpResponse(kwargs['political_party_id'])
+        return context
 
-def hello(request):
-    return HttpResponse("Hello world")
+class CandidateDetail(TemplateView):
+    template_name = 'candidates/candidate_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CandidateDetail, self).get_context_data(**kwargs)
+        context['candidate'] = Candidate.objects.get(pk=kwargs['candidate_id'])
+
+        return context
+
+def Home(request):
+    return render(request, 'candidates/index.html')

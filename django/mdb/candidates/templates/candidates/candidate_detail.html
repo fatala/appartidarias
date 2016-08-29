@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<img src="{{ candidate.picture_url }}" />
+<h4>{{ candidate.name_ballot }} - {{ candidate.number }}</h4>
+
+<p><b>Nome completo: </b>{{ candidate.name }}</p>
+<p><b>Número na urna: </b>{{ candidate.number }}</p>
+<p><b>Partido: </b></p>
+<p><b>Coligação: </b>{{ candidate.coalition }}</p>
+<p><b>Eleita em 2012: </b>{{ candidate.elected }}</p>
+<p><b>Reeleição: </b>{{ candidate.reelection }}</p>
+
+{% endblock content %}

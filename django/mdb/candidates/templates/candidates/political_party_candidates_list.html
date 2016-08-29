@@ -4,7 +4,7 @@
 {% block content %}
     <ul>
     {% for candidates in candidates_list %}
-        <li>{{ candidates.name_ballot }}</li>
+        <li><a href="{% url 'candidates_detail' candidates.id %}">{{ candidates.name_ballot }}</a></li>
     {% endfor %}
     </ul>
 {% endblock content %}
