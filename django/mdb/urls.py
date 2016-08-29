@@ -9,4 +9,6 @@ urlpatterns = patterns(
     url(r'^$', views.hello),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/candidates/', views.CandidateList.as_view()),
+
+    url(r'^example/$', views.ExampleView.as_view()),
 )
