@@ -1,7 +1,10 @@
+{% extends "base.html" %}
 
 
-<ul>
-{% for party in object_list %}
-    <li>{{ party.name }}</li>
-{% endfor %}
-</ul>
+{% block content %}
+    <ul>
+    {% for party in object_list %}
+        <li>{{ party.name }}</li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
