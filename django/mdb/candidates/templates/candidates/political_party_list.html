@@ -3,30 +3,38 @@
 
 {% block content %}
 
-<div>
-    <h3>Partidos</h3>
-    <div>
-        <ul>
-            {% for political_party in object_list %}
-                <li>{{ political_party.name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    <div class="pagination">
-        <span class="step-links">
-            {% if object_list.has_previous %}
-                <a href="?page={{ object_list.previous_page_number }}">Anterior</a>
-            {% endif %}
 
-            <span class="current">
-                Página {{ object_list.number }} de {{ object_list.paginator.num_pages }}.
-            </span>
-
-            {% if object_list.has_next %}
-                <a href="?page={{ object_list.next_page_number }}">Próxima</a>
-            {% endif %}
-        </span>
-    </div>
+<div class="page-header">
+  <h1>Partidos</h1>
 </div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Partido</th>
+            <th>Número</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for political_party in object_list %}
+        <tr>
+            <td><a href="{% url 'political_party_candidates' political_party.id %}">{{ political_party.name }}</a></td>
+            <td>{{ political_party.number }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<nav aria-label="...">
+    <ul class="pager">
+        {% if object_list.has_previous %}
+        <li><a href="?page={{ object_list.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+        <li>Página {{ object_list.number }} de {{ object_list.paginator.num_pages }}</li>
+        {% if object_list.has_next %}
+        <li><a href="?page={{ object_list.next_page_number }}">Próxima</a></li>
+        {% endif %}
+    </ul>
+</nav>
 
 {% endblock content %}

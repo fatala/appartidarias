@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form class="form-inline">
+  <div class="form-group">
+    <input type="text" class="form-control" name="query" placeholder="Candidata ou número">
+  </div>
+  <button type="submit" class="btn btn-primary">Buscar</button>
+</form>
+
+{% if query %}
+{% if candidate_list %}
+<ul>
+{% for candidate in candidate_list %}
+<li>{{ candidate.name }} - {{ candidate.number }}</li>
+{% endfor %}
+<ul>
+{% else %}
+<span>Não foi encontrado nenhum resultado para {{ query }}.</span>
+{% endif %}
+{% endif %}
+
+{% endblock content %}

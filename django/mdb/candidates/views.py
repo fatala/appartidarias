@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Candidate, PoliticalParty
+from .models import Candidate, PoliticalParty, Agenda
 from .serializers import CandidateSerializer
 
 
@@ -41,12 +41,12 @@ class CandidateDetail(TemplateView):
 
 class PoliticalPartyListView(TemplateView):
     template_name = 'candidates/political_party_list.html'
-    page_size = 5
+    page_size = 20
 
     def get_context_data(self, **kwargs):
         context = super(PoliticalPartyListView, self).get_context_data(**kwargs)
 
-        political_parties = PoliticalParty.objects.all()
+        political_parties = PoliticalParty.objects.order_by('name')
 
         paginator = Paginator(political_parties, self.page_size)
 
@@ -59,7 +59,15 @@ class PoliticalPartyListView(TemplateView):
             object_list = paginator.page(paginator.num_pages)
         context['object_list'] = object_list
 
-        #search
+        return context
+
+
+class CandidateSearchView(TemplateView):
+    template_name = 'candidates/candidate_search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CandidateSearchView, self).get_context_data(**kwargs)
+
         query = self.request.GET.get('query')
         if query:
             try:
@@ -78,5 +86,27 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
+
+        return context
+
+
+class AgendaListView(TemplateView):
+    template_name = 'candidates/agenda_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AgendaListView, self).get_context_data(**kwargs)
+        context['agenda_list'] = Agenda.objects.all()
+
+        return context
+
+
+class AgendaCandidates(TemplateView):
+    template_name = 'candidates/agenda_candidates_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AgendaCandidates, self).get_context_data(**kwargs)
+        context['candidates_list'] = Candidate.objects.filter(
+            agenda__id=kwargs['agenda_id']
+        )
 
         return context

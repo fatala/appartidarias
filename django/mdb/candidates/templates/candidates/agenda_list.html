@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h3>Pautas</h3>
+    <ul>
+    {% for agenda in agenda_list %}
+        <li><a href="{% url 'agenda_candidates' agenda.id %}">{{ agenda.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
