@@ -6,11 +6,12 @@
 <img src="{{ candidate.picture_url }}" />
 <h4>{{ candidate.name_ballot }} - {{ candidate.number }}</h4>
 
+<p><b>Cargo: </b>{{ candidate.job_role.name }}</p>
 <p><b>Nome completo: </b>{{ candidate.name }}</p>
 <p><b>Número na urna: </b>{{ candidate.number }}</p>
-<p><b>Partido: </b></p>
+<p><b>Partido: </b>{{ candidate.political_party.name }} - {{ candidate.political_party.number }}</p>
 <p><b>Coligação: </b>{{ candidate.coalition }}</p>
-<p><b>Eleita em 2012: </b>{{ candidate.elected }}</p>
-<p><b>Reeleição: </b>{{ candidate.reelection }}</p>
+<p><b>Eleita em 2012: </b>{% if candidate.elected == True %} Sim {% else %} Não {% endif %}</p>
+<p><b>Reeleição: </b>{% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>
 
 {% endblock content %}

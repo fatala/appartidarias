@@ -38,12 +38,12 @@ class CandidateDetail(TemplateView):
         return context
 
 
-class IndexView(TemplateView):
-    template_name = 'candidates/index.html'
+class PoliticalPartyListView(TemplateView):
+    template_name = 'candidates/political_party_list.html'
     page_size = 5
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
+        context = super(PoliticalPartyListView, self).get_context_data(**kwargs)
 
         political_parties = PoliticalParty.objects.all()
 
@@ -57,5 +57,14 @@ class IndexView(TemplateView):
         except EmptyPage:
             object_list = paginator.page(paginator.num_pages)
         context['object_list'] = object_list
+
+        return context
+
+
+class IndexView(TemplateView):
+    template_name = 'candidates/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
 
         return context

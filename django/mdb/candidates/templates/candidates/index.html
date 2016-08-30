@@ -4,37 +4,4 @@
 {% block content %}
 
 
-<div class="jumbotron">
-    <div class="container">
-        <h1>AppartidariAs</h1>
-        <p>Lorem ipsum dolor...</p>
-
-        <div>
-            <h3>Partidos</h3>
-            <div>
-                <ul>
-                    {% for political_party in object_list %}
-                        <li>{{ political_party.name }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="pagination">
-                <span class="step-links">
-                    {% if object_list.has_previous %}
-                        <a href="?page={{ object_list.previous_page_number }}">Anterior</a>
-                    {% endif %}
-
-                    <span class="current">
-                        Página {{ object_list.number }} de {{ object_list.paginator.num_pages }}.
-                    </span>
-
-                    {% if object_list.has_next %}
-                        <a href="?page={{ object_list.next_page_number }}">Próxima</a>
-                    {% endif %}
-                </span>
-            </div>
-        <div>
-    </div>
-</div>
-
 {% endblock content %}
