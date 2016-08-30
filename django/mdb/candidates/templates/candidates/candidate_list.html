@@ -2,21 +2,11 @@
 
 {% block content %}
 
+{% if candidates_list %}
 <div class="page-header">
-  <h1>Busca de candidatas <small>{% if query %} "{{ query }}" {% endif %}</small></h1>
+  <h1>Candidatas do <small> {{ title }} </small></h1>
 </div>
 
-<form class="form-inline">
-  <div class="form-group input-group-lg">
-    <input type="text" class="form-control" name="query" placeholder="Candidata ou número">
-  </div>
-  <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
-</form>
-
-<br><br>
-
-{% if query %}
-{% if candidates_list %}
 <ul class="list-group">
 {% for candidates in candidates_list %}
 <li class="list-group-item">
@@ -36,9 +26,20 @@
 </li>
 {% endfor %}
 </ul>
+
+<nav aria-label="...">
+    <ul class="pager">
+        {% if candidates_list.has_previous %}
+        <li><a href="?page={{ candidates_list.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+        <li>Página {{ candidates_list.number }} de {{ candidates_list.paginator.num_pages }}</li>
+        {% if candidates_list.has_next %}
+        <li><a href="?page={{ candidates_list.next_page_number }}">Próxima</a></li>
+        {% endif %}
+    </ul>
+</nav>
 {% else %}
 <div class="alert alert-warning" role="alert">Não foi encontrado nenhum resultado.</div>
-{% endif %}
 {% endif %}
 
 {% endblock content %}

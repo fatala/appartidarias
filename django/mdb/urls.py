@@ -10,7 +10,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/candidates/', views.CandidateList.as_view()),
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
-    url(r'^candidates/political_party/(?P<political_party_id>[0-9]+)/$', views.PoliticalPartyCandidates.as_view(), name='political_party_candidates'),
+    url(r'^candidates/list/(?P<type>\w+)/(?P<id>\d+)/$', views.CandidateListFilter.as_view(), name='candidates_list_filter'),
     url(r'^candidates/detail/(?P<candidate_id>[0-9]+)/$', views.CandidateDetail.as_view(), name='candidate_detail'),
     url(r'^candidates/search/', views.CandidateSearchView.as_view(), name='candidate_search'),
     url(r'^candidates/agendas/', views.AgendaListView.as_view(), name='agenda_list'),

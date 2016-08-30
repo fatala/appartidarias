@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-    <h3>Pautas</h3>
-    <ul>
+
+<div class="page-header">
+  <h1>Pautas</h1>
+</div>
+
+<div class="list-group">
     {% for agenda in agenda_list %}
-        <li><a href="{% url 'agenda_candidates' agenda.id %}">{{ agenda.name }}</a></li>
+    <a href="{% url 'candidates_list_filter' type='agenda' id=agenda.id %}" class="list-group-item">{{ agenda.name }}</a>
     {% endfor %}
-    </ul>
+</div>
+
 {% endblock content %}

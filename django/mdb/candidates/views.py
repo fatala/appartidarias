@@ -17,14 +17,36 @@ class CandidateList(APIView):
         return Response(serializer.data)
 
 
-class PoliticalPartyCandidates(TemplateView):
-    template_name = 'candidates/political_party_candidates_list.html'
+class CandidateListFilter(TemplateView):
+    template_name = 'candidates/candidate_list.html'
+    page_size = 10
 
     def get_context_data(self, **kwargs):
-        context = super(PoliticalPartyCandidates, self).get_context_data(**kwargs)
-        context['candidates_list'] = Candidate.objects.filter(
-            political_party__id=kwargs['political_party_id']
-        )
+        context = super(CandidateListFilter, self).get_context_data(**kwargs)
+
+        if kwargs['type'] == "political_party":
+            candidates = Candidate.objects.filter(
+                political_party__id=kwargs['id']
+            )
+            if candidates:
+                context['title'] = candidates[0].political_party.name
+        else:
+            candidates = Candidate.objects.filter(
+                agenda__id=kwargs['id']
+            )
+            if candidates:
+                context['title'] = candidates[0].agenda.name
+
+        paginator = Paginator(candidates, self.page_size)
+
+        page = self.request.GET.get('page', 1)
+        try:
+            object_list = paginator.page(page)
+        except PageNotAnInteger:
+            object_list = paginator.page(1)
+        except EmptyPage:
+            object_list = paginator.page(paginator.num_pages)
+        context['candidates_list'] = object_list
 
         return context
 
@@ -75,7 +97,7 @@ class CandidateSearchView(TemplateView):
                 candidate_list = Candidate.objects.filter(number=query)
             except ValueError:
                 candidate_list = Candidate.objects.filter(name__icontains=query)
-            context['candidate_list'] = candidate_list
+            context['candidates_list'] = candidate_list
             context['query'] = query
 
         return context
@@ -95,7 +117,7 @@ class AgendaListView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AgendaListView, self).get_context_data(**kwargs)
-        context['agenda_list'] = Agenda.objects.all()
+        context['agenda_list'] = Agenda.objects.order_by("name")
 
         return context
 
