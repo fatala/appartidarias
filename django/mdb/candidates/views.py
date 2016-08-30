@@ -1,12 +1,11 @@
-from django.shortcuts import get_object_or_404, render
+# coding: utf-8
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
-from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework import status
+
 from .models import Candidate, PoliticalParty
 from .serializers import CandidateSerializer
-from django.http import HttpResponse
 
 
 class CandidateList(APIView):
@@ -22,9 +21,12 @@ class PoliticalPartyCandidates(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(PoliticalPartyCandidates, self).get_context_data(**kwargs)
-        context['candidates_list'] = Candidate.objects.filter(political_party__id=kwargs['political_party_id'])
+        context['candidates_list'] = Candidate.objects.filter(
+            political_party__id=kwargs['political_party_id']
+        )
 
         return context
+
 
 class CandidateDetail(TemplateView):
     template_name = 'candidates/candidate_detail.html'
@@ -35,5 +37,25 @@ class CandidateDetail(TemplateView):
 
         return context
 
-def Home(request):
-    return render(request, 'candidates/index.html')
+
+class IndexView(TemplateView):
+    template_name = 'candidates/index.html'
+    page_size = 5
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+
+        political_parties = PoliticalParty.objects.all()
+
+        paginator = Paginator(political_parties, self.page_size)
+
+        page = self.request.GET.get('page', 1)
+        try:
+            object_list = paginator.page(page)
+        except PageNotAnInteger:
+            object_list = paginator.page(1)
+        except EmptyPage:
+            object_list = paginator.page(paginator.num_pages)
+        context['object_list'] = object_list
+
+        return context

@@ -1,6 +1,7 @@
 # coding: utf-8
 from django.db import models
 
+
 class PoliticalParty(models.Model):
     initials = models.CharField(max_length=128, verbose_name='sigla')
     name = models.CharField(max_length=128, verbose_name='nome')
