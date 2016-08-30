@@ -1,6 +1,7 @@
 # coding: utf-8
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -57,6 +58,17 @@ class PoliticalPartyListView(TemplateView):
         except EmptyPage:
             object_list = paginator.page(paginator.num_pages)
         context['object_list'] = object_list
+
+        #search
+        query = self.request.GET.get('query')
+        if query:
+            try:
+                query = int(query)
+                candidate_list = Candidate.objects.filter(number=query)
+            except ValueError:
+                candidate_list = Candidate.objects.filter(name__icontains=query)
+            context['candidate_list'] = candidate_list
+            context['query'] = query
 
         return context
 
