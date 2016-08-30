@@ -34,6 +34,25 @@
                 </span>
             </div>
         <div>
+
+        <div>
+            <form action="" method="GET">
+                <input type="text" name="query" placeholder="Digite o nome ou número do candidato .." />
+
+                <button type="submit">Buscar</button>
+            </form>
+            {% if query %}
+                {% if candidate_list %}
+                    <ul>
+                        {% for candidate in candidate_list %}
+                            <li>{{ candidate.name }} - {{ candidate.number }}</li>
+                        {% endfor %}
+                    <ul>
+                {% else %}
+                    <span>Não foi encontrado nenhum resultado para {{ query }}.</span>
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
 </div>
 
