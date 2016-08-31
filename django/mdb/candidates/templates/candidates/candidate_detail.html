@@ -39,14 +39,18 @@
 Enviar comentário
 </button>
 
-<h2>Comentários</h2>
-<br>
-<ul class="list-group">
-    <li class="list-group-item">
-        <h4 class="list-group-item-heading">Nome <small>email</small></h4>
-        <p class="list-group-item-text">Comentário</p>
-    </li>
-</ul>
+{% if comments %}
+    <h2>Comentários</h2>
+    <br>
+    <ul class="list-group">
+        {% for comment in comments %}
+            <li class="list-group-item">
+                <h4 class="list-group-item-heading">{{ comment.name }} <small>{{ comment.email }}</small></h4>
+                <p class="list-group-item-text">{{ comment.comment }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -57,24 +61,25 @@ Enviar comentário
                 <h4 class="modal-title" id="myModalLabel">Enviar comentário</h4>
             </div>
             <div class="modal-body">
-                <form id="contact_form" method="get" action="/">
+                <form id="contact_form" method="get" action=".">
+                    {% csrf_token %}
                     <div class="form-group">
-                        <label for="name" class="control-label">Nome:</label>
-                        <input type="text" class="form-control" id="name">
+                        <label for="id_name" class="control-label">Nome:</label>
+                        <input type="text" class="form-control" name="name" id="id_name">
                     </div>
                     <div class="form-group">
-                        <label for="email" class="control-label">Email:</label>
-                        <input type="text" class="form-control" id="email">
+                        <label for="id_email" class="control-label">Email:</label>
+                        <input type="text" class="form-control" name="email" id="id_email">
                     </div>
                     <div class="form-group">
-                        <label for="comment" class="control-label">Comentário:</label>
-                        <textarea class="form-control" id="comment"></textarea>
+                        <label for="id_comment" class="control-label">Comentário:</label>
+                        <textarea class="form-control" id="id_comment" name="comment"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary" id="submit_form">Enviar</button>
+                <button type="submit" class="btn btn-primary" id="submit_form">Enviar</button>
             </div>
         </div>
     </div>
