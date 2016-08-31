@@ -1,11 +1,13 @@
 # coding: utf-8
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView
+from django.core.mail import send_mail
+
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .forms import CommentForm
+from .forms import CommentForm, ContactForm
 from .models import Candidate, PoliticalParty, Agenda, Comment
 from .serializers import CandidateSerializer
 
@@ -138,6 +140,54 @@ class IndexView(TemplateView):
         context = super(IndexView, self).get_context_data(**kwargs)
 
         return context
+
+
+class AboutView(TemplateView):
+    template_name = 'candidates/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AboutView, self).get_context_data(**kwargs)
+
+        return context
+
+
+class Elections2012View(TemplateView):
+    template_name = 'candidates/elections2012.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(Elections2012View, self).get_context_data(**kwargs)
+
+        return context
+
+
+class ContactView(TemplateView):
+    template_name = 'candidates/contact.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+
+        return context
+
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = ContactForm(request.POST)
+
+        if form.is_valid():
+            subject = 'AppartidariAs - contato'
+            message = form.cleaned_data['message']
+            sender = form.cleaned_data['sender']
+
+            recipients = ['contato@grupomulheresdorasil.com.br']
+
+            send_mail(subject, message, sender, recipients)
+
+            context['success'] = True
+        else:
+            context['success'] = False
+            context['errors'] = form.errors
+
+        return self.render_to_response(context)
 
 
 class AgendaListView(TemplateView):

@@ -13,3 +13,7 @@ class CommentForm(forms.ModelForm):
             'name',
             'comment',
         ]
+
+class ContactForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+    sender = forms.EmailField()

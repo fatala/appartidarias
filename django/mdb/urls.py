@@ -9,6 +9,9 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^$', views.IndexView.as_view(), name='home'),
+    url(r'^about-us/', views.AboutView.as_view(), name='about-us'),
+    url(r'^elections2012/', views.Elections2012View.as_view(), name='elections2012'),
+    url(r'^contact/', views.ContactView.as_view(), name='contact'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/candidates/', views.CandidateList.as_view()),
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
