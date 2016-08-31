@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from candidates import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 admin.autodiscover()
 
@@ -16,3 +18,5 @@ urlpatterns = patterns(
     url(r'^candidates/agendas/', views.AgendaListView.as_view(), name='agenda_list'),
     url(r'^candidates/agendas/(?P<agenda_id>[0-9]+)/$', views.AgendaCandidates.as_view(), name='agenda_candidates'),
 )
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

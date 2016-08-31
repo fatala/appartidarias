@@ -32,7 +32,10 @@ class Agenda(models.Model):
 
 
 class JobRole(models.Model):
-    name = models.CharField('Cargo', max_length=128)
+    name = models.CharField(u'Cargo', max_length=128)
+    code = models.CharField(u'Código', max_length=128, null=True)
+    initials = models.CharField(u'Sigla', max_length=128, null=True)
+    counting = models.IntegerField(u'Contagem', default=0)
 
     class Meta:
         verbose_name = 'Cargo'
