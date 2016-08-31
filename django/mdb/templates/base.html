@@ -53,9 +53,8 @@
                 <li><a href="{% url 'political_party_list' %}">Candidatas por partido</a></li>
                 <li><a href="{% url 'agenda_list' %}">Candidatas por pauta</a></li>
               </ul>
-              <li><a href="#contact">Cotas por partido</a></li>
-              <li><a href="#contact">Eventos das candidatas</a></li>
-              <li><a href="#contact">Fale conosco</a></li>
+              <li><a href="/candidates/elections2012">Eleições 2012</a></li>
+              <li><a href="/contact">Fale conosco</a></li>
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -83,5 +82,10 @@
     <script src="/static/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/static/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    {% block js %}
+
+    {% endblock js %}
+
   </body>
 </html>

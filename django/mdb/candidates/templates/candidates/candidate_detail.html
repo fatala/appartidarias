@@ -34,4 +34,82 @@
     </div>
 </div>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+Enviar comentário
+</button>
+
+<h2>Comentários</h2>
+<br>
+<ul class="list-group">
+    <li class="list-group-item">
+        <h4 class="list-group-item-heading">Nome <small>email</small></h4>
+        <p class="list-group-item-text">Comentário</p>
+    </li>
+</ul>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Enviar comentário</h4>
+            </div>
+            <div class="modal-body">
+                <form id="contact_form" method="get" action="/">
+                    <div class="form-group">
+                        <label for="name" class="control-label">Nome:</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label">Email:</label>
+                        <input type="text" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment" class="control-label">Comentário:</label>
+                        <textarea class="form-control" id="comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary" id="submit_form">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
+
+
+{% block js %}
+
+<script>
+$(document).ready(function () {
+    $("#contact_form").on("submit", function(e) {
+        var postData = $(this).serializeArray();
+        var formURL = $(this).attr("action");
+        $.ajax({
+            url: formURL,
+            type: "POST",
+            data: postData,
+            success: function(data, textStatus, jqXHR) {
+                $('#contact_dialog .modal-header .modal-title').html("Result");
+                $('#contact_dialog .modal-body').html(data);
+                $("#submit_form").remove();
+            },
+            error: function(jqXHR, status, error) {
+                console.log(status + ": " + error);
+            }
+        });
+        e.preventDefault();
+    });
+     
+    $("#submit_form").on('click', function() {
+        $("#contact_form").submit();
+    });
+});
+</script>
+
+{% endblock js %}
