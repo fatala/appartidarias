@@ -5,7 +5,8 @@ from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
-from .models import Candidate, PoliticalParty, Agenda
+from .forms import CommentForm
+from .models import Candidate, PoliticalParty, Agenda, Comment
 from .serializers import CandidateSerializer
 
 
@@ -54,11 +55,38 @@ class CandidateListFilter(TemplateView):
 class CandidateDetail(TemplateView):
     template_name = 'candidates/candidate_detail.html'
 
+    def get_object(self):
+        return Candidate.objects.get(pk=self.kwargs['candidate_id'])
+
     def get_context_data(self, **kwargs):
         context = super(CandidateDetail, self).get_context_data(**kwargs)
-        context['candidate'] = Candidate.objects.get(pk=kwargs['candidate_id'])
+        candidate_id = kwargs['candidate_id']
+
+        context['candidate'] = self.get_object()
+
+        context['comments'] = Comment.objects.filter(
+            candidate_id=candidate_id,
+            approved=True,
+        )
+        context['form'] = CommentForm()
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.candidate = self.get_object()
+            instance.save()
+
+            context['success'] = True
+        else:
+            context['success'] = False
+            context['errors'] = form.errors
+
+        return self.render_to_response(context)
 
 
 class PoliticalPartyListView(TemplateView):

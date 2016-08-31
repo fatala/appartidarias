@@ -1,7 +1,9 @@
 from django.contrib import admin
-from candidates.models import Candidate, PoliticalParty, Agenda, JobRole, Comments
+from candidates.models import (
+    Agenda, Candidate, Comment, JobRole, PoliticalParty
+)
 from django.utils.safestring import mark_safe
-from django.utils.html import format_html_join
+
 
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ('name_ballot', 'political_party', 'number', 'job_role')
@@ -11,12 +13,25 @@ class CandidateAdmin(admin.ModelAdmin):
     readonly_fields = ('picture',)
 
     def picture(self, instance):
-        result = '<img src=%s/>' % instance.picture_url
+        result = u'<img src=%s/>' % instance.picture_url
         return mark_safe(result)
     picture.short_description = "Foto do candidato"
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'name', 'email', 'candidate', 'approved',
+    )
+
+    raw_id_fields = (
+        'candidate',
+    )
+
+    readonly_fields = ('created_at',)
+
 
 admin.site.register(Candidate, CandidateAdmin)
 admin.site.register(PoliticalParty)
 admin.site.register(Agenda)
 admin.site.register(JobRole)
-admin.site.register(Comments)
+admin.site.register(Comment, CommentAdmin)

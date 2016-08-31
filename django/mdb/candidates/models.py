@@ -1,5 +1,6 @@
 # coding: utf-8
 from django.db import models
+from django.utils import timezone
 
 
 class PoliticalParty(models.Model):
@@ -92,12 +93,14 @@ class Candidate(models.Model):
         return self.name
 
 
-class Comments(models.Model):
-    facebook_id = models.IntegerField(verbose_name='Facebook')
+class Comment(models.Model):
+    email = models.EmailField(verbose_name='email')
     name = models.CharField('Nome', max_length=128)
     comment = models.TextField(verbose_name='Comentário', blank=True)
     candidate = models.ForeignKey(Candidate, verbose_name='Candidata')
-    timestamp = models.DateTimeField()
+
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='criado em')
+    approved = models.BooleanField('aprovado', default=False)
 
     class Meta:
         verbose_name = 'Comentário'
