@@ -10,7 +10,7 @@
 <div class="panel panel-default">
 <!-- Default panel contents -->
     <div class="panel-heading">
-        <h3 class="panel-title">Perfil</h3>
+        <h3 class="panel-title">Dados pessoais</h3>
     </div>
     <div class="panel-body">
 
@@ -34,13 +34,43 @@
     </div>
 </div>
 
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Perfil</h3>
+    </div>
+    <div class="panel-body">
+    Panel content
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Pauta</h3>
+    </div>
+    <div class="panel-body">
+    Panel content
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Financiamento</h3>
+    </div>
+    <div class="panel-body">
+    Panel content
+    </div>
+</div>
+
+<br>
+<h2>Comentários</h2>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 Enviar comentário
 </button>
 
-<h2>Comentários</h2>
-<br>
+<br><br>
+
 <ul class="list-group">
     <li class="list-group-item">
         <h4 class="list-group-item-heading">Nome <small>email</small></h4>
@@ -57,7 +87,7 @@ Enviar comentário
                 <h4 class="modal-title" id="myModalLabel">Enviar comentário</h4>
             </div>
             <div class="modal-body">
-                <form id="contact_form" method="get" action="/">
+                <form id="contact_form" method="get" action="#">
                     <div class="form-group">
                         <label for="name" class="control-label">Nome:</label>
                         <input type="text" class="form-control" id="name">
@@ -87,25 +117,6 @@ Enviar comentário
 
 <script>
 $(document).ready(function () {
-    $("#contact_form").on("submit", function(e) {
-        var postData = $(this).serializeArray();
-        var formURL = $(this).attr("action");
-        $.ajax({
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function(data, textStatus, jqXHR) {
-                $('#contact_dialog .modal-header .modal-title').html("Result");
-                $('#contact_dialog .modal-body').html(data);
-                $("#submit_form").remove();
-            },
-            error: function(jqXHR, status, error) {
-                console.log(status + ": " + error);
-            }
-        });
-        e.preventDefault();
-    });
-     
     $("#submit_form").on('click', function() {
         $("#contact_form").submit();
     });
