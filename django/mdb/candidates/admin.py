@@ -26,7 +26,7 @@ class CommentAdmin(admin.ModelAdmin):
     raw_id_fields = (
         'candidate',
     )
-
+    list_filter = ('approved', )
     readonly_fields = ('created_at',)
 
 
