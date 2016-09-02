@@ -1,6 +1,6 @@
 from django.contrib import admin
 from candidates.models import (
-    Agenda, Candidate, Comment, JobRole, PoliticalParty
+    Agenda, Candidate, Comment, JobRole, PoliticalParty, Contact
 )
 from django.utils.safestring import mark_safe
 
@@ -30,8 +30,17 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        'name', 'email', 'created_at', 'reviewed',
+    )
+
+    list_filter = ('reviewed', )
+    readonly_fields = ('created_at',)
+
 admin.site.register(Candidate, CandidateAdmin)
 admin.site.register(PoliticalParty)
 admin.site.register(Agenda)
 admin.site.register(JobRole)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Contact, ContactAdmin)

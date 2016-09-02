@@ -174,13 +174,8 @@ class ContactView(TemplateView):
         form = ContactForm(request.POST)
 
         if form.is_valid():
-            subject = 'AppartidariAs - contato'
-            message = form.cleaned_data['message']
-            sender = form.cleaned_data['sender']
-
-            recipients = ['contato@grupomulheresdorasil.com.br']
-
-            send_mail(subject, message, sender, recipients)
+            instance = form.save(commit=False)
+            instance.save()
 
             context['success'] = True
         else:

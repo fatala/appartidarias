@@ -87,7 +87,7 @@ class Candidate(models.Model):
     facebook = models.URLField(verbose_name='Facebook', blank=True)
     instagram = models.URLField(verbose_name='Instagram', blank=True)
 
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING, verbose_name='Aprovação candidatura Mulheres do Brasil')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING, verbose_name='Aprovação candidatura MDB')
 
     class Meta:
         verbose_name = 'candidato'
@@ -97,17 +97,32 @@ class Candidate(models.Model):
 
 
 class Comment(models.Model):
-    email = models.EmailField(verbose_name='email')
-    name = models.CharField('Nome', max_length=128)
+    email = models.EmailField(verbose_name='Email')
+    name = models.CharField(verbose_name='Nome', max_length=128)
     comment = models.TextField(verbose_name='Comentário', blank=True)
     candidate = models.ForeignKey(Candidate, verbose_name='Candidata')
 
-    created_at = models.DateTimeField(default=timezone.now, verbose_name='criado em')
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Enviado em')
     approved = models.BooleanField('aprovado', default=False)
 
     class Meta:
         verbose_name = 'Comentário'
         verbose_name_plural = 'Comentários'
+
+    def __str__(self):
+        return self.name
+
+
+class Contact(models.Model):
+    email = models.EmailField(verbose_name='Email')
+    name = models.CharField(verbose_name='Nome', max_length=128)
+    message = models.TextField(verbose_name='Comentário', blank=True)
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Data')
+    reviewed = models.BooleanField(verbose_name='Revisado', default=False)
+
+    class Meta:
+        verbose_name = 'Contato'
+        verbose_name_plural = 'Contatos'
 
     def __str__(self):
         return self.name

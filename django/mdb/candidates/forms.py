@@ -1,7 +1,7 @@
 # coding: utf-8
 from django import forms
 
-from .models import Comment
+from .models import Comment, Contact
 
 
 class CommentForm(forms.ModelForm):
@@ -14,6 +14,12 @@ class CommentForm(forms.ModelForm):
             'comment',
         ]
 
-class ContactForm(forms.Form):
-    message = forms.CharField(widget=forms.Textarea)
-    sender = forms.EmailField()
+class ContactForm(forms.ModelForm):
+
+    class Meta:
+        model = Contact
+        fields = [
+            'email',
+            'name',
+            'message',
+        ]
