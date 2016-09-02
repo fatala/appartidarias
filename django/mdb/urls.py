@@ -23,3 +23,6 @@ urlpatterns = patterns(
 )
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Change admin site title
+admin.site.site_header = ("AppartidariAs - Admin")
