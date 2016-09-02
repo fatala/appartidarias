@@ -15,48 +15,34 @@ def get(candidate, j):
     response_json = response.json()
     stdout.write("\r\t\t\t\t%s " % (response_json.get('descricaoSexo')))
     stdout.flush()
-    if 'FEM.' != response_json.get('descricaoSexo'):
-        return
+    if 'FEM.' == response_json.get('descricaoSexo'):
+        political_party, created = PoliticalParty.objects.get_or_create(
+            initials=response_json.get('partido').get('sigla'),
+            name=response_json.get('partido').get('nome'),
+            number=response_json.get('partido').get('numero'),
+            )
 
-    print 'response_json: ', response_json
+        job_role = JobRole.objects.get(pk=3)
 
-    political_party, created = PoliticalParty.objects.get_or_create(
-        initials=response_json.get('partido').get('sigla'),
-        name=response_json.get('partido').get('nome'),
-        number=response_json.get('partido').get('numero'),
-        )
-    if not created:
-        print 'partido não salvo:', political_party
+        candidate_to_save = Candidate()
 
-    o = response_json['cargo']
-    job_role, created = JobRole.objects.get_or_create(
-        name=o['nome'],
-        code=o['codigo'],
-        initials=o['sigla'],
-        counting=o['contagem'],
-    )
-    if not created:
-        print 'cargo não salvo:', o
+        candidate_to_save.id_tse = response_json.get('id')
+        candidate_to_save.name = response_json.get('nomeCompleto')
+        candidate_to_save.name_ballot = response_json.get('nomeUrna')
+        candidate_to_save.number = response_json.get('numero')
+        candidate_to_save.job_role = job_role
+        candidate_to_save.political_party = political_party
+        candidate_to_save.coalition = response_json.get('nomeColigacao')
+        candidate_to_save.picture_url = response_json.get('fotoUrl')
+        candidate_to_save.budget_1t = response_json.get('gastoCampanha1T')
+        candidate_to_save.budget_2t = response_json.get('gastoCampanha2T')
+        candidate_to_save.birth_date = response_json.get('dataDeNascimento')
+        candidate_to_save.marital_status = response_json.get('descricaoEstadoCivil')
+        candidate_to_save.education = response_json.get('grauInstrucao')
+        candidate_to_save.job = response_json.get('ocupacao')
+        candidate_to_save.property_value = response_json.get('totalDeBens')
 
-    candidate_to_save = Candidate()
-
-    candidate_to_save.id_tse = response_json.get('id')
-    candidate_to_save.name = response_json.get('nomeCompleto')
-    candidate_to_save.name_ballot = response_json.get('nomeUrna')
-    candidate_to_save.number = response_json.get('numero')
-    candidate_to_save.job_role = job_role
-    candidate_to_save.political_party = political_party
-    candidate_to_save.coalition = response_json.get('nomeColigacao')
-    candidate_to_save.picture_url = response_json.get('fotoUrl')
-    candidate_to_save.budget_1t = response_json.get('gastoCampanha1T')
-    candidate_to_save.budget_2t = response_json.get('gastoCampanha2T')
-    candidate_to_save.birth_date = response_json.get('dataDeNascimento')
-    candidate_to_save.marital_status = response_json.get('descricaoEstadoCivil')
-    candidate_to_save.education = response_json.get('grauInstrucao')
-    candidate_to_save.job = response_json.get('ocupacao')
-    candidate_to_save.property_value = response_json.get('totalDeBens')
-
-    candidate_to_save.save()
+        candidate_to_save.save()
 
     stdout.write("\r\t\t\t%s " % (j))
     stdout.flush()
