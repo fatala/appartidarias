@@ -126,7 +126,7 @@ class CandidateSearchView(TemplateView):
                 query = int(query)
                 candidate_list = Candidate.objects.filter(number=query)
             except ValueError:
-                candidate_list = Candidate.objects.filter(name__icontains=query)
+                candidate_list = Candidate.objects.filter(name_ballot__icontains=query)
             context['candidates_list'] = candidate_list
             context['query'] = query
 
