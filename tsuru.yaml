@@ -1,4 +1,0 @@
-hooks:
-    build:
-        - python django/mdb/manage.py migrate
-        - python django/mdb/manage.py collectstatic --noinput
