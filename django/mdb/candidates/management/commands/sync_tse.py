@@ -16,7 +16,7 @@ logger = logging.getLogger('mdb')
 def get(candidate, j):
     while range(6):
         try:
-            response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/2016/71072/2/candidato/{}'.format(candidate.get('id')))
+            response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/2016/71072/2/candidato/{}'.format(candidate.get('id')), timeout=3)
         except:
             print('retrying to get details on candidate', candidate.get('id'))
             continue
@@ -29,8 +29,6 @@ def get(candidate, j):
         else:
             break
 
-    response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/2016/71072/2/candidato/{}'.format(candidate.get('id')))
-    response_json = response.json()
     stdout.write("\r\t\t\t\t%s " % (response_json.get('descricaoSexo')))
     stdout.flush()
 
@@ -38,40 +36,40 @@ def get(candidate, j):
         political_party, created = PoliticalParty.objects.get_or_create(
             initials=response_json.get('partido').get('sigla'),
             name=response_json.get('partido').get('nome'),
-            number=response_json.get('partido').get('numero'),
+            number=response_json.get('partido').get('numero')
             )
 
-        job_role = JobRole.objects.get(pk=3)
+        job_role, created = JobRole.objects.get_or_create(
+            name=response_json.get('cargo').get('nome')
+            )
 
-        candidate_to_save = Candidate()
-
-        candidate_to_save.id_tse = response_json.get('id')
-        candidate_to_save.name = response_json.get('nomeCompleto')
-        candidate_to_save.name_ballot = response_json.get('nomeUrna')
-        candidate_to_save.number = response_json.get('numero')
-        candidate_to_save.job_role = job_role
-        candidate_to_save.political_party = political_party
-        candidate_to_save.coalition = response_json.get('nomeColigacao')
-        candidate_to_save.picture_url = response_json.get('fotoUrl')
-        candidate_to_save.budget_1t = response_json.get('gastoCampanha1T')
-        candidate_to_save.budget_2t = response_json.get('gastoCampanha2T')
-        candidate_to_save.birth_date = response_json.get('dataDeNascimento')
-        candidate_to_save.marital_status = response_json.get('descricaoEstadoCivil')
-        candidate_to_save.education = response_json.get('grauInstrucao')
-        candidate_to_save.job = response_json.get('ocupacao')
-        candidate_to_save.property_value = response_json.get('totalDeBens')
-
-        candidate_to_save.save()
+        candidate, created = Candidate.objects.update_or_create(
+            id_tse = response_json.get('id'),
+            defaults= {
+                'name' : response_json.get('nomeCompleto'),
+                'name_ballot' : response_json.get('nomeUrna'),
+                'number' : response_json.get('numero'),
+                'job_role' : job_role,
+                'political_party' : political_party,
+                'coalition' : response_json.get('nomeColigacao'),
+                'picture_url' : response_json.get('fotoUrl'),
+                'budget_1t' : response_json.get('gastoCampanha1T'),
+                'budget_2t' : response_json.get('gastoCampanha2T'),
+                'birth_date' : response_json.get('dataDeNascimento'),
+                'marital_status' : response_json.get('descricaoEstadoCivil'),
+                'education' : response_json.get('grauInstrucao'),
+                'job' : response_json.get('ocupacao'),
+                'property_value' : response_json.get('totalDeBens')
+            }
+            )
 
     stdout.write("\r\t\t\t%s " % (j))
     stdout.flush()
 
 
 class Command(BaseCommand):
-    Candidate.objects.all().delete()
 
     def handle(self, *args, **options):
-        thread_pool = ThreadPool(processes=30)
         print ("FILL\t\t\tConsume")
         i = 0
         response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/listar/2016/71072/2/13/candidatos').json()
@@ -82,6 +80,4 @@ class Command(BaseCommand):
             j = int(i)
             # thread_pool.apply_async(get, (candidate, j))  # async
             get(candidate, j)  # sync
-        thread_pool.close()
-        thread_pool.join()
         print ("\nDONE!")
