@@ -1,4 +1,7 @@
 # coding: utf-8
+
+from __future__ import print_function
+
 from sys import stdout
 from django.core.management.base import BaseCommand
 from multiprocessing.pool import ThreadPool
@@ -11,10 +14,26 @@ logger = logging.getLogger('mdb')
 
 
 def get(candidate, j):
+    while range(6):
+        try:
+            response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/2016/71072/2/candidato/{}'.format(candidate.get('id')))
+        except:
+            print('retrying to get details on candidate', candidate.get('id'))
+            continue
+
+        try:
+            response_json = response.json()
+        except:
+            print('Failed to decode json. raw response:', response.text)
+            continue
+        else:
+            break
+
     response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/2016/71072/2/candidato/{}'.format(candidate.get('id')))
     response_json = response.json()
     stdout.write("\r\t\t\t\t%s " % (response_json.get('descricaoSexo')))
     stdout.flush()
+
     if 'FEM.' == response_json.get('descricaoSexo'):
         political_party, created = PoliticalParty.objects.get_or_create(
             initials=response_json.get('partido').get('sigla'),
