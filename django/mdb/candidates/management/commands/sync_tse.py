@@ -73,7 +73,7 @@ class Command(BaseCommand):
         print ("FILL\t\t\tConsume")
         i = 0
         response = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/listar/2016/71072/2/13/candidatos').json()
-        for candidate in response.get('candidatos'):  # Remove `[:100]` to import all
+        for candidate in response.get('candidatos')[:100]:  # Remove `[:100]` to import all
             i = i + 1
             stdout.write("\r%s" % i)
             stdout.flush()
