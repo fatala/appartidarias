@@ -14,6 +14,7 @@ Requisitos
 ----------
 
 Python 3
+Virtualenv
 
 
 Configuração
