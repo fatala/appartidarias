@@ -68,7 +68,19 @@ class CandidateDetail(TemplateView):
         candidate_id = kwargs['candidate_id']
         context['candidate'] = self.get_object()
 
-        context['budget'] = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2/2016/71072/13/{}/{}/{}'.format(context['candidate'].political_party.number, context['candidate'].number, context['candidate'].id_tse), timeout=10).json()
+        attempt = 1
+        while range(6):
+            try:
+                url = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2/2016/71072/13/{}/{}/{}'.format(context['candidate'].political_party.number, context['candidate'].number, context['candidate'].id_tse)
+                print('Getting {} attempt #{}'.format(url, attempt))
+                context['budget'] = requests.get(url).json()
+                print('Response: {}'.format(context['budget']))
+            except Exception as e:
+                print('Failed to fetch or decode budget: {}'.format(str(e)))
+                attempt += 1
+                continue
+            else:
+                break
 
         context['comments'] = Comment.objects.filter(
             candidate_id=candidate_id,
