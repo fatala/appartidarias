@@ -75,8 +75,11 @@
         <h3 class="panel-title">Financiamento</h3>
     </div>
     <div class="panel-body">
-    <p><b>Total de recursos recebidos: </b></p>
-    <p><b>Limite de gasto: </b>{{ candidate.budget_1t }}</p>
+    <p><b>Data última atualização: </b>{{ budget.dataUltimaAtualizacaoContas }}</p>
+    <p><b>Recursos recebidos: </b>R$ {{ budget.dadosConsolidados.totalRecebido|default_if_none:"0" }}</p>
+    <p><b>Despesas contratadas: </b>R$ {{ budget.despesas.totalDespesasContratadas|default_if_none:"0" }}</p>
+    <p><b>Despesas pagas: </b>R$ {{ budget.despesas.totalDespesasPagas|default_if_none:"0" }}</p>
+    <p><b>Limite de gasto: </b>R$ {{ budget.despesas.valorLimiteDeGastos|default_if_none:"0" }}</p>
     </div>
 </div>
 
