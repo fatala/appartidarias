@@ -68,7 +68,7 @@ class CandidateDetail(TemplateView):
         candidate_id = kwargs['candidate_id']
         context['candidate'] = self.get_object()
 
-        context['budget'] = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2/2016/71072/13/{}/{}/{}'.format(context['candidate'].political_party.number, context['candidate'].number, context['candidate'].id_tse)).json()
+        context['budget'] = requests.get('http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2/2016/71072/13/{}/{}/{}'.format(context['candidate'].political_party.number, context['candidate'].number, context['candidate'].id_tse), timeout=3).json()
 
         context['comments'] = Comment.objects.filter(
             candidate_id=candidate_id,
