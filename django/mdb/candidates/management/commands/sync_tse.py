@@ -43,12 +43,12 @@ def get(candidate, j):
             name=response_json.get('cargo').get('nome')
             )
 
-        candidate, created = Candidate.objects.update_or_create(
-            id_tse = response_json.get('id'),
+        response_candidate, created = Candidate.objects.update_or_create(
+            number=response_json.get('numero'),
             defaults= {
+                'id_tse': candidate.get('id'),
                 'name' : response_json.get('nomeCompleto'),
                 'name_ballot' : response_json.get('nomeUrna'),
-                'number' : response_json.get('numero'),
                 'job_role' : job_role,
                 'political_party' : political_party,
                 'coalition' : response_json.get('nomeColigacao'),
