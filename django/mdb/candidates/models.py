@@ -62,7 +62,7 @@ class Candidate(models.Model):
         (DENIED, 'Negado')
     )
 
-    id_tse = models.IntegerField(verbose_name='ID do TSE')
+    id_tse = models.CharField(max_length=100, verbose_name='ID do TSE')
     name = models.CharField(max_length=128, verbose_name='Nome')
     name_ballot = models.CharField(max_length=128, verbose_name='Nome urna')
     number = models.IntegerField(verbose_name='Numero')
