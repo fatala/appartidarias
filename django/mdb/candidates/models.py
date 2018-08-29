@@ -126,3 +126,10 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Expenses(models.Model):
+    candidate = models.ForeignKey(Candidate, verbose_name='Candidata')
+    received = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total recebido')
+    paid = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total Gasto')
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Data')    

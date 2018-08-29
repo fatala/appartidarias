@@ -1,19 +1,34 @@
 import io
 import os
 import json
+import time
 import pandas
 import zipfile
 import logging
 import requests
 
 from datetime import datetime
-from utils import estados
-from parse_tse_files import concat
+from utils import estados, store_json
 
 from django.core.management.base import BaseCommand
-from candidates.models import Candidate, PoliticalParty, JobRole
+from candidates.models import Candidate, PoliticalParty, JobRole, Expenses
 
 logger = logging.getLogger('mdb')
+
+
+def concat(files):
+    """
+    Concat TSE files into a single pandas.DataFrame
+    """
+    print(files.keys())
+    return pandas.concat([
+        pandas.read_csv(
+            pandas.compat.BytesIO(file_),
+            encoding='latin1',
+            sep=';',
+        )
+        for _, file_ in files.items()
+    ])
 
 
 def url_patterns():
@@ -122,6 +137,8 @@ class Command(BaseCommand):
         df = concat(download)
         logger.debug('total candidates: {shape}'.format(shape=df.shape))
 
+        current_time = int(time.time())
+
         for row in df.iterrows():
             candidate = row[1]
 
@@ -130,12 +147,32 @@ class Command(BaseCommand):
                 state=candidate['SG_UF'],
             )
 
+            store_json(
+                'profile_{id_}_{partido}_{uf}_{time}'.format(
+                    id_=candidate['SQ_CANDIDATO'],
+                    partido=candidate['NR_PARTIDO'],
+                    uf=candidate['SG_UF'],
+                    time=current_time,
+                ),
+                profile,
+            )
+
             expenses = fetch_2018_candidate_expenses(
                 estado=candidate['SG_UF'],
                 candidate=candidate['SQ_CANDIDATO'],
                 urna=candidate['NR_CANDIDATO'],
                 cargo=candidate['CD_CARGO'],
                 partido=candidate['NR_PARTIDO'],
+            )
+
+            store_json(
+                'expenses_{id_}_{partido}_{uf}_{time}'.format(
+                    id_=candidate['SQ_CANDIDATO'],
+                    partido=candidate['NR_PARTIDO'],
+                    uf=candidate['SG_UF'],
+                    time=current_time,
+                ),
+                expenses,
             )
 
             print(json.dumps(profile, indent=4))
@@ -152,7 +189,7 @@ class Command(BaseCommand):
                     name=profile.get('cargo').get('nome')
                 )
 
-                response_candidate, created = Candidate.objects.update_or_create(
+                candidate_model, created = Candidate.objects.update_or_create(
                     number=profile.get('numero'),
                     defaults= {
                         'id_tse': profile.get('id'),
@@ -172,6 +209,10 @@ class Command(BaseCommand):
                     }
                 )
 
-                logger.debug('created: {}'.format(profile.get('nomeCompleto')))
+                expenses = Expenses.objects.create(
+                    candidate=candidate_model,
+                    received=expenses['dadosConsolidados'].get('totalRecebido'),
+                    paid=expenses['despesas'].get('totalDespesasPagas'),
+                )
 
-                break
+                logger.debug('created: {}'.format(profile.get('nomeCompleto')))
