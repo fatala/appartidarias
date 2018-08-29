@@ -32,13 +32,13 @@ Criar virtualenv (use ``virtualenvwrapper``): ::
 
 Install requirements via ``pip``: ::
 
-    pip install django/requirements/development.txt
+    pip install -r django/requirements/development.txt
 
 
 Criar tabelas do banco de dados: ::
 
     # no diretório django/mdb
-    ./manage.py syncdb --all --settings=settings.development
+    ./manage.py migrate --settings=settings.development
 
 
 Rodar o projeto: ::
@@ -60,3 +60,4 @@ Importar candidatas do TSE: ::
 
     # no diretório django/mdb
     ./manage.py sync_tse
+    ./manage.py sync_tse_2018
