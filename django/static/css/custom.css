@@ -10,41 +10,38 @@ body {
 /* home */
 .home {
 	background-color: #fffbe9;
-	min-height: 100vh;
-	box-shadow: 0 3px 8px hsla(0, 0%, 0%, 0.06);
-	-moz-box-shadow: 0 3px 8px hsla(0, 0%, 0%, 0.06);
-	-webkit-box-shadow: 0 3px 8px hsla(0, 0%, 0%, 0.06);
+	color: #FFF;
+	padding: 40px;
+	background: #470c6e;
+	background: -webkit-linear-gradient(to right, #470c6e, #c58fe8);
+	background: linear-gradient(to right, #470c6e, #c58fe8);
 }
-.home .appartidarias {
-	width: 60%;
-}
+
 .home h1{
 	font-size: 8vw;
 	font-weight: 700;
-}
-.home h2{
-	font-size: 5.4vw;
-	font-weight: 400;
-}
-.home .lead {
-	font-weight: 300;
-	font-size: 5vw;
 }
 
 /* candidatas */
 
 .filter-box {
-	background: #fab946;
 	margin-bottom: 40px;
-	padding: 10px 0;
+	padding: 40px 0 30px 0;
+}
+.filter-box label {
+    display: inline-block;
+    margin-bottom: .5rem;
+    opacity: .4;
+    font-size: 12px;
+    text-transform: uppercase;
 }
 
 .candidates {
 	padding: 0 0 30px 0;
 }
 .candidates h1{
-	color: rgba(0,0,0,0.2);
-	font-size: 1.5em;
+	color: rgba(0,0,0,0.05);
+	font-size: 3.5em;
 	font-weight: 700;
 	padding: 30px 0 0 0;
 	text-transform: uppercase;
@@ -53,18 +50,14 @@ body {
 	margin-bottom: 20px;
 }
 .candidates .media .icon{
-	max-width: 40px;
+	min-width: 20px;
 }
 .candidates .media .partido{
-	max-width: 70px;
+	max-width: 60px;
 }
 .candidates .mt-0 {
 	font-weight: 700;
 	font-size: 1.1em;
-}
-.filters {
-	margin-bottom: 20px;
-	padding: 20px 0;
 }
 
 /* realizacao */
@@ -81,14 +74,16 @@ body {
 
 /* custom select */
 .btn-light {
-	color: #212529;
+	color: #fba919;
 	background-color: #FFF;
-	border-color: #212529;
+	border: 1px solid #fba919;
+	border-radius: 0;
 }
-/*.bootstrap-select {
-    width: 100%!important;
+.bootstrap-select 
+.dropdown-toggle 
+.filter-option {
+  font-weight: 700;
 }
-*/
 
 footer {
 	background: #f5568c;
