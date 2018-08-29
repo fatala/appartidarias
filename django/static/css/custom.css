@@ -1,0 +1,138 @@
+body {
+	font-family: 'M PLUS Rounded 1c', Arial, sans-serif;
+}
+
+.bg-custom {
+	background-color: #fffbe9;
+	display: none;
+}
+
+/* home */
+.home {
+	background-color: #fffbe9;
+	min-height: 100vh;
+	box-shadow: 0 3px 8px hsla(0, 0%, 0%, 0.06);
+	-moz-box-shadow: 0 3px 8px hsla(0, 0%, 0%, 0.06);
+	-webkit-box-shadow: 0 3px 8px hsla(0, 0%, 0%, 0.06);
+}
+.home .appartidarias {
+	width: 60%;
+}
+.home h1{
+	font-size: 8vw;
+	font-weight: 700;
+}
+.home h2{
+	font-size: 5.4vw;
+	font-weight: 400;
+}
+.home .lead {
+	font-weight: 300;
+	font-size: 5vw;
+}
+
+/* candidatas */
+
+.filter-box {
+	background: #fab946;
+	margin-bottom: 40px;
+	padding: 10px 0;
+}
+
+.candidates {
+	padding: 0 0 30px 0;
+}
+.candidates h1{
+	color: rgba(0,0,0,0.2);
+	font-size: 1.5em;
+	font-weight: 700;
+	padding: 30px 0 0 0;
+	text-transform: uppercase;
+}
+.candidates .media {
+	margin-bottom: 20px;
+}
+.candidates .media .icon{
+	max-width: 40px;
+}
+.candidates .media .partido{
+	max-width: 70px;
+}
+.candidates .mt-0 {
+	font-weight: 700;
+	font-size: 1.1em;
+}
+.filters {
+	margin-bottom: 20px;
+	padding: 20px 0;
+}
+
+/* realizacao */
+.achievement {
+	background: rgba(0,0,0,0.05);
+	padding: 30px 0;
+	text-transform: uppercase;
+}
+.achievement h1, 
+.achievement h2{
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+/* custom select */
+.btn-light {
+	color: #212529;
+	background-color: #FFF;
+	border-color: #212529;
+}
+/*.bootstrap-select {
+    width: 100%!important;
+}
+*/
+
+footer {
+	background: #f5568c;
+	background: -webkit-linear-gradient(to top, #f5568c, #fab946);
+	background: linear-gradient(to top, #f5568c, #fab946);
+	font-weight: 300;
+	font-size: 0.9em;
+	line-height: 35px;
+	padding: 60px 0 30px 0;
+	color: #FFF;
+}
+
+/* social icons */
+footer .facebook,
+footer .instagram,
+footer .email {
+	width: 25px; 
+	height: 25px;
+	margin: 0 5px;
+	padding: 12px 12px 0 12px;
+}
+footer .facebook {
+	background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDYxMiA2MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDYxMiA2MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNNjEyLDMwNkM2MTIsMTM3LjAwNCw0NzQuOTk1LDAsMzA2LDBDMTM3LjAwNCwwLDAsMTM3LjAwNCwwLDMwNmMwLDE2OC45OTUsMTM3LjAwNCwzMDYsMzA2LDMwNiAgICBDNDc0Ljk5NSw2MTIsNjEyLDQ3NC45OTUsNjEyLDMwNnogTTI3LjgxOCwzMDZDMjcuODE4LDE1Mi4zNiwxNTIuMzYsMjcuODE4LDMwNiwyNy44MThTNTg0LjE4MiwxNTIuMzYsNTg0LjE4MiwzMDYgICAgUzQ1OS42NCw1ODQuMTgyLDMwNiw1ODQuMTgyUzI3LjgxOCw0NTkuNjQsMjcuODE4LDMwNnoiIGZpbGw9IiNGRkZGRkYiLz4KCQk8cGF0aCBkPSJNMzE3LjczOSw0ODIuNjE3VjMwNmg1OC4yNzlsOS4yMDgtNTguNTI5aC02Ny40ODd2LTI5LjM0OGMwLTE1LjI3Miw1LjAwNy0yOS44NDksMjYuOTI4LTI5Ljg0OWg0My44MTN2LTU4LjQxOGgtNjIuMjAxICAgIGMtNTIuMjk4LDAtNjYuNTY5LDM0LjQzOC02Ni41NjksODIuMTc1djM1LjQxM2gtMzUuODg1VjMwNmgzNS44ODV2MTc2LjYxN0gzMTcuNzM5TDMxNy43MzksNDgyLjYxN3oiIGZpbGw9IiNGRkZGRkYiLz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K) no-repeat;
+}
+footer .instagram {
+	background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyLjAwMDk2IDUxMi4wMDA5NiIgd2lkdGg9IjI0cHgiIGhlaWdodD0iMjRweCI+PHBhdGggZD0ibTM3My40MDYyNSAwaC0yMzQuODEyNWMtNzYuNDIxODc1IDAtMTM4LjU5Mzc1IDYyLjE3MTg3NS0xMzguNTkzNzUgMTM4LjU5Mzc1djIzNC44MTY0MDZjMCA3Ni40MTc5NjkgNjIuMTcxODc1IDEzOC41ODk4NDQgMTM4LjU5Mzc1IDEzOC41ODk4NDRoMjM0LjgxNjQwNmM3Ni40MTc5NjkgMCAxMzguNTg5ODQ0LTYyLjE3MTg3NSAxMzguNTg5ODQ0LTEzOC41ODk4NDR2LTIzNC44MTY0MDZjMC03Ni40MjE4NzUtNjIuMTcxODc1LTEzOC41OTM3NS0xMzguNTkzNzUtMTM4LjU5Mzc1em0xMDguNTc4MTI1IDM3My40MTAxNTZjMCA1OS44NjcxODgtNDguNzA3MDMxIDEwOC41NzQyMTktMTA4LjU3ODEyNSAxMDguNTc0MjE5aC0yMzQuODEyNWMtNTkuODcxMDk0IDAtMTA4LjU3ODEyNS00OC43MDcwMzEtMTA4LjU3ODEyNS0xMDguNTc0MjE5di0yMzQuODE2NDA2YzAtNTkuODcxMDk0IDQ4LjcwNzAzMS0xMDguNTc4MTI1IDEwOC41NzgxMjUtMTA4LjU3ODEyNWgyMzQuODE2NDA2YzU5Ljg2NzE4OCAwIDEwOC41NzQyMTkgNDguNzA3MDMxIDEwOC41NzQyMTkgMTA4LjU3ODEyNXptMCAwIiBmaWxsPSIjRkZGRkZGIi8+PHBhdGggZD0ibTI1NiAxMTYuMDAzOTA2Yy03Ny4xOTUzMTIgMC0xMzkuOTk2MDk0IDYyLjgwMDc4Mi0xMzkuOTk2MDk0IDEzOS45OTYwOTRzNjIuODAwNzgyIDEzOS45OTYwOTQgMTM5Ljk5NjA5NCAxMzkuOTk2MDk0IDEzOS45OTYwOTQtNjIuODAwNzgyIDEzOS45OTYwOTQtMTM5Ljk5NjA5NC02Mi44MDA3ODItMTM5Ljk5NjA5NC0xMzkuOTk2MDk0LTEzOS45OTYwOTR6bTAgMjQ5Ljk3NjU2M2MtNjAuNjQwNjI1IDAtMTA5Ljk4MDQ2OS00OS4zMzU5MzgtMTA5Ljk4MDQ2OS0xMDkuOTgwNDY5IDAtNjAuNjQwNjI1IDQ5LjMzOTg0NC0xMDkuOTgwNDY5IDEwOS45ODA0NjktMTA5Ljk4MDQ2OSA2MC42NDQ1MzEgMCAxMDkuOTgwNDY5IDQ5LjMzOTg0NCAxMDkuOTgwNDY5IDEwOS45ODA0NjkgMCA2MC42NDQ1MzEtNDkuMzM1OTM4IDEwOS45ODA0NjktMTA5Ljk4MDQ2OSAxMDkuOTgwNDY5em0wIDAiIGZpbGw9IiNGRkZGRkYiLz48cGF0aCBkPSJtMzk5LjM0Mzc1IDY2LjI4NTE1NmMtMjIuODEyNSAwLTQxLjM2NzE4OCAxOC41NTg1OTQtNDEuMzY3MTg4IDQxLjM2NzE4OCAwIDIyLjgxMjUgMTguNTU0Njg4IDQxLjM3MTA5NCA0MS4zNjcxODggNDEuMzcxMDk0czQxLjM3MTA5NC0xOC41NTg1OTQgNDEuMzcxMDk0LTQxLjM3MTA5NC0xOC41NTg1OTQtNDEuMzY3MTg4LTQxLjM3MTA5NC00MS4zNjcxODh6bTAgNTIuNzE4NzVjLTYuMjU3ODEyIDAtMTEuMzUxNTYyLTUuMDkzNzUtMTEuMzUxNTYyLTExLjM1MTU2MiAwLTYuMjYxNzE5IDUuMDkzNzUtMTEuMzUxNTYzIDExLjM1MTU2Mi0xMS4zNTE1NjMgNi4yNjE3MTkgMCAxMS4zNTU0NjkgNS4wODk4NDQgMTEuMzU1NDY5IDExLjM1MTU2MyAwIDYuMjU3ODEyLTUuMDkzNzUgMTEuMzUxNTYyLTExLjM1NTQ2OSAxMS4zNTE1NjJ6bTAgMCIgZmlsbD0iI0ZGRkZGRiIvPjwvc3ZnPgo=) no-repeat;
+}
+footer .email {
+	background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjU1LDBDMTE0LjA2LDAsMCwxMTQuMDUsMCwyNTVjMCwxMzkuODk1LDExMy4wMjUsMjU3LDI1NSwyNTdjMTQwLjY0NCwwLDI1Ny0xMTUuOTE0LDI1Ny0yNTdDNTEyLDExMi44NywzOTQuNzQzLDAsMjU1LDAgICAgeiBNMjU1LDQ4Mi4yQzEzMC45MzUsNDgyLjIsMjkuOCwzODAuMTY4LDI5LjgsMjU1QzI5LjgsMTMwLjkzNSwxMzAuOTM1LDI5LjgsMjU1LDI5LjhjMTI1LjE2OCwwLDIyNy4yLDEwMS4xMzUsMjI3LjIsMjI1LjIgICAgQzQ4Mi4yLDM4MC4xNjgsMzgwLjE2OCw0ODIuMiwyNTUsNDgyLjJ6IiBmaWxsPSIjRkZGRkZGIi8+Cgk8L2c+CjwvZz4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMjU1LDkwYy05MC45ODEsMC0xNjUsNzQuMDE5LTE2NSwxNjVjMCw5MS4zMjMsNzMuODY3LDE2NywxNjUsMTY3YzM2Ljg3NCwwLDc0LjE3NS0xMi4zOTMsMTAyLjMzOS0zNC4wMDEgICAgYzYuNTczLTUuMDQzLDcuODEzLTE0LjQ1OSwyLjc3LTIxLjAzMmMtNS4wNDMtNi41NzMtMTQuNDYtNy44MTMtMjEuMDMyLTIuNzdDMzE2LjA0OCwzODEuODY2LDI4NS40MDMsMzkyLjIsMjU1LDM5Mi4yICAgIGMtNzQuNDM5LDAtMTM1LTYxLjY1OC0xMzUtMTM3LjJjMC03NC40MzksNjAuNTYxLTEzNS4yLDEzNS0xMzUuMmM3NS41NDIsMCwxMzcsNjAuNzYxLDEzNywxMzUuMnYxNWMwLDE2LjU0Mi0xMy40NTgsMzAtMzAsMzAgICAgcy0zMC0xMy40NTgtMzAtMzBjMC03LjQzLDAtNjcuMTY0LDAtNzVjMC04LjI4NC02LjcxNi0xNS0xNS0xNXMtMTUsNi43MTYtMTUsMTV2MC45NTFDMjg4LjQ1NCwxODUuNjIyLDI3Mi4wNjgsMTgwLDI1NSwxODAgICAgYy00MS4zNTUsMC03NSwzMy42NDUtNzUsNzVzMzMuNjQ1LDc1LDc1LDc1YzIyLjQyMywwLDQzLjA1OS05LjYyMiw1Ny43MzUtMjUuODEyQzMyMy41ODMsMzE5Ljc3MiwzNDEuNjE1LDMzMCwzNjIsMzMwICAgIGMzMy4wODQsMCw2MC0yNi45MTYsNjAtNjB2LTE1QzQyMiwxNjMuNzQ2LDM0Ni4yMSw5MCwyNTUsOTB6IE0yNTUsMzAwLjJjLTI0LjgxMywwLTQ1LTIwLjM4Ny00NS00NS4yczIwLjE4Ny00NS4yLDQ1LTQ1LjIgICAgYzI1LjQ3NywwLDQ3LDIwLjgwNyw0Nyw0NS4yUzI4MC40NzcsMzAwLjIsMjU1LDMwMC4yeiIgZmlsbD0iI0ZGRkZGRiIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=) no-repeat;
+}
+
+/* responsive breakpoints */
+@media only screen and (min-width: 576px) {
+	.home .appartidarias {
+		width: 30%;
+	}
+	.home h1{
+		font-size: 3vw;
+		font-weight: 700;
+	}
+	.home h2{
+		font-size: 2.4vw;
+	}
+	.home .lead {
+		font-size: 1.6vw;
+	}
+}

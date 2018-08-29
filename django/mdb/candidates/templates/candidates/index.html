@@ -3,13 +3,234 @@
 
 {% block content %}
 
-<div class="jumbotron">
-    <h1>AppartidariAs</h1>
-    <p>“Acreditamos que é necessário reformular os espaços partidários e garantir a melhor representação de todos os setores da sociedade na formulação das políticas, como um dos meios adequados para a construção de uma nova sociedade, mais inclusiva, mais democrática e mais justa”</p>
-</div>
+<section class="container-fluid home">
+  <div class="container">
 
-<div class="container">
-<!-- Example row of columns -->
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-7 text-center">
+          <img src="/static/img/logo_appartidarias.png" class="appartidarias mt-3 mb-3" alt="appartidárias" />
+          <h1 class="mb-3">Apoiando mulheres na candidatura 2018</h1>
+          <h2>Veja os partidos que mais apoiam a candidatura feminina.</h2>
+          <p class="lead">Obrigatório 30% do Fundo de Financiamento de Campanha.</p>
+
+          <!-- lista partidos -->
+          <form class="row justify-content-center">
+            <div class="form-group col-12 col-md-6">
+              <select class="selectpicker" data-live-search="true" id="partido">
+                <option>Selecione o partido</option>
+                <option>MDB</option>
+                <option>PTB</option>
+                <option>PDT</option>
+                <option>PT</option>
+                <option>DEM</option>
+                <option>PCdoB</option>
+                <option>PSB</option>
+                <option>PSDB</option>
+                <option>PTC</option>
+                <option>PSC</option>
+                <option>PMN</option>
+                <option>PRP</option>
+                <option>PPS</option>
+                <option>PV</option>
+                <option>AVANTE</option>
+                <option>PP</option>
+                <option>PSTU</option>
+                <option>PCB</option>
+                <option>PRTB</option>
+                <option>PHS</option>
+                <option>DC</option>
+                <option>PCO</option>
+                <option>PODE</option>
+                <option>PSL</option>
+                <option>PRB</option>
+                <option>PSOL</option>
+                <option>PR</option>
+                <option>PSD</option>
+                <option>PPL</option>
+                <option>Patri</option>
+                <option>PROS</option>
+                <option>SOLIDARIEDADE</option>
+                <option>NOVO</option>
+                <option>REDE</option>
+                <option>PMB</option>
+              </select>
+            </div>
+          </form>
+          <!-- /lista partidos -->
+
+        </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="candidates">
+
+  <div class="filter-box">
+    <div class="container">
+
+      <h1>Candidatas</h1>
+
+      <div class="row filters">
+        <!-- lista cargo -->
+        <div class="col-sm">
+          <div class="form-group">
+            <label for="cargo">Cargo</label>
+            <select class="selectpicker" data-live-search="true" id="cargo">
+              <option>Presidente</option>
+              <option>Governadora</option>
+              <option>Senadora</option>
+            </select>
+          </div>
+        </div>
+        <!-- /lista cargo -->
+
+        <!-- lista partidos -->
+        <div class="col-sm">
+          <div class="form-group">
+            <label for="partido">Partido</label>
+            <select class="selectpicker" data-live-search="true" id="partido">
+              <option>MDB</option>
+              <option>PTB</option>
+              <option>PDT</option>
+              <option>PT</option>
+              <option>DEM</option>
+              <option>PCdoB</option>
+              <option>PSB</option>
+              <option>PSDB</option>
+              <option>PTC</option>
+              <option>PSC</option>
+              <option>PMN</option>
+              <option>PRP</option>
+              <option>PPS</option>
+              <option>PV</option>
+              <option>AVANTE</option>
+              <option>PP</option>
+              <option>PSTU</option>
+              <option>PCB</option>
+              <option>PRTB</option>
+              <option>PHS</option>
+              <option>DC</option>
+              <option>PCO</option>
+              <option>PODE</option>
+              <option>PSL</option>
+              <option>PRB</option>
+              <option>PSOL</option>
+              <option>PR</option>
+              <option>PSD</option>
+              <option>PPL</option>
+              <option>Patri</option>
+              <option>PROS</option>
+              <option>SOLIDARIEDADE</option>
+              <option>NOVO</option>
+              <option>REDE</option>
+              <option>PMB</option>
+            </select>
+          </div>
+        </div>
+        <!-- /lista partidos -->
+
+        <!-- lista estado -->
+        <div class="col-sm">
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <select class="selectpicker" data-live-search="true" id="estado">
+              <option>Acre</option>
+              <option>Alagoas</option>
+              <option>Amapá</option>
+              <option>Amazonas</option>
+              <option>Bahia</option>
+              <option>Ceará</option>
+              <option>Distrito Federal</option>
+              <option>Espírito Santo</option>
+              <option>Goiás</option>
+              <option>Maranhão</option>
+              <option>Mato Grosso</option>
+              <option>Mato Grosso do Sul</option>
+              <option>Minas Gerais</option>
+              <option>Pará</option>
+              <option>Paraíba</option>
+              <option>Paraná</option>
+              <option>Pernambuco</option>
+              <option>Piauí</option>
+              <option>Rio de Janeiro</option>
+              <option>Rio Grande do Norte</option>
+              <option>Rio Grande do Sul</option>
+              <option>Rondônia</option>
+              <option>Roraima</option>
+              <option>Santa Catarina</option>
+              <option>São Paulo</option>
+              <option>Sergipe</option>
+              <option>Tocantins</option>
+            </select>
+          </div>
+        </div>
+        <!-- /lista estado -->
+
+        <div class="col-sm">
+          XX
+        </div>
+      </div>
+
+    </div>
+    </div><!--/filterbox-->
+
+    <div class="container">
+    <div class="row">
+
+      <!-- candidata -->
+      <div class="media">
+        <img class="mr-1 col-1" src="/static/img/dilma.jpg" alt="Nome da candidata">
+        <div class="media-body">
+          <h5 class="mt-0">Nome Candidata</h5>
+          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        </div>
+        <div class="mr-1 col-1">
+          <img src="/static/img/checked.svg" class="icon" alt="Candidatura Ok" />
+        </div>
+        <div class="mr-1 col-1">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Partido_da_Social_Democracia_Brasileira_%28logo%29.jpg" class="partido" alt="Candidatura Ok" />
+        </div>
+      </div>
+      <!-- /candidata -->
+
+      <!-- candidata -->
+      <div class="media">
+        <img class="mr-1 col-1" src="/static/img/dilma.jpg" alt="Nome da candidata">
+        <div class="media-body">
+          <h5 class="mt-0">Nome Candidata</h5>
+          Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+        </div>
+        <div class="mr-1 col-1">
+          <img src="/static/img/alert.svg" class="icon" alt="Candidatura não ok" />
+        </div>
+        <div class="mr-1 col-1">
+          <img src="https://logodownload.org/wp-content/uploads/2016/09/pt-logo-2.png" class="partido" alt="Candidatura Ok" />
+        </div>
+      </div>
+      <!-- /candidata -->
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="container-fluid">
+  <div class="row achievement">
+    <div class="col-12 col-md-6 text-center">
+      <h1>Realização</h1>
+      <img src="/static/img/logo_mulheres.png" class="col-md-3" alt="Mulheres do Brasil" />
+    </div>
+    <div class="col-12 col-md-6 text-center">
+      <h2>Apoio</h2>
+      <img src="/static/img/logo_dux.png" class="col-md-3" alt="Mulheres do Brasil" />
+    </div>
+  </div>
+</section>
+
+<!-- <div class="container">
     <div class="row">
         <div class="col-md-4">
             <h2>Candidatas</h2>
@@ -27,6 +248,6 @@
             <p><a class="btn btn-primary" href="{% url 'agenda_list' %}" role="button">Clique aqui &raquo;</a></p>
         </div>
     </div>
-</div>
+</div> -->
 
 {% endblock content %}
