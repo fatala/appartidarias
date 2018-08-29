@@ -30,108 +30,114 @@
 
           <h2>Veja os partidos que mais apoiam candidaturas femininas</h2>
 
-          <!-- lista cargo -->
-          <div class="col-sm">
-            <div class="form-group">
-              <select class="selectpicker" data-live-search="true" id="cargo">
-                <option>Presidente</option>
-                <option>Governadora</option>
-                <option>Senadora</option>
-              </select>
-            </div>
-          </div>
-          <!-- /lista cargo -->
-
-          <!-- lista partidos -->
-          <div class="col-sm">
-            <div class="form-group">
-              <select class="selectpicker" data-live-search="true" id="partido">
-                <option>MDB</option>
-                <option>PTB</option>
-                <option>PDT</option>
-                <option>PT</option>
-                <option>DEM</option>
-                <option>PCdoB</option>
-                <option>PSB</option>
-                <option>PSDB</option>
-                <option>PTC</option>
-                <option>PSC</option>
-                <option>PMN</option>
-                <option>PRP</option>
-                <option>PPS</option>
-                <option>PV</option>
-                <option>AVANTE</option>
-                <option>PP</option>
-                <option>PSTU</option>
-                <option>PCB</option>
-                <option>PRTB</option>
-                <option>PHS</option>
-                <option>DC</option>
-                <option>PCO</option>
-                <option>PODE</option>
-                <option>PSL</option>
-                <option>PRB</option>
-                <option>PSOL</option>
-                <option>PR</option>
-                <option>PSD</option>
-                <option>PPL</option>
-                <option>Patri</option>
-                <option>PROS</option>
-                <option>SOLIDARIEDADE</option>
-                <option>NOVO</option>
-                <option>REDE</option>
-                <option>PMB</option>
-              </select>
-            </div>
-          </div>
-          <!-- /lista partidos -->
-
           <!-- lista estado -->
-          <div class="col-sm">
-            <div class="form-group">
-              <select class="selectpicker" data-live-search="true" id="estado">
-                <option>Acre</option>
-                <option>Alagoas</option>
-                <option>Amapá</option>
-                <option>Amazonas</option>
-                <option>Bahia</option>
-                <option>Ceará</option>
-                <option>Distrito Federal</option>
-                <option>Espírito Santo</option>
-                <option>Goiás</option>
-                <option>Maranhão</option>
-                <option>Mato Grosso</option>
-                <option>Mato Grosso do Sul</option>
-                <option>Minas Gerais</option>
-                <option>Pará</option>
-                <option>Paraíba</option>
-                <option>Paraná</option>
-                <option>Pernambuco</option>
-                <option>Piauí</option>
-                <option>Rio de Janeiro</option>
-                <option>Rio Grande do Norte</option>
-                <option>Rio Grande do Sul</option>
-                <option>Rondônia</option>
-                <option>Roraima</option>
-                <option>Santa Catarina</option>
-                <option>São Paulo</option>
-                <option>Sergipe</option>
-                <option>Tocantins</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <select class="selectpicker form-control" data-live-search="true" id="estado">
+              <option>Selecione UF</option>
+              <option>Acre</option>
+              <option>Alagoas</option>
+              <option>Amapá</option>
+              <option>Amazonas</option>
+              <option>Bahia</option>
+              <option>Ceará</option>
+              <option>Distrito Federal</option>
+              <option>Espírito Santo</option>
+              <option>Goiás</option>
+              <option>Maranhão</option>
+              <option>Mato Grosso</option>
+              <option>Mato Grosso do Sul</option>
+              <option>Minas Gerais</option>
+              <option>Pará</option>
+              <option>Paraíba</option>
+              <option>Paraná</option>
+              <option>Pernambuco</option>
+              <option>Piauí</option>
+              <option>Rio de Janeiro</option>
+              <option>Rio Grande do Norte</option>
+              <option>Rio Grande do Sul</option>
+              <option>Rondônia</option>
+              <option>Roraima</option>
+              <option>Santa Catarina</option>
+              <option>São Paulo</option>
+              <option>Sergipe</option>
+              <option>Tocantins</option>
+            </select>
           </div>
           <!-- /lista estado -->
 
+          <!-- lista partidos -->
+          <div class="form-group">
+            <select class="selectpicker form-control" data-live-search="true" id="partido">
+              <option>Selecione Partido</option>
+              <option>MDB</option>
+              <option>PTB</option>
+              <option>PDT</option>
+              <option>PT</option>
+              <option>DEM</option>
+              <option>PCdoB</option>
+              <option>PSB</option>
+              <option>PSDB</option>
+              <option>PTC</option>
+              <option>PSC</option>
+              <option>PMN</option>
+              <option>PRP</option>
+              <option>PPS</option>
+              <option>PV</option>
+              <option>AVANTE</option>
+              <option>PP</option>
+              <option>PSTU</option>
+              <option>PCB</option>
+              <option>PRTB</option>
+              <option>PHS</option>
+              <option>DC</option>
+              <option>PCO</option>
+              <option>PODE</option>
+              <option>PSL</option>
+              <option>PRB</option>
+              <option>PSOL</option>
+              <option>PR</option>
+              <option>PSD</option>
+              <option>PPL</option>
+              <option>Patri</option>
+              <option>PROS</option>
+              <option>SOLIDARIEDADE</option>
+              <option>NOVO</option>
+              <option>REDE</option>
+              <option>PMB</option>
+            </select>
+          </div>
+          <!-- /lista partidos -->
+
+          <!-- lista cargo -->
+          <div class="form-group">
+            <select class="selectpicker form-control" data-live-search="true" id="cargo">
+              <option>Selecione Cargo</option>
+              <optgroup label="Deputada Federal">
+                <option>Nome da Candidata</option>
+                <option>Nome da Candidata</option>
+                <option>Nome da Candidata</option>
+              </optgroup>
+              <optgroup label="Deputada Federal">
+                <option>Nome da Candidata</option>
+                <option>Nome da Candidata</option>
+                <option>Nome da Candidata</option>
+              </optgroup>
+            </select>
+          </div>
+          <!-- /lista cargo -->
+
           <!-- lista pauta -->
-          <div class="col-sm">
-            <div class="form-group">
-              <select class="selectpicker" data-live-search="true" id="pauta">
-                <option>Selecione a pauta</option>
-                <option>pauta 1</option>
-                <option>pauta 2</option>
-                <option>pauta 3</option>
-              </select>
-            </div>
+          <div class="form-group">
+            <select class="selectpicker form-control" data-live-search="true" id="pauta">
+              <option>Selecione Pauta</option>
+              <option>pauta 1</option>
+              <option>pauta 2</option>
+              <option>pauta 3</option>
+              <option>pauta 1</option>
+              <option>pauta 2</option>
+              <option>pauta 3</option>
+              <option>pauta 3</option>
+            </select>
           </div>
           <!-- /lista pauta -->
 
