@@ -1,4 +1,5 @@
 import os
+import sys
 
 DEBUG = True
 
@@ -156,6 +157,12 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
+        'stdout': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'stream': sys.stdout
+        },
         'mdb_logfile': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -172,7 +179,7 @@ LOGGING = {
             'propagate': True,
         },
         'mdb': {
-            'handlers': ['mdb_logfile'],
+            'handlers': ['mdb_logfile', 'stdout'],
             'level': 'DEBUG',
             'propagate': True,
         },
