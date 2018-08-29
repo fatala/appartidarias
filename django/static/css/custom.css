@@ -143,20 +143,25 @@ footer .twitter {
   background-color: #fba919;
 }
 .dropdown-toggle::after {
-  display: inline-block;
-  height: 24px;
-  margin: -5px 0 0 0;
-  vertical-align: .255em;
-  content: "";
-  border-top: 0;
-  border-right: 0;
-  border-bottom: 0;
-  border-left: 0;
-  width: 31px;
-  padding: 0;
-	background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im0xMjEuMywzNC42Yy0xLjYtMS42LTQuMi0xLjYtNS44LDBsLTUxLDUxLjEtNTEuMS01MS4xYy0xLjYtMS42LTQuMi0xLjYtNS44LDAtMS42LDEuNi0xLjYsNC4yIDAsNS44bDUzLjksNTMuOWMwLjgsMC44IDEuOCwxLjIgMi45LDEuMiAxLDAgMi4xLTAuNCAyLjktMS4ybDUzLjktNTMuOWMxLjctMS42IDEuNy00LjIgMC4xLTUuOHoiIGZpbGw9IiNmYmE5MTkiLz4KICA8L2c+Cjwvc3ZnPgo=) no-repeat;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+		border-style: solid;
+		border-width: 0.15em 0.15em 0 0;
+		content: '';
+		display: inline-block;
+		height: 0.95em;
+		right: 0.15em;
+		position: relative;
+		top: 0.15em;
+		transform: rotate(135deg);
+		vertical-align: top;
+		width: 0.95em;
 }
-
 
 /* responsive breakpoints */
 @media only screen and (min-width: 576px) {
