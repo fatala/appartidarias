@@ -205,14 +205,19 @@ class Command(BaseCommand):
                         'marital_status' : profile.get('descricaoEstadoCivil'),
                         'education' : profile.get('grauInstrucao'),
                         'job' : profile.get('ocupacao'),
+                        'state': profile.get('sgUe') or candidate['SG_UF'],
                         'property_value' : profile.get('totalDeBens')
                     }
                 )
 
-                expenses = Expenses.objects.create(
-                    candidate=candidate_model,
-                    received=expenses['dadosConsolidados'].get('totalRecebido'),
-                    paid=expenses['despesas'].get('totalDespesasPagas'),
-                )
+                try:
+                    expenses = Expenses.objects.create(
+                        candidate=candidate_model,
+                        received=expenses['dadosConsolidados']['totalRecebido'],
+                        paid=expenses['despesas']['totalDespesasPagas'],
+                    )
+                    logger.debug('got expenses: {}'.format(profile.get('nomeCompleto')))
+                except Exception:
+                    logger.debug('missing expenses: {}'.format(profile.get('nomeCompleto')))
 
                 logger.debug('created: {}'.format(profile.get('nomeCompleto')))

@@ -76,6 +76,7 @@ class Candidate(models.Model):
     projects = models.TextField(verbose_name='Projetos', blank=True)
     reelection = models.BooleanField(blank=True, verbose_name='Re-eleição?', default=False)
     elected = models.BooleanField(blank=True, verbose_name='Eleita antes de 2012?', default=False)
+    state = models.CharField(default='BR', max_length=100, verbose_name='Estado')
 
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=FEMALE, verbose_name='Sexo')
     birth_date = models.DateField(verbose_name='Data de nascimento', auto_now=False, auto_now_add=False, blank=True)
