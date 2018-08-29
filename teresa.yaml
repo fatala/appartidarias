@@ -1,0 +1,2 @@
+cron:
+  schedule: "00 12 * * * "
