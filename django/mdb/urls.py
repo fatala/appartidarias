@@ -13,7 +13,14 @@ urlpatterns = patterns(
     url(r'^elections2012/', views.Elections2012View.as_view(), name='elections2012'),
     url(r'^contact/', views.ContactView.as_view(), name='contact'),
     url(r'^admin/', include(admin.site.urls)),
+
+    # api
     url(r'^api/candidates/', views.CandidateList.as_view()),
+    url(r'^api/states/', views.StateList.as_view()),
+    url(r'^api/job_roles/', views.JobRoleList.as_view()),
+    url(r'^api/parties/', views.PartiesList.as_view()),
+
+    #  candidates
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
     url(r'^candidates/list/(?P<type>\w+)/(?P<id>\d+)/$', views.CandidateListFilter.as_view(), name='candidates_list_filter'),
     url(r'^candidates/detail/(?P<candidate_id>[0-9]+)/$', views.CandidateDetail.as_view(), name='candidate_detail'),

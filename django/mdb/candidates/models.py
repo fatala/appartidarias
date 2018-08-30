@@ -31,6 +31,11 @@ class Agenda(models.Model):
         return self.name
 
 
+class State(models.Model):
+    uf = models.CharField('UF', max_length=128)
+    name = models.CharField('nome', max_length=128)
+
+
 class JobRole(models.Model):
     name = models.CharField('Cargo', max_length=128)
     code = models.CharField('Código', max_length=128, null=True)

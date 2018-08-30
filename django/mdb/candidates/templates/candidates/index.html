@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block js %}
+<script type="text/javascript" src="/static/assets/js/src/candidate.js"></script>
+<script type="text/javascript">CandidateHandler($, "http://localhost:8000")</script>
+{% endblock js %}
 
 {% block content %}
 
@@ -33,34 +37,34 @@
           <!-- lista estado -->
           <div class="form-group">
             <select class="selectpicker form-control" data-live-search="true" id="estado">
-              <option>Selecione UF</option>
-              <option>Acre</option>
-              <option>Alagoas</option>
-              <option>Amapá</option>
-              <option>Amazonas</option>
-              <option>Bahia</option>
-              <option>Ceará</option>
-              <option>Distrito Federal</option>
-              <option>Espírito Santo</option>
-              <option>Goiás</option>
-              <option>Maranhão</option>
-              <option>Mato Grosso</option>
-              <option>Mato Grosso do Sul</option>
-              <option>Minas Gerais</option>
-              <option>Pará</option>
-              <option>Paraíba</option>
-              <option>Paraná</option>
-              <option>Pernambuco</option>
-              <option>Piauí</option>
-              <option>Rio de Janeiro</option>
-              <option>Rio Grande do Norte</option>
-              <option>Rio Grande do Sul</option>
-              <option>Rondônia</option>
-              <option>Roraima</option>
-              <option>Santa Catarina</option>
-              <option>São Paulo</option>
-              <option>Sergipe</option>
-              <option>Tocantins</option>
+              <option value="">Selecione UF</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF"=>Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
             </select>
           </div>
           <!-- /lista estado -->
@@ -68,7 +72,7 @@
           <!-- lista partidos -->
           <div class="form-group">
             <select class="selectpicker form-control" data-live-search="true" id="partido">
-              <option>Selecione Partido</option>
+              <option value="">Selecione Partido</option>
               <option>MDB</option>
               <option>PTB</option>
               <option>PDT</option>
@@ -111,17 +115,14 @@
           <!-- lista cargo -->
           <div class="form-group">
             <select class="selectpicker form-control" data-live-search="true" id="cargo">
-              <option>Selecione Cargo</option>
-              <optgroup label="Deputada Federal">
-                <option>Nome da Candidata</option>
-                <option>Nome da Candidata</option>
-                <option>Nome da Candidata</option>
-              </optgroup>
-              <optgroup label="Deputada Federal">
-                <option>Nome da Candidata</option>
-                <option>Nome da Candidata</option>
-                <option>Nome da Candidata</option>
-              </optgroup>
+              <option value="">Selecione Cargo</option>
+              <option value="Presidente">Presidente</option>
+              <option value="Senador">Senador</option>
+              <option value="Governador">Governador</option>
+              <option value="Vice-governador">Vice-governador</option>
+              <option value="Deputado Estadual">Deputado Estadual</option>
+              <option value="Deputado Federal">Deputado Federal</option>
+              <option value="Deputado Distrital">Deputadoo Distrital</option>
             </select>
           </div>
           <!-- /lista cargo -->
@@ -149,7 +150,7 @@
     </div><!--/filterbox-->
 
     <div class="container">
-    <div class="row">
+    <div class="row" id="candidates-list">
 
       <!-- candidata -->
       <div class="media">

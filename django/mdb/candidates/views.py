@@ -9,9 +9,30 @@ from rest_framework.response import Response
 
 from .forms import CommentForm, ContactForm
 from .models import Candidate, PoliticalParty, Agenda, Comment, JobRole
-from .serializers import CandidateSerializer
+from .serializers import CandidateSerializer, JobRoleSerializer, PartySerializer, StateSerializer
 
 import requests
+
+
+class StateList(APIView):
+    def get(self, request):
+        states = []
+        serializer = StateSerializer(states, many=True)
+        return Response(serializer.data)
+
+
+class JobRoleList(APIView):
+    def get(self, request):
+        job_roles = JobRole.objects.all()
+        serializer = JobRoleSerializer(job_roles, many=True)
+        return Response(serializer.data)
+
+
+class PartiesList(APIView):
+    def get(self, request):
+        parties = PoliticalParty.objects.all()
+        serializer = PartySerializer(parties, many=True)
+        return Response(serializer.data)
 
 
 class CandidateList(APIView):
@@ -20,14 +41,14 @@ class CandidateList(APIView):
         query = request.query_params
         candidates = Candidate.objects.all()
 
-        if 'state' in query:
-            candidates = candidates.filter(state=query['state'])
-        if 'party' in query:
-            candidates = candidates.filter(political_party__name=query['party'])
-        if 'job_role' in query:
-            candidates = candidates.filter(job_role__name=query['job_role'])
+        if 'estado' in query:
+            candidates = candidates.filter(state=query['estado'])
+        if 'partido' in query:
+            candidates = candidates.filter(political_party__initials=query['partido'])
+        if 'cargo' in query:
+            candidates = candidates.filter(job_role__name=query['cargo'])
 
-        serializer = CandidateSerializer(candidates, many=True)
+        serializer = CandidateSerializer(candidates[:3], many=True)
         return Response(serializer.data)
 
 

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Candidate
+from .models import Candidate, PoliticalParty, JobRole, State
 
 
 class CandidateSerializer(serializers.ModelSerializer):
@@ -15,6 +15,44 @@ class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         fields = (
-        	'name', 'political_party_initials', 'political_party_name', 'directory_national', 'directory_state',
-        	'directory_city', 'obs', 'number', 'agenda', 'projects',
-        	)
+            'name',
+            'political_party_initials',
+            'political_party_name',
+            'directory_national',
+            'directory_state',
+            'directory_city',
+            'picture_url',
+            'status',
+            'obs',
+            'number',
+            'agenda',
+            'projects',
+        )
+
+
+class PartySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PoliticalParty
+        fields = (
+            'initials',
+            'name'
+        )
+
+
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PoliticalParty
+        fields = (
+            'name',
+            'uf'
+        )
+
+
+class JobRoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobRole
+        fields = (
+            'name',
+            'code'
+        )
+
