@@ -48,7 +48,7 @@ class CandidateList(APIView):
         if 'cargo' in query:
             candidates = candidates.filter(job_role__name=query['cargo'])
 
-        serializer = CandidateSerializer(candidates[:3], many=True)
+        serializer = CandidateSerializer(candidates, many=True)
         return Response(serializer.data)
 
 
