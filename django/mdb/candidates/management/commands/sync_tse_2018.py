@@ -20,7 +20,6 @@ def concat(files):
     """
     Concat TSE files into a single pandas.DataFrame
     """
-    print(files.keys())
     return pandas.concat([
         pandas.read_csv(
             pandas.compat.BytesIO(file_),
@@ -87,7 +86,7 @@ def fetch_2018_candidate_expenses(**kwargs):
     host = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2022802018/2018/'
     path = '{estado}/{cargo}/{partido}/{urna}/{candidate}'
     url = host + path.format(**kwargs)
-    print('fetch_candidate:', url)
+    logger.debug(f'fetch_expenses: {url}')
     return requests.get(url).json()
 
 
@@ -100,6 +99,7 @@ def fetch_2018_candidate(id_, state, year='2018', election='2022802018'):
         election=election,
         year=year,
     )
+    logger.debug(f'fetch_candidate: {url}')
     return requests.get(url).json()
 
 
@@ -140,84 +140,87 @@ class Command(BaseCommand):
         current_time = int(time.time())
 
         for row in df.iterrows():
-            candidate = row[1]
 
-            profile = fetch_2018_candidate(
-                id_=candidate['SQ_CANDIDATO'],
-                state=candidate['SG_UF'],
-            )
+            try:
+                candidate = row[1]
 
-            store_json(
-                'profile_{id_}_{partido}_{uf}_{time}'.format(
+                profile = fetch_2018_candidate(
                     id_=candidate['SQ_CANDIDATO'],
+                    state=candidate['SG_UF'],
+                )
+
+                store_json(
+                    'profile_{id_}_{partido}_{uf}_{time}'.format(
+                        id_=candidate['SQ_CANDIDATO'],
+                        partido=candidate['NR_PARTIDO'],
+                        uf=candidate['SG_UF'],
+                        time=current_time,
+                    ),
+                    profile,
+                )
+
+                expenses = fetch_2018_candidate_expenses(
+                    estado=candidate['SG_UF'],
+                    candidate=candidate['SQ_CANDIDATO'],
+                    urna=candidate['NR_CANDIDATO'],
+                    cargo=candidate['CD_CARGO'],
                     partido=candidate['NR_PARTIDO'],
-                    uf=candidate['SG_UF'],
-                    time=current_time,
-                ),
-                profile,
-            )
-
-            expenses = fetch_2018_candidate_expenses(
-                estado=candidate['SG_UF'],
-                candidate=candidate['SQ_CANDIDATO'],
-                urna=candidate['NR_CANDIDATO'],
-                cargo=candidate['CD_CARGO'],
-                partido=candidate['NR_PARTIDO'],
-            )
-
-            store_json(
-                'expenses_{id_}_{partido}_{uf}_{time}'.format(
-                    id_=candidate['SQ_CANDIDATO'],
-                    partido=candidate['NR_PARTIDO'],
-                    uf=candidate['SG_UF'],
-                    time=current_time,
-                ),
-                expenses,
-            )
-
-            print(json.dumps(profile, indent=4))
-
-            if 'FEM.' == profile.get('descricaoSexo'):
-
-                political_party, created = PoliticalParty.objects.get_or_create(
-                    initials=profile.get('partido').get('sigla'),
-                    name=profile.get('partido').get('nome'),
-                    number=profile.get('partido').get('numero')
                 )
 
-                job_role, created = JobRole.objects.get_or_create(
-                    name=profile.get('cargo').get('nome')
+                store_json(
+                    'expenses_{id_}_{partido}_{uf}_{time}'.format(
+                        id_=candidate['SQ_CANDIDATO'],
+                        partido=candidate['NR_PARTIDO'],
+                        uf=candidate['SG_UF'],
+                        time=current_time,
+                    ),
+                    expenses,
                 )
 
-                candidate_model, created = Candidate.objects.update_or_create(
-                    number=profile.get('numero'),
-                    defaults= {
-                        'id_tse': profile.get('id'),
-                        'name' : profile.get('nomeCompleto'),
-                        'name_ballot' : profile.get('nomeUrna'),
-                        'job_role' : job_role,
-                        'political_party' : political_party,
-                        'coalition' : profile.get('nomeColigacao'),
-                        'picture_url' : profile.get('fotoUrl'),
-                        'budget_1t' : profile.get('gastoCampanha1T'),
-                        'budget_2t' : profile.get('gastoCampanha2T'),
-                        'birth_date' : profile.get('dataDeNascimento'),
-                        'marital_status' : profile.get('descricaoEstadoCivil'),
-                        'education' : profile.get('grauInstrucao'),
-                        'job' : profile.get('ocupacao'),
-                        'state': profile.get('sgUe') or candidate['SG_UF'],
-                        'property_value' : profile.get('totalDeBens')
-                    }
-                )
+                if 'FEM.' == profile.get('descricaoSexo'):
 
-                try:
-                    expenses = Expenses.objects.create(
-                        candidate=candidate_model,
-                        received=expenses['dadosConsolidados']['totalRecebido'],
-                        paid=expenses['despesas']['totalDespesasPagas'],
+                    political_party, created = PoliticalParty.objects.get_or_create(
+                        initials=profile.get('partido').get('sigla'),
+                        name=profile.get('partido').get('nome'),
+                        number=profile.get('partido').get('numero')
                     )
-                    logger.debug('got expenses: {}'.format(profile.get('nomeCompleto')))
-                except Exception:
-                    logger.debug('missing expenses: {}'.format(profile.get('nomeCompleto')))
 
-                logger.debug('created: {}'.format(profile.get('nomeCompleto')))
+                    job_role, created = JobRole.objects.get_or_create(
+                        name=profile.get('cargo').get('nome')
+                    )
+
+                    candidate_model, created = Candidate.objects.update_or_create(
+                        number=profile.get('numero'),
+                        defaults= {
+                            'id_tse': profile.get('id'),
+                            'name' : profile.get('nomeCompleto'),
+                            'name_ballot' : profile.get('nomeUrna'),
+                            'job_role' : job_role,
+                            'political_party' : political_party,
+                            'coalition' : profile.get('nomeColigacao'),
+                            'picture_url' : profile.get('fotoUrl'),
+                            'budget_1t' : profile.get('gastoCampanha1T'),
+                            'budget_2t' : profile.get('gastoCampanha2T'),
+                            'birth_date' : profile.get('dataDeNascimento'),
+                            'marital_status' : profile.get('descricaoEstadoCivil'),
+                            'education' : profile.get('grauInstrucao'),
+                            'job' : profile.get('ocupacao'),
+                            'state': profile.get('sgUe') or candidate['SG_UF'],
+                            'property_value' : profile.get('totalDeBens')
+                        }
+                    )
+
+                    try:
+                        expenses = Expenses.objects.create(
+                            candidate=candidate_model,
+                            received=expenses['dadosConsolidados']['totalRecebido'],
+                            paid=expenses['despesas']['totalDespesasPagas'],
+                        )
+                        logger.debug('got expenses: {}'.format(profile.get('nomeCompleto')))
+                    except Exception:
+                        logger.debug('missing expenses: {}'.format(profile.get('nomeCompleto')))
+
+                    logger.debug('created: {}'.format(profile.get('nomeCompleto')))
+
+            except Exception:
+                logger.exception('parsing candidate {profile.get("nomeCompleto")}')

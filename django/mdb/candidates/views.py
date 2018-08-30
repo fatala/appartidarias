@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .forms import CommentForm, ContactForm
-from .models import Candidate, PoliticalParty, Agenda, Comment
+from .models import Candidate, PoliticalParty, Agenda, Comment, JobRole
 from .serializers import CandidateSerializer
 
 import requests
@@ -17,8 +17,17 @@ import requests
 class CandidateList(APIView):
 
     def get(self, request):
-        candidate = Candidate.objects.all()
-        serializer = CandidateSerializer(candidate, many=True)
+        query = request.query_params
+        candidates = Candidate.objects.all()
+
+        if 'state' in query:
+            candidates = candidates.filter(state=query['state'])
+        if 'party' in query:
+            candidates = candidates.filter(political_party__name=query['party'])
+        if 'job_role' in query:
+            candidates = candidates.filter(job_role__name=query['job_role'])
+
+        serializer = CandidateSerializer(candidates, many=True)
         return Response(serializer.data)
 
 
