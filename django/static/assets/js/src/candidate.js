@@ -111,7 +111,8 @@ function CandidateHandler($, host) {
         return img;
     };
     
-    this.buildCandidateUI = function(id, name, description, candidateImg, party, status) {
+    
+    this.buildCandidateUI = function(id, name, description, candidateImg, partyImg, status) {
         let media = this.$('<div>', {class: 'media'});
 
         // image
@@ -140,12 +141,11 @@ function CandidateHandler($, host) {
         
         // party
         let partyDiv = this.$('<div>', {class: 'col-1'});
-        let partyImg = this.$('<img>', {
-            src: party,
+        partyDiv.append(this.$('<img>', {
+            src: partyImg,
             class: 'partido',
             alt: 'imagem do partido'
-        });
-        partyDiv.append(partyImg);
+        }));
         media.append(partyDiv);
 
         this.$('#' + id).append(media);   
@@ -178,7 +178,10 @@ function CandidateHandler($, host) {
     };
 
     this.getPartyImg = function(candidate) {
-        return  'img/' + candidate.party + '.jpg';
+        let p = candidate.political_party_initials.toLowerCase();
+        let path = `/static/img/partidos/${p}.png`;
+        console.log(path);
+        return path;
     };
 
     this.displayCandidates = function(result) {
