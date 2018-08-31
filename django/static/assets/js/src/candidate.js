@@ -150,7 +150,7 @@ function CandidateHandler($, host) {
         media.append(statusDiv);
         
         // party
-        let partyDiv = this.$('<div>', {class: 'col-2'});
+        let partyDiv = this.$('<div>', {class: 'col-3 col-md-2'});
         partyDiv.append(this.$('<img>', {
             src: partyImg,
             class: 'img-fluid brand',
