@@ -2,7 +2,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import TemplateView
 from django.core.mail import send_mail
-
+from django.conf import settings
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -39,8 +39,13 @@ class CandidateList(APIView):
 
     def get(self, request):
         query = request.query_params
-        candidates = Candidate.objects.all()
 
+        # pagination
+        page_size = int(query.get('page_size') or settings.PAGE_SIZE)
+        page = int(query.get('page') or 1)
+
+        # filter candiadates
+        candidates = Candidate.objects.all()
         if 'estado' in query:
             candidates = candidates.filter(state=query['estado'])
         if 'partido' in query:
@@ -48,7 +53,9 @@ class CandidateList(APIView):
         if 'cargo' in query:
             candidates = candidates.filter(job_role__name=query['cargo'])
 
-        serializer = CandidateSerializer(candidates, many=True)
+        paginated_candidates = candidates[(page-1)*page_size:page*page_size]
+        assert len(paginated_candidates) == page_size
+        serializer = CandidateSerializer(paginated_candidates, many=True)
         return Response(serializer.data)
 
 
