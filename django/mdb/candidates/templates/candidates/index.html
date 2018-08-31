@@ -149,10 +149,34 @@
     </div>
   </div><!--/filterbox-->
 
+  <!-- pagination -->
   <div class="container">
     <div class="row" id="candidates-list">
     </div>
+
+    <div class="row">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Anterior</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Próxima</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
+  <!-- /pagination -->
 
 </section>
 
@@ -172,25 +196,5 @@
 </section>
 <!-- /achievement content -->
 
-
-<!-- <div class="container">
-     <div class="row">
-       <div class="col-md-4">
-         <h2>Candidatas</h2>
-         <p>Estão a disposição a lista das candidatas por nome, as informações sobre suas candidaturas (extraídas do site do TSE) e campos para que todos cidadãos e cidadãs possam inserir informações sobre as candidatas.</p>
-         <p><a class="btn btn-primary" href="{% url 'candidate_search' %}" role="button">Clique aqui &raquo;</a></p>
-       </div>
-       <div class="col-md-4">
-         <h2>Partidos</h2>
-         <p>Você poderá monitorar suas candidatas por partido ou coligação, observar os dados de suas campanhas e nos auxiliar a inserir suas pautas e projetos.</p>
-         <p><a class="btn btn-primary" href="{% url 'political_party_list' %}" role="button">Clique aqui &raquo;</a></p>
-       </div>
-       <div class="col-md-4">
-         <h2>Pautas</h2>
-         <p>Você poderá monitorar suas candidatas a partir de pautas que sejam caras a você. Se você tiver dados sobre as campanhas de candidatas que apresentam essas pautas, por favor, nos informe!</p>
-         <p><a class="btn btn-primary" href="{% url 'agenda_list' %}" role="button">Clique aqui &raquo;</a></p>
-       </div>
-     </div>
-</div> -->
 
 {% endblock content %}
