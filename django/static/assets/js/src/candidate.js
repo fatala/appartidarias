@@ -123,25 +123,25 @@ function CandidateHandler($, host) {
     
     
     this.buildCandidateUI = function(id, name, description, candidateImg, partyImg, status) {
-        let media = this.$('<div>', {class: 'media'});
+        let media = this.$('<div>', {class: 'media border'});
 
         // image
         media.append(this.$('<img>', {
-            class: 'mr-1 col-3 col-md-1',
+            class: 'border picture',
             src: candidateImg,
-            alt: 'nome da candidata'
+            alt: name
         }));
         
         let mediaBody = this.$('<div>', {
-            class:'media-body col-5 col-md-9',
+            class:'col-5 col-md-8',
             text: description
         });
         media.append(mediaBody);
         
-        mediaBody.append(this.$('<h5>', {class: 'mt-0', text: name}));
+        mediaBody.append(this.$('<h5>', {class: 'align-text-bottom', text: name}));
         
         // candidature status
-        let statusDiv = this.$('<div>', {class: 'mr-1 col-1'});
+        let statusDiv = this.$('<div>', {class: 'col-1'});
         statusDiv.append(this.$('<img>', {
             src: this.getStatusImg(status),
             class: 'icon',
@@ -150,10 +150,10 @@ function CandidateHandler($, host) {
         media.append(statusDiv);
         
         // party
-        let partyDiv = this.$('<div>', {class: 'col-1'});
+        let partyDiv = this.$('<div>', {class: 'col-2'});
         partyDiv.append(this.$('<img>', {
             src: partyImg,
-            class: 'partido',
+            class: 'img-fluid brand',
             alt: 'imagem do partido'
         }));
         media.append(partyDiv);
@@ -182,7 +182,7 @@ function CandidateHandler($, host) {
     };
 
     this.getCandidateDescription = function(candidate) {
-        return candidate.name;
+        return candidate.description;
     };
 
     this.getCandidateImg = function(candidate) {

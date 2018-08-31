@@ -50,7 +50,6 @@ select:focus {
 	background: linear-gradient(to right, #470c6e, #c58fe8);
 }
 .home h1{
-	font-size: 8vw;
 	font-weight: 300;
 }
 .home img{
@@ -87,18 +86,23 @@ select:focus {
 	text-transform: uppercase;
 }
 .candidates .media {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	background-color: rgba(0,0,0,0.03);
+	padding: 10px;
 }
 .candidates .media .icon{
 	min-width: 20px;
 	width: 30px;
 }
-.candidates .media .partido{
-	max-width: 60px;
+.candidates .media .brand{
+	max-height: 60px;
 }
-.candidates .mt-0 {
+.candidates h5 {
 	font-weight: 700;
 	font-size: 1.1em;
+}
+.picture {
+	width: 70px;
 }
 
 /* realizacao */
@@ -165,11 +169,22 @@ footer .twitter {
 	border-radius: 0;
 	padding: 20px;
 }
-.bootstrap-select 
-.dropdown-toggle 
+.btn-light:hover {
+	color: #FFF;
+}
+.bootstrap-select
+.dropdown-toggle
+.filter-option-inner:hover {
+  color: #FFF;
+}
+.bootstrap-select
+.dropdown-toggle
 .filter-option {
   font-weight: 400;
+  color: #fba919;
 }
+
+
 .btn-light:not(:disabled):not(.disabled).active, 
 .btn-light:not(:disabled):not(.disabled):active,
 .btn-light:hover, 
@@ -210,12 +225,15 @@ footer .twitter {
 		width: 30%;
 	}
 	.home h1{
-		font-size: 3vw;
+		font-size: 2.2em;
 	}
 	.home h2{
 		font-size: 2.4vw;
 	}
 	.home .lead {
 		font-size: 1.6vw;
+	}
+	.picture {
+		width: 50px;
 	}
 }
