@@ -1,6 +1,4 @@
 function CandidateHandler($, host) {
-    this.$ = $;
-    console.log(this.$);
 
     this.init = function() {
 
@@ -25,12 +23,10 @@ function CandidateHandler($, host) {
 
         selects.map(function(select) {
             this.onSelectRefresh(select.name, '/api/candidates', selects);
-            
         });
 
-        this.fetchCandidates(host + '/api/candidates', selects);
-
-        console.log('init candidate handler');
+        this.setInfinityScroll('#candidates-list', '/api/candidates', selects);
+        // this.fetchCandidates(host + '/api/candidates', selects);
     };
 
     this.logError = function(xhr, err) {
@@ -52,6 +48,17 @@ function CandidateHandler($, host) {
         });
     };
 
+    this.setInfinityScroll = function(id, host, selects) {
+        $(window).scroll(function() { 
+            if ($(window).scrollTop() >= $(document).height() - $(window).height() - 1000) {
+                if (!this.waitingFetchCandidates) {
+                    this.waitingFetchCandidates = true;
+                    this.fetchCandidates(host, selects, this.page);
+                }
+            }
+        });
+    };
+    
     this.fullfill = function(id, data) {
         let length = data.length;
         let picker = this.$('#'+id);
@@ -76,17 +83,20 @@ function CandidateHandler($, host) {
         return query;
     };
 
-    this.fetchCandidates = function(host, selects) {
+    this.fetchCandidates = function(host, selects, page) {
         let query = this.readSelectStates(selects);
+        query['page'] = page;
 
-        console.log('query');
         console.log(query);
+
         let url = host + '?' +  this.$.param(query);
         console.log(url);
         this.$.ajax({
             url: url,
             success: function(result) {
                 this.displayCandidates(result);
+                this.page += 1;
+                this.waitingFetchCandidates = false;
             }.bind(this),
             error: function(xhr, opt, err) {
                 this.logError(xhr, err);
@@ -153,6 +163,8 @@ function CandidateHandler($, host) {
 
     this.onSelectRefresh = function(id, host, selects) {
         this.$('#'+id).change(function() {
+            this.page = 1;
+            this.clearCandidates();
             this.fetchCandidates(host, selects);
         }.bind(this));
     };
@@ -178,7 +190,7 @@ function CandidateHandler($, host) {
     };
 
     this.getPartyImg = function(candidate) {
-        let p = candidate.political_party_initials.toLowerCase();
+        let p = candidate.political_party_initials.toLowerCase().replace(/ /g, '');
         let path = `/static/img/partidos/${p}.png`;
         console.log(path);
         return path;
@@ -186,7 +198,6 @@ function CandidateHandler($, host) {
 
     this.displayCandidates = function(result) {
         console.log(result);
-        this.clearCandidates();
 
         result.map(function(candidate) {
 
@@ -208,7 +219,8 @@ function CandidateHandler($, host) {
         }.bind(this));
     };
 
+    this.$ = $;
+    this.page = 1;
+    this.waitingFetchCandidates = false;
     this.init();
-    
-    console.log('loading candidate.js');
 }

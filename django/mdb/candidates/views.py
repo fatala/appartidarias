@@ -54,7 +54,6 @@ class CandidateList(APIView):
             candidates = candidates.filter(job_role__name=query['cargo'])
 
         paginated_candidates = candidates[(page-1)*page_size:page*page_size]
-        assert len(paginated_candidates) == page_size
         serializer = CandidateSerializer(paginated_candidates, many=True)
         return Response(serializer.data)
 
