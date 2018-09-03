@@ -1,7 +1,8 @@
 body {
 	font-family: 'Titillium Web', Arial, sans-serif;
 }
-textarea:focus, 
+textarea:focus,
+button:focus, 
 input:focus, 
 select:focus {
 	box-shadow: 0 0 0 0;
@@ -162,43 +163,38 @@ footer .twitter {
 }
 
 /* custom select */
-.btn-light {
-	color: #fba919;
-	background-color: #FFF;
-	border: 1px solid #fba919;
-	border-radius: 0;
-	padding: 20px;
+.bootstrap-select .btn {
+  background-color: #FFF;
+  border: 1px solid #fba919;
+  border-radius: 0;
+  color: #fba919;
+  font-weight: 300;
+  padding: 20px;
+  font-size: 16px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
-.btn-light:hover{
+.bootstrap-select>.dropdown-toggle.bs-placeholder {
+	color: #fba919!important;
+}
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active, 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus {
 	color: #FFF;
 }
-.bootstrap-select
-.dropdown-toggle
-.filter-option-inner:hover {
-  color: #FFF;
-}
-.bootstrap-select
-.dropdown-toggle
-.filter-option {
-  font-weight: 400;
-  color: #fba919;
-}
-
-
 .btn-light:not(:disabled):not(.disabled).active, 
-.btn-light:not(:disabled):not(.disabled):active,
-.btn-light:hover, 
+.btn-light:not(:disabled):not(.disabled):active, 
 .show>.btn-light.dropdown-toggle {
-  color: #FFF;
+  color: #FFF!important;
   background-color: #fba919;
   border-color: #fba919;
 }
-.dropdown-item.active, .dropdown-item:active {
-  color: #fff;
-  text-decoration: none;
-  background-color: #C0C0C0;
+.bootstrap-select .dropdown-menu {
+  margin: 0;
+  border: 1px solid #fba919;
+  border-radius: 0;
 }
-.dropdown-toggle::after {
+.bootstrap-select .dropdown-toggle::after {
 	margin-left: .255em;
 	vertical-align: .255em;
 	content: "";
@@ -217,6 +213,10 @@ footer .twitter {
 	transform: rotate(135deg);
 	vertical-align: top;
 	width: 0.95em;
+}
+select::-ms-expand {
+  /* for IE 11 */
+  display: none;
 }
 
 /* responsive breakpoints */
