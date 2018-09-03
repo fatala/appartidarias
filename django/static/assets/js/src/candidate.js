@@ -144,7 +144,7 @@ function CandidateHandler($, host) {
         let partyDiv = this.$('<div>', {class: 'col-3 col-md-2 align-center'});
         partyDiv.append(this.$('<img>', {
             src: partyImg,
-            class: 'brand',
+            class: 'brand img-fluid',
             alt: 'imagem do partido'
         }));
         media.append(partyDiv);

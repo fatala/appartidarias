@@ -45,20 +45,35 @@ select:focus {
 .home {
 	background-color: #fffbe9;
 	color: #FFF;
+	margin-top: -20px;
 	padding: 40px;
 	background: #470c6e;
 	background: -webkit-linear-gradient(to right, #470c6e, #c58fe8);
 	background: linear-gradient(to right, #470c6e, #c58fe8);
+  -webkit-transform: skewY(-5deg);
+  -moz-transform: skewY(-5deg);
+  -ms-transform: skewY(-5deg);
+  -o-transform: skewY(-5deg);
+  transform: skewY(-5deg);
+}
+.home > .container {
+  -webkit-transform: skewY(5deg);
+  -moz-transform: skewY(5deg);
+  -ms-transform: skewY(5deg);
+  -o-transform: skewY(5deg);
+  transform: skewY(5deg);
 }
 .home h1{
+	font-size: 1.8em;
 	font-weight: 300;
+	text-align: center;
 }
 .home img{
 	border-radius: 50%;
   box-shadow: 2px 5px 7px rgba(0,0,0,0.08);
   -webkit-box-shadow: 2px 5px 7px rgba(0,0,0,0.08);
   -moz-box-shadow: 2px 5px 7px rgba(0,0,0,0.08);
-  width: 90%;
+  width: 80%;
 }
 
 /* candidatas */
@@ -99,18 +114,21 @@ select:focus {
 }
 .candidates .media .icon{
 	min-width: 20px;
-	width: 25px;
+	width: 20px;
 }
 .candidates .media .brand{
-	max-height: 60px;
-	max-width: 100px;
+	max-height: 40px;
+	max-width: 60px;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  opacity: .6;
 }
 .candidates h5 {
 	font-weight: 700;
-	font-size: 1.1em;
+	font-size: .9em;
 }
 .picture {
-	width: 70px;
+	width: 50px;
 }
 
 /* realizacao */
@@ -255,19 +273,43 @@ select::-ms-expand {
 
 /* responsive breakpoints */
 @media only screen and (min-width: 576px) {
+	.home {
+		margin-top: 0;
+	  -webkit-transform: skewY(0);
+	  -moz-transform: skewY(0);
+	  -ms-transform: skewY(0);
+	  -o-transform: skewY(0);
+	  transform: skewY(0);
+	}
+	.home > .container {
+	  -webkit-transform: skewY(0);
+	  -moz-transform: skewY(0);
+	  -ms-transform: skewY(0);
+	  -o-transform: skewY(0);
+	  transform: skewY(0);
+	}
 	.home .appartidarias {
 		width: 30%;
 	}
 	.home h1{
 		font-size: 2.2em;
+		text-align: left;
 	}
 	.home h2{
 		font-size: 2.4vw;
 	}
+	.home img {
+		width: 150px;
+  	float: right;
+	}
 	.home .lead {
 		font-size: 1.6vw;
 	}
-	.picture {
-		width: 50px;
+	.candidates h5 {
+		font-weight: 700;
+		font-size: 1.1em;
+	}
+	.candidates .media .icon{
+		width: 25px;
 	}
 }
