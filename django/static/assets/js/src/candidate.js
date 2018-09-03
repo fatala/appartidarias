@@ -121,7 +121,7 @@ function CandidateHandler($, host) {
         return img;
     };
     
-    
+
     this.buildCandidateUI = function(id, name, description, candidateImg, partyImg, status) {
         let media = this.$('<div>', {class: 'media border'});
 
@@ -194,7 +194,7 @@ function CandidateHandler($, host) {
     this.getPartyImg = function(candidate) {
         let p = candidate.political_party_initials.toLowerCase().replace(/ /g, '');
         let path = `/static/img/partidos/${p}.png`;
-        console.log(path);
+        console.log(p);
         return path;
     };
 
