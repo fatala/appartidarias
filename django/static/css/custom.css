@@ -90,6 +90,12 @@ select:focus {
 	margin-bottom: 10px;
 	background-color: rgba(0,0,0,0.03);
 	padding: 10px;
+	display: table;
+	width: 100%;
+}
+.candidates .align-center {
+	display: table-cell; 
+	vertical-align: middle;
 }
 .candidates .media .icon{
 	min-width: 20px;
@@ -97,6 +103,7 @@ select:focus {
 }
 .candidates .media .brand{
 	max-height: 60px;
+	max-width: 100px;
 }
 .candidates h5 {
 	font-weight: 700;

@@ -133,15 +133,26 @@ function CandidateHandler($, host) {
         }));
         
         let mediaBody = this.$('<div>', {
-            class:'col-5 col-md-8',
+            class:'col-5 col-md-8 align-center',
             text: description
         });
         media.append(mediaBody);
         
         mediaBody.append(this.$('<h5>', {class: 'align-text-bottom', text: name}));
-        
+
+        // party
+        let partyDiv = this.$('<div>', {class: 'col-3 col-md-2 align-center'});
+        partyDiv.append(this.$('<img>', {
+            src: partyImg,
+            class: 'brand',
+            alt: 'imagem do partido'
+        }));
+        media.append(partyDiv);
+
+        this.$('#' + id).append(media);
+
         // candidature status
-        let statusDiv = this.$('<div>', {class: 'col-1'});
+        let statusDiv = this.$('<div>', {class: 'col-1 align-center'});
         statusDiv.append(this.$('<img>', {
             src: this.getStatusImg(status),
             class: 'icon',
@@ -149,16 +160,7 @@ function CandidateHandler($, host) {
         }));
         media.append(statusDiv);
         
-        // party
-        let partyDiv = this.$('<div>', {class: 'col-3 col-md-2'});
-        partyDiv.append(this.$('<img>', {
-            src: partyImg,
-            class: 'img-fluid brand',
-            alt: 'imagem do partido'
-        }));
-        media.append(partyDiv);
 
-        this.$('#' + id).append(media);   
     };
 
     this.onSelectRefresh = function(id, host, selects) {
