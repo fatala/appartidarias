@@ -156,7 +156,7 @@ function CandidateHandler($, host) {
         statusDiv.append(this.$('<img>', {
             src: this.getStatusImg(status),
             class: 'icon',
-            alt: 'Candidatura Ok'
+            alt: status
         }));
         media.append(statusDiv);
         

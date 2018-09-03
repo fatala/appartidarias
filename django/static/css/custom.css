@@ -5,7 +5,7 @@ textarea:focus,
 button:focus, 
 input:focus, 
 select:focus {
-	box-shadow: 0 0 0 0;
+	box-shadow: 0 0 0 0 rgba(0,123,255,.0);
 	border: 0 none;
 	outline: 0;
 }
@@ -99,7 +99,7 @@ select:focus {
 }
 .candidates .media .icon{
 	min-width: 20px;
-	width: 30px;
+	width: 25px;
 }
 .candidates .media .brand{
 	max-height: 60px;
@@ -221,9 +221,36 @@ footer .twitter {
 	vertical-align: top;
 	width: 0.95em;
 }
+.bootstrap-select.show .dropdown-toggle::after {
+	top: 0.6em;
+	transform: rotate(-45deg);
+}
 select::-ms-expand {
   /* for IE 11 */
   display: none;
+}
+.bs-actionsbox, 
+.bs-donebutton, 
+.bs-searchbox {
+  padding: 0;
+}
+.bs-searchbox .form-control {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #fba919;
+  background-color: #FFF;
+  background-clip: padding-box;
+  border: 0;
+  border-bottom: 1px solid #fba919;
+  border-radius: 0;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.bs-searchbox .form-control:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0 rgba(0,123,255,.0);
 }
 
 /* responsive breakpoints */
