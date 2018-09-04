@@ -1,6 +1,7 @@
 body {
 	font-family: 'Titillium Web', Arial, sans-serif;
 }
+
 textarea:focus,
 button:focus, 
 input:focus, 
@@ -129,6 +130,39 @@ select:focus {
 }
 .picture {
 	width: 50px;
+}
+
+/* ranking */
+.ranking {
+	background: #ededee;
+	background: -webkit-linear-gradient(to bottom, #ededee, #ffffff);
+	background: linear-gradient(to bottom, #ededee, #ffffff);
+	padding-bottom: 40px;
+}
+.ranking .bullet {
+	background: left center url('../img/icon_arrow.png') no-repeat;
+	background-size: 50px;
+	margin: 40px 0;
+	padding: 5px 0 5px 60px;
+}
+.ranking .icon {
+	width: 40px;
+}
+.ranking .progress {
+	margin-top: 14px;
+}
+.ranking .progress,
+.ranking .progress-bar {
+	border-radius: 25px;
+}
+.ranking .progress-bar {
+  text-align: center;
+  background-color: #470c6e;
+}
+.ranking .gray {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  opacity: .6;
 }
 
 /* realizacao */
