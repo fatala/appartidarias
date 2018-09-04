@@ -17,8 +17,18 @@ select:focus {
 }
 .section_title {
 	color: #475967;
-	font-size: 1.8em;
+	font-size: 2em;
 	font-weight: 300;
+}
+.col_title {
+	color: #475967;
+	font-size: 1.8em;
+	font-weight: 400;
+	padding-top: 20px;
+}
+.col_title span{
+	display: block;
+	font-size: 0.6em;
 }
 .section_title span{
 	display: block;
@@ -150,6 +160,7 @@ select:focus {
 }
 .ranking .progress {
 	margin-top: 5px;
+	height: 0.8rem;
 }
 .ranking .progress,
 .ranking .progress-bar {
