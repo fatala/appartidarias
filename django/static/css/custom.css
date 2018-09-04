@@ -149,7 +149,7 @@ select:focus {
 	width: 40px;
 }
 .ranking .progress {
-	margin-top: 14px;
+	margin-top: 5px;
 }
 .ranking .progress,
 .ranking .progress-bar {
@@ -163,6 +163,33 @@ select:focus {
   -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
   opacity: .6;
+  max-height: 90px;
+}
+.ranking .arrow-progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 1rem;
+  overflow: hidden;
+  font-size: .75rem;
+  background-color: transparent;
+  border-radius: .25rem;
+}
+.ranking .arrow-progress .arrow-bar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  text-align: center;
+  transition: width .6s ease;
+	background: top right transparent url('../img/icon_step.png') no-repeat;
+	background-size: 20px;
 }
 
 /* realizacao */
