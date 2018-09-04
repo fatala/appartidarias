@@ -81,6 +81,8 @@ select:focus {
 }
 .home img{
 	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
   box-shadow: 2px 5px 7px rgba(0,0,0,0.08);
   -webkit-box-shadow: 2px 5px 7px rgba(0,0,0,0.08);
   -moz-box-shadow: 2px 5px 7px rgba(0,0,0,0.08);
@@ -201,6 +203,23 @@ select:focus {
   transition: width .6s ease;
 	background: top right transparent url('../img/icon_step.png') no-repeat;
 	background-size: 20px;
+}
+.ranking .load_more {
+	width: 50px;
+	height: 50px;
+	border: 1px solid #fba919;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+	background: center center #fba919 url('../img/icon_plus.png') no-repeat;
+	background-size: 100%;
+	box-shadow: 0 9px 10px rgba(0,0,0,0.08);
+	-webkit-box-shadow: 0 9px 10px rgba(0,0,0,0.08);
+	-moz-box-shadow: 0 9px 10px rgba(0,0,0,0.08);
+	transition: all 0.3s ease;
+}
+.ranking .load_more:hover {
+	background-color: #ef9d0e;
 }
 
 /* realizacao */
