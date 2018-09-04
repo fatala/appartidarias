@@ -227,92 +227,53 @@ function CandidateHandler($, host) {
     this.init();
 }
 
-// candidatas por partido
-new Chart(document.getElementById("candidates_party"), {
-    type: 'pie',
-    data: {
-      labels: ["Candidatas", "Partido", "Sei lá"],
-      datasets: [{
-        label: "Values",
-        backgroundColor: ["#bb84e0", "#340056","#fba919"],
-        data: [2478,5267,734]
-      }]
-    },
-    options: {
-        legend: {
-            display: false
-        }
-    }
+
+// load partidos
+$.getJSON("/api/parties/", function (response) { 
+    response.map(getStoreDetails).forEach(showStore); 
 });
 
-// candidatas por partido
-new Chart(document.getElementById("candidates_coalition"), {
-    type: 'pie',
-    data: {
-      labels: ["Candidatas", "Partido", "Sei lá"],
-      datasets: [{
-        label: "Values",
-        backgroundColor: ["#bb84e0", "#340056","#fba919"],
-        data: [2478,5267,734]
-      }]
-    },
-    options: {
-        legend: {
-            display: false
-        }
-    }
-});
+// load view
+function getStoreDetails(partyInfo) {
+    return `<div class="row mb-4 justify-content-center">
+              <div class="col-4 text-center">
+                <img src="/static/img/partidos/${partyInfo.initials}.png" class="img-fluid gray" alt="${partyInfo.name}" />
+              </div>
+            </div>
 
-// candidatas por estado
-new Chart(document.getElementById("candidates_state"), {
-    type: 'pie',
-    data: {
-      labels: ["Candidatas", "Partido", "Sei lá"],
-      datasets: [{
-        label: "Values",
-        backgroundColor: ["#bb84e0", "#340056","#fba919"],
-        data: [2478,5267,734]
-      }]
-    },
-    options: {
-        legend: {
-            display: false
-        }
-    }
-});
+            <div class="row">
+              <div class="col-1 mt-1 p-1">
+                <img src="/static/img/icon_person.png" class="img-fluid" alt="Person" />
+              </div>
+              <div class="col-11">
+                <div class="arrow-progress">
+                  <div class="arrow-bar" role="progressbar" style="width: ${partyInfo.women_ptc}%" aria-valuenow="${partyInfo.women_ptc}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+              </div>
+            </div>
 
-// candidatas federal
-new Chart(document.getElementById("candidates_federal"), {
-    type: 'pie',
-    data: {
-      labels: ["Candidatas", "Partido", "Sei lá"],
-      datasets: [{
-        label: "Values",
-        backgroundColor: ["#bb84e0", "#340056","#fba919"],
-        data: [2478,5267,734]
-      }]
-    },
-    options: {
-        legend: {
-            display: false
-        }
-    }
-});
+            <hr>
 
-// Repasse de fundo partidário
-new Chart(document.getElementById("candidates_pass"), {
-    type: 'pie',
-    data: {
-      labels: ["Candidatas", "Partido", "Sei lá"],
-      datasets: [{
-        label: "Values",
-        backgroundColor: ["#bb84e0", "#340056","#fba919"],
-        data: [2478,5267,734]
-      }]
-    },
-    options: {
-        legend: {
-            display: false
-        }
-    }
-});
+            <div class="row">
+              <div class="col-1 mt-1 p-1">
+                <img src="/static/img/icon_money.png" class="img-fluid" alt="Money" />
+              </div>
+              <div class="col-11">
+                <div class="arrow-progress">
+                  <div class="arrow-bar" role="progressbar" style="width: ${partyInfo.women_ptc}%" aria-valuenow="${partyInfo.women_ptc}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+              </div>
+            </div>
+
+            <hr>`; 
+}
+function showStore(partyDetails) {
+    document.querySelector(".stores").innerHTML += partyDetails;
+}
+partyInfo.map(getStoreDetails).forEach(showStore);

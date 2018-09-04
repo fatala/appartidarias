@@ -1,3 +1,12 @@
+{% extends "base.html" %}
+
+{% block js %}
+<script type="text/javascript" src="/static/assets/js/src/graphs.js"></script>
+<script type="text/javascript">CandidateHandler($, "http://localhost:8000")</script>
+{% endblock js %}
+
+{% block content %}
+
 <section class="political">
   <div class="container">
     <div class="row justify-content-center">
@@ -64,3 +73,5 @@
     </div>
   </div>
 </section>
+
+{% endblock content %}
