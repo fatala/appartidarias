@@ -226,3 +226,68 @@ function CandidateHandler($, host) {
     this.waitingFetchCandidates = false;
     this.init();
 }
+
+
+// load partidos
+$.getJSON("/api/parties/", function (response) { 
+    response.map(getPartyDetails).forEach(showStore); 
+});
+
+// load view
+function getPartyDetails(partyInfo) {
+    return `<div class="item-party">
+            <div class="row mb-4 justify-content-center">
+              <div class="col-4 text-center">
+                <img src="/static/img/partidos/${partyInfo.initials}.png" class="img-fluid gray" alt="${partyInfo.name}" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-1 mt-1 p-1">
+                <img src="/static/img/icon_person.png" class="img-fluid" alt="Person" />
+              </div>
+              <div class="col-11">
+                <div class="arrow-progress">
+                  <div class="arrow-bar" role="progressbar" style="width: ${partyInfo.women_ptc}%" aria-valuenow="${partyInfo.women_ptc}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col-1 mt-1 p-1">
+                <img src="/static/img/icon_money.png" class="img-fluid" alt="Money" />
+              </div>
+              <div class="col-11">
+                <div class="arrow-progress">
+                  <div class="arrow-bar" role="progressbar" style="width: ${partyInfo.women_ptc}%" aria-valuenow="${partyInfo.women_ptc}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>
+                </div> 
+              </div>
+            </div>
+
+            <hr>
+            </div>`; 
+}
+function showStore(partyDetails) {
+    document.querySelector(".stores").innerHTML += partyDetails;
+}
+// partyInfo.map(getPartyDetails).forEach(showStore);
+
+// carrega mais partidos
+$(function () {
+    $(".item-party").slice(0, 4).show();
+    $("#loadMore").on('click', function (e) {
+        e.preventDefault();
+        $(".item-party:hidden").slice(0, 4).slideDown();
+        if ($(".item-party:hidden").length == 0) {
+            $("#loadMore").fadeOut('slow');
+        };
+    });
+});
