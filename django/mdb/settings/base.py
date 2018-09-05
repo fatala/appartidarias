@@ -186,6 +186,8 @@ LOGGING = {
     }
 }
 
+HOST = os.environ.get('HOST') or 'http://localhost:8000'
+
 PAGE_SIZE = os.environ.get('PAGE_SIZE') or 15
 
 AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
