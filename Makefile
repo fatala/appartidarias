@@ -18,6 +18,7 @@ deploy:
 
 clean:
 	@find . -name "*.pyc" | xargs rm -f
+	@find . -name "*.log" | xargs rm -f
 	@find . -name "*.pyo" | xargs rm -rf
 	@find . -name "__pycache__" -type d | xargs rm -rf
 	@find . -name "*.DS_Store" | xargs rm -rf

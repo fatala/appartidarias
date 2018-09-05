@@ -1,0 +1,7 @@
+.git
+.gitignore
+CONTRIBUTORS.rst
+README.rst
+venv
+*.db
+*.log

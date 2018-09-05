@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from candidates import views
@@ -19,6 +20,7 @@ urlpatterns = patterns(
     url(r'^api/states/', views.StateList.as_view()),
     url(r'^api/job_roles/', views.JobRoleList.as_view()),
     url(r'^api/parties/', views.PartiesList.as_view()),
+    url(r'^api/meta/parties/', csrf_exempt(views.PoliticalPartyMeta.as_view())),
 
     #  candidates
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),

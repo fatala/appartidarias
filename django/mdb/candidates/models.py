@@ -11,6 +11,11 @@ class PoliticalParty(models.Model):
     directory_state = models.TextField(verbose_name='diretório estadual', null=True)
     directory_city = models.TextField(verbose_name='diretório municipal', null=True)
     obs = models.TextField(null=True)
+    # meta
+    ranking = models.IntegerField(null=True, verbose_name='ranking to partido')
+    size = models.IntegerField(null=True, verbose_name='tamanho do partido')
+    women_ptc = models.FloatField(null=True, verbose_name='porcentagem de mulheres')
+    money_women_pct = models.FloatField(null=True, verbose_name='porcentagem de dinheiro destinado a mulheres')
 
     class Meta:
         verbose_name = 'partido político'

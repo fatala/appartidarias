@@ -35,7 +35,11 @@ class PartySerializer(serializers.ModelSerializer):
         model = PoliticalParty
         fields = (
             'initials',
-            'name'
+            'name',
+            'ranking',
+            'size',
+            'women_ptc',
+            'money_women_pct',
         )
 
 

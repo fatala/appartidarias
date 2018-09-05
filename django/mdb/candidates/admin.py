@@ -5,6 +5,10 @@ from candidates.models import (
 from django.utils.safestring import mark_safe
 
 
+class PoliticalPartyAdmin(admin.ModelAdmin):
+    readonly_fields = ('ranking', 'size', 'women_ptc', 'money_women_pct')
+
+
 class CandidateAdmin(admin.ModelAdmin):
     list_display = ('name_ballot', 'political_party', 'number', 'job_role')
     search_fields = ('name_ballot', 'number')
@@ -39,7 +43,7 @@ class ContactAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
 admin.site.register(Candidate, CandidateAdmin)
-admin.site.register(PoliticalParty)
+admin.site.register(PoliticalParty, PoliticalPartyAdmin)
 admin.site.register(Agenda)
 admin.site.register(JobRole)
 admin.site.register(Comment, CommentAdmin)

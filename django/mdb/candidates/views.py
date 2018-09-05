@@ -1,8 +1,10 @@
 # coding: utf-8
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import TemplateView
-from django.core.mail import send_mail
 from django.conf import settings
+from django.core.mail import send_mail
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from django.views.generic import TemplateView
+from django.views.generic import View
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -11,8 +13,8 @@ from .forms import CommentForm, ContactForm
 from .models import Candidate, PoliticalParty, Agenda, Comment, JobRole
 from .serializers import CandidateSerializer, JobRoleSerializer, PartySerializer, StateSerializer
 
+import json
 import requests
-
 
 class StateList(APIView):
     def get(self, request):
@@ -44,8 +46,11 @@ class CandidateList(APIView):
         page_size = int(query.get('page_size') or settings.PAGE_SIZE)
         page = int(query.get('page') or 1)
 
-        # filter candiadates
         candidates = Candidate.objects.all()
+
+        # filter candiadates
+        if 'sexo' in query:
+            candidates = candidates.filter(gender=query['sexo'])
         if 'estado' in query:
             candidates = candidates.filter(state=query['estado'])
         if 'partido' in query:
@@ -257,3 +262,29 @@ class AgendaCandidates(TemplateView):
         )
 
         return context
+
+
+class PoliticalPartyMeta(View):
+
+    def post(self, request, *args, **kwargs):
+
+        data = json.loads(request.body)
+        parties = []
+
+        for d in data:
+
+            party = PoliticalParty.objects.filter(
+                number=d['party_nb'],
+                initials=d['party_accr']
+            )[0]
+
+            party.ranking = d['ranking']
+            party.size = d['party_size']
+            party.women_ptc = int(d['pct_women']*100)
+            party.money_women_pct = int(d['pct_money_women']*100)
+
+            party.save()
+            parties.append(party)
+
+        serializer = PartySerializer(parties, many=True)
+        return JsonResponse(serializer.data, safe=False)
