@@ -409,3 +409,16 @@ select::-ms-expand {
 		width: 25px;
 	}
 }
+
+
+.item-party {
+  display:none;
+}
+.totop {
+	position: fixed;
+	bottom: 10px;
+	right: 20px;
+}
+.totop a {
+  display: none;
+}

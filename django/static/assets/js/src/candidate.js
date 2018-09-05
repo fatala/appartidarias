@@ -230,12 +230,13 @@ function CandidateHandler($, host) {
 
 // load partidos
 $.getJSON("/api/parties/", function (response) { 
-    response.map(getStoreDetails).forEach(showStore); 
+    response.map(getPartyDetails).forEach(showStore); 
 });
 
 // load view
-function getStoreDetails(partyInfo) {
-    return `<div class="row mb-4 justify-content-center">
+function getPartyDetails(partyInfo) {
+    return `<div class="item-party">
+            <div class="row mb-4 justify-content-center">
               <div class="col-4 text-center">
                 <img src="/static/img/partidos/${partyInfo.initials}.png" class="img-fluid gray" alt="${partyInfo.name}" />
               </div>
@@ -271,9 +272,22 @@ function getStoreDetails(partyInfo) {
               </div>
             </div>
 
-            <hr>`; 
+            <hr>
+            </div>`; 
 }
 function showStore(partyDetails) {
     document.querySelector(".stores").innerHTML += partyDetails;
 }
-partyInfo.map(getStoreDetails).forEach(showStore);
+// partyInfo.map(getPartyDetails).forEach(showStore);
+
+// carrega mais partidos
+$(function () {
+    $(".item-party").slice(0, 4).show();
+    $("#loadMore").on('click', function (e) {
+        e.preventDefault();
+        $(".item-party:hidden").slice(0, 4).slideDown();
+        if ($(".item-party:hidden").length == 0) {
+            $("#loadMore").fadeOut('slow');
+        };
+    });
+});
