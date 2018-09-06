@@ -22,14 +22,14 @@
             </div>
           </div>
 
-          <h1 class="section_title text-center mt-5"><span>Partidos coligados</span></h1>
+          <!--<h1 class="section_title text-center mt-5"><span>Partidos coligados</span></h1>
           
           <div class="coligados pt-3">
             <img src="/static/img/partidos/pr.png" class="col-3 col-md-2" alt="PR" />
             <img src="/static/img/partidos/democratas.png" class="col-3 col-md-2" alt="Democratas" />
             <img src="/static/img/partidos/pp.png" class="col-3 col-md-2" alt="PP" />
             <img src="/static/img/partidos/ptb.png" class="col-3 col-md-2" alt="PTB" />
-          </div>
+          </div> -->
 
           <h2 class="section_title text-center pt-3"><span>Sobre</span></h2>
           <p class="section_text pt-3">{{ party.about }}</p>
@@ -38,33 +38,35 @@
 
           <div class="row">
             <div class="col-6 p-4">
-              <canvas id="candidates_party" width="400" height="400"></canvas>
-            </div>
-            <div class="col-6 pt-5">
               <p class="col_title">% candidatas do partido <span>(referência mínimo 30%)</span></p>
             </div>
+            <div class="col-6 pt-5">
+              <canvas id="candidates_party" width="400" height="400"></canvas>
+            </div>
+            <!--
             <div class="col-6 pt-5">
               <p class="col_title">% candidatas por coligação <span>(referência mínimo 30%)</span></p>
             </div>
             <div class="col-6 p-4">
               <canvas id="candidates_coalition" width="400" height="400"></canvas>
             </div>
-            <div class="col-6 p-4">
+            -->
+            <div class="col-6 pt-5">
               <canvas id="candidates_state" width="400" height="400"></canvas>
             </div>
-            <div class="col-6 pt-5">
+            <div class="col-6 p-4">
               <p class="col_title">% candidatas a dep estadual do partido <span>(referência mínimo 30%)</span></p>
             </div>
-            <div class="col-6 pt-5">
+            <div class="col-6 p-4">
               <p class="col_title">% candidatas a dep federal do partido <span>(referência mínimo 30%)</span></p>
             </div>
-            <div class="col-6 p-4">
+            <div class="col-6 pt-5">
               <canvas id="candidates_federal" width="400" height="400"></canvas>
             </div>
-            <div class="col-6 p-4">
+            <div class="col-6 pt-5">
               <canvas id="candidates_pass" width="400" height="400"></canvas>
             </div>
-            <div class="col-6 pt-5">
+            <div class="col-6 p-4">
               <p class="col_title">% de Repasse do Fundo Especial de Financiamento de Campanha e Fundo Partidário para candidaturas femininas <span>(referência mínimo 30%)</span></p>
             </div>
           </div>
