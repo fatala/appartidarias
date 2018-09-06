@@ -81,6 +81,6 @@ class Command(BaseCommand):
         data = ranking.to_json(orient='records', index=True)
         logger.debug(data)
 
-        resp = requests.post(f'{settings.APPARTIDARIAS_URL}/api/meta/parties/', data=data)
+        resp = requests.post(f'{settings.HOST}/api/meta/parties/', data=data)
 
         logger.debug(f'status_code: {resp.status_code} response: {resp.text}')

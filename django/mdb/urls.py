@@ -22,6 +22,10 @@ urlpatterns = patterns(
     url(r'^api/parties/', views.PartiesList.as_view()),
     url(r'^api/meta/parties/', csrf_exempt(views.PoliticalPartyMeta.as_view())),
 
+    # political party
+    url(r'^parties/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
+    url(r'^parties/(?P<party_id>[0-9]+)/$', views.PoliticalPartyDetail.as_view(), name='political_party_detail'),
+
     #  candidates
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
     url(r'^candidates/list/(?P<type>\w+)/(?P<id>\d+)/$', views.CandidateListFilter.as_view(), name='candidates_list_filter'),

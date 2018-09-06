@@ -171,6 +171,27 @@ class PoliticalPartyListView(TemplateView):
         return context
 
 
+class PoliticalPartyDetail(TemplateView):
+    template_name = 'candidates/political_party_detail.html'
+
+    def get_object(self):
+        return PoliticalParty.objects.get(initials=self.kwargs['party_initials'])
+
+    def get_context_data(self, **kwargs):
+        context = super(PoliticalPartyDetail, self).get_context_data(**kwargs)
+
+        party_id = kwargs['party_id']
+        party = self.get_object()
+        context['party'] = party
+        context['party_img'] = party.initials.lower()
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
+
 class CandidateSearchView(TemplateView):
     template_name = 'candidates/candidate_search.html'
 
@@ -195,7 +216,7 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-
+        context['host'] = settings.HOST
         return context
 
 

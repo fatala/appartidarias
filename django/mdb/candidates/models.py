@@ -4,13 +4,16 @@ from django.utils import timezone
 
 
 class PoliticalParty(models.Model):
-    initials = models.CharField(max_length=128, verbose_name='sigla')
+
+    initials = models.CharField(max_length=128, verbose_name='sigla', unique=True)
     name = models.CharField(max_length=128, verbose_name='nome')
-    number = models.IntegerField(verbose_name='numero')
-    directory_national = models.TextField(verbose_name='diretório nacional', null=True)
-    directory_state = models.TextField(verbose_name='diretório estadual', null=True)
-    directory_city = models.TextField(verbose_name='diretório municipal', null=True)
-    obs = models.TextField(null=True)
+    number = models.IntegerField(verbose_name='numero', unique=True)
+    directory_national = models.TextField(verbose_name='diretório nacional', null=True, blank=True)
+    directory_state = models.TextField(verbose_name='diretório estadual', null=True, blank=True)
+    directory_city = models.TextField(verbose_name='diretório municipal', null=True, blank=True)
+    about = models.TextField(verbose_name='sobre', null=True)
+    obs = models.TextField(null=True, blank=True)
+
     # meta
     ranking = models.IntegerField(null=True, verbose_name='ranking to partido')
     size = models.IntegerField(null=True, verbose_name='tamanho do partido')
