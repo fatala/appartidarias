@@ -240,11 +240,12 @@ $.getJSON("/api/parties/", function (response) {
 
 // load view
 function getPartyDetails(partyInfo) {
-    console.log(partyInfo);
     return '<div class="item-party">' +
             '<div class="row mb-4 justify-content-center">' +
-              '<div class="col-4 text-center">' +
-        '<img src="/static/img/partidos/'+partyInfo.initials.toUpperCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+        '<div class="col-4 text-center">' +
+        '<a href="/parties/' + partyInfo.initials.toUpperCase() + '">' +
+            '<img src="/static/img/partidos/'+partyInfo.initials.toUpperCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+           '</a>' +
               '</div>' +
             '</div>'+
 
