@@ -201,7 +201,7 @@ class PoliticalPartyTemplate(TemplateView):
 
         context['party'] = party
         context['party_img'] = party.initials.lower()
-        context['charts'] = charts
+        context['charts'] = json.dumps(charts)
 
         return context
 
@@ -319,8 +319,8 @@ class PoliticalPartyMeta(View):
 
             party.ranking = d['ranking']
             party.size = d['party_size']
-            party.women_ptc = int(d['pct_women']*100)
-            party.money_women_pct = int(d['pct_money_women']*100)
+            party.women_pct = d['pct_women']
+            party.money_women_pct = d['pct_money_women']
 
             party.save()
             parties.append(party)
@@ -354,7 +354,7 @@ class Stats(View):
             )
 
             stats.size = d['nb_candidates']
-            stats.women_ptc = int(d['pct_women']*100)
+            stats.women_pct = d['pct_women']
             # stats.money_women_pct = int(d['pct_money_women']*100)
 
             stats.save()

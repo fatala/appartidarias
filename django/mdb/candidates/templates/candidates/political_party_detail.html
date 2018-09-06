@@ -2,7 +2,7 @@
 
 {% block js %}
 <script type="text/javascript" src="/static/assets/js/src/graphs.js"></script>
-<script type="text/javascript">PartyCharts("{{ charts }}")")</script>
+<script type="text/javascript">PartyCharts('{{ charts|safe }}')</script>
 {% endblock js %}
 
 {% block content %}
@@ -41,7 +41,7 @@
               <canvas id="candidates_party" width="400" height="400"></canvas>
             </div>
             <div class="col-6 pt-5">
-              <p class="col_title">% candidatas por partido <span>(referência mínimo 30%)</span></p>
+              <p class="col_title">% candidatas do partido <span>(referência mínimo 30%)</span></p>
             </div>
             <div class="col-6 pt-5">
               <p class="col_title">% candidatas por coligação <span>(referência mínimo 30%)</span></p>
@@ -53,10 +53,10 @@
               <canvas id="candidates_state" width="400" height="400"></canvas>
             </div>
             <div class="col-6 pt-5">
-              <p class="col_title">% candidatas a dep estadual por partido <span>(referência mínimo 30%)</span></p>
+              <p class="col_title">% candidatas a dep estadual do partido <span>(referência mínimo 30%)</span></p>
             </div>
             <div class="col-6 pt-5">
-              <p class="col_title">% candidatas a dep federal por partido <span>(referência mínimo 30%)</span></p>
+              <p class="col_title">% candidatas a dep federal do partido <span>(referência mínimo 30%)</span></p>
             </div>
             <div class="col-6 p-4">
               <canvas id="candidates_federal" width="400" height="400"></canvas>

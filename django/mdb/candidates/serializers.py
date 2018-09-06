@@ -38,7 +38,7 @@ class PartySerializer(serializers.ModelSerializer):
             'name',
             'ranking',
             'size',
-            'women_ptc',
+            'women_pct',
             'money_women_pct',
         )
 
@@ -62,11 +62,13 @@ class JobRoleSerializer(serializers.ModelSerializer):
 
 
 class StatsSerializer(serializers.ModelSerializer):
+    job_role_name = serializers.StringRelatedField(source='job_role', read_only=True)
     class Meta:
         model = PartyJobRoleStats
         fields = (
             'political_party',
             'job_role',
+            'job_role_name',
             'size',
             'women_pct',
         )

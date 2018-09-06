@@ -7,7 +7,7 @@ from django.utils.safestring import mark_safe
 
 class PoliticalPartyAdmin(admin.ModelAdmin):
     list_display = ('number', 'initials', 'name')
-    readonly_fields = ('ranking', 'size', 'women_ptc', 'money_women_pct')
+    readonly_fields = ('ranking', 'size', 'women_pct', 'money_women_pct')
 
 
 class CandidateAdmin(admin.ModelAdmin):
