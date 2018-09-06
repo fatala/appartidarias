@@ -290,6 +290,7 @@ function showStore(partyDetails) {
 // carrega mais partidos
 $(function () {
     $(".item-party").slice(0, 4).show();
+    $(".item-party:hidden").slice(0, 4).slideDown();
     $("#loadMore").on('click', function (e) {
         e.preventDefault();
         $(".item-party:hidden").slice(0, 4).slideDown();
@@ -297,4 +298,4 @@ $(function () {
             $("#loadMore").fadeOut('slow');
         };
     });
-});
+})();
