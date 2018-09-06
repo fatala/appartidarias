@@ -204,7 +204,7 @@ select:focus {
 	background: top right transparent url('../img/icon_step.png') no-repeat;
 	background-size: 20px;
 }
-.ranking .load_more {
+.load_more {
 	width: 50px;
 	height: 50px;
 	border: 1px solid #fba919;
@@ -218,7 +218,7 @@ select:focus {
 	-moz-box-shadow: 0 9px 10px rgba(0,0,0,0.08);
 	transition: all 0.3s ease;
 }
-.ranking .load_more:hover {
+.load_more:hover {
 	background-color: #ef9d0e;
 }
 
@@ -420,5 +420,9 @@ select::-ms-expand {
 	right: 20px;
 }
 .totop a {
+  display: none;
+}
+
+.load_more_candidates {
   display: none;
 }

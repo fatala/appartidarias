@@ -2,7 +2,7 @@ function CandidateHandler($, host) {
 
     this.init = function() {
 
-        let selects = [
+        var selects = [
             {
                 name: 'estado',
                 path: '/api/states/'
@@ -16,21 +16,26 @@ function CandidateHandler($, host) {
                 path: '/api/job_roles'
             }
         ];
-        
+
         selects.map(function(select) {
-            this.fetchSelectData(host + select.path, select.name);            
+            this.fetchSelectData(host + select.path, select.name);
         });
 
         selects.map(function(select) {
             this.onSelectRefresh(select.name, '/api/candidates', selects);
         });
 
-        this.setInfinityScroll('#candidates-list', '/api/candidates', selects);
-        // this.fetchCandidates(host + '/api/candidates', selects);
+        this.registerLoadMoreCandidates(host + '/api/candidates', selects);
+    };
+
+    this.registerLoadMoreCandidates = function(host, selects) {
+        this.$("#loadMoreCandidates").on('click', function (e) {
+            e.preventDefault();
+            this.fetchCandidates(host, selects);
+        }.bind(this));
     };
 
     this.logError = function(xhr, err) {
-        // console.log(xhr.responseText);
         console.error(err);
     };
 
@@ -49,7 +54,7 @@ function CandidateHandler($, host) {
     };
 
     this.setInfinityScroll = function(id, host, selects) {
-        $(window).scroll(function() { 
+        $(window).scroll(function() {
             if ($(window).scrollTop() >= $(document).height() - $(window).height() - 1000) {
                 if (!this.waitingFetchCandidates) {
                     this.waitingFetchCandidates = true;
@@ -58,13 +63,13 @@ function CandidateHandler($, host) {
             }
         });
     };
-    
+
     this.fullfill = function(id, data) {
-        let length = data.length;
-        let picker = this.$('#'+id);
-        for (let i = 0; i < length; i++) {
-            let d = data[i];
-            let option = this.$('<option>', {
+        var length = data.length;
+        var picker = this.$('#'+id);
+        for (var i = 0; i < length; i++) {
+            var d = data[i];
+            var option = this.$('<option>', {
                 value: d.value,
                 text: d.name
             });
@@ -73,9 +78,9 @@ function CandidateHandler($, host) {
     };
 
     this.readSelectStates = function(selects){
-        let query = {};
+        var query = {};
         selects.map(function(select) {
-            let value = this.$('#' + select.name).val();
+            var value = this.$('#' + select.name).val();
             if (value != undefined && value.length > 0) {
                 query[select.name] = value;
             }
@@ -83,13 +88,13 @@ function CandidateHandler($, host) {
         return query;
     };
 
-    this.fetchCandidates = function(host, selects, page) {
-        let query = this.readSelectStates(selects);
-        query['page'] = page;
+    this.fetchCandidates = function(host, selects) {
+        var query = this.readSelectStates(selects);
+        query['page'] = this.page + 1;
 
         console.log(query);
 
-        let url = host + '?' +  this.$.param(query);
+        var url = host + '?' +  this.$.param(query);
         console.log(url);
         this.$.ajax({
             url: url,
@@ -105,7 +110,7 @@ function CandidateHandler($, host) {
     };
 
     this.getStatusImg = function(status) {
-        let img = '';
+        var img = '';
 
         console.log(`status: ${status}`);
         if (status === 'P') {
@@ -120,10 +125,10 @@ function CandidateHandler($, host) {
 
         return img;
     };
-    
+
 
     this.buildCandidateUI = function(id, name, description, candidateImg, partyImg, status) {
-        let media = this.$('<div>', {class: 'media border'});
+        var media = this.$('<div>', {class: 'media border'});
 
         // image
         media.append(this.$('<img>', {
@@ -131,17 +136,17 @@ function CandidateHandler($, host) {
             src: candidateImg,
             alt: name
         }));
-        
-        let mediaBody = this.$('<div>', {
+
+        var mediaBody = this.$('<div>', {
             class:'col-5 col-md-8 align-center',
             text: description
         });
         media.append(mediaBody);
-        
+
         mediaBody.append(this.$('<h5>', {class: 'align-text-bottom', text: name}));
 
         // party
-        let partyDiv = this.$('<div>', {class: 'col-3 col-md-2 align-center'});
+        var partyDiv = this.$('<div>', {class: 'col-3 col-md-2 align-center'});
         partyDiv.append(this.$('<img>', {
             src: partyImg,
             class: 'brand img-fluid',
@@ -152,15 +157,13 @@ function CandidateHandler($, host) {
         this.$('#' + id).append(media);
 
         // candidature status
-        let statusDiv = this.$('<div>', {class: 'col-1 align-center'});
+        var statusDiv = this.$('<div>', {class: 'col-1 align-center'});
         statusDiv.append(this.$('<img>', {
             src: this.getStatusImg(status),
             class: 'icon',
             alt: status
         }));
         media.append(statusDiv);
-        
-
     };
 
     this.onSelectRefresh = function(id, host, selects) {
@@ -192,8 +195,8 @@ function CandidateHandler($, host) {
     };
 
     this.getPartyImg = function(candidate) {
-        let p = candidate.political_party_initials.toLowerCase().replace(/ /g, '');
-        let path = `/static/img/partidos/${p}.png`;
+        var p = candidate.political_party_initials.toLowerCase().replace(/ /g, '');
+        var path = `/static/img/partidos/${p}.png`;
         console.log(p);
         return path;
     };
@@ -203,11 +206,11 @@ function CandidateHandler($, host) {
 
         result.map(function(candidate) {
 
-            let name = this.getCandidateName(candidate);
-            let description = this.getCandidateDescription(candidate);
-            let partyImg = this.getPartyImg(candidate);
-            let img = this.getCandidateImg(candidate);
-            let status = this.getCandidateStatus(candidate);
+            var name = this.getCandidateName(candidate);
+            var description = this.getCandidateDescription(candidate);
+            var partyImg = this.getPartyImg(candidate);
+            var img = this.getCandidateImg(candidate);
+            var status = this.getCandidateStatus(candidate);
 
             this.buildCandidateUI(
                 'candidates-list',
@@ -219,61 +222,63 @@ function CandidateHandler($, host) {
             );
 
         }.bind(this));
+
+        this.$(".load_more_candidates").show();
     };
 
     this.$ = $;
-    this.page = 1;
+    this.page = 0;
     this.waitingFetchCandidates = false;
     this.init();
 }
 
 
 // load partidos
-$.getJSON("/api/parties/", function (response) { 
-    response.map(getPartyDetails).forEach(showStore); 
+$.getJSON("/api/parties/", function (response) {
+    response.map(getPartyDetails).forEach(showStore);
 });
 
 // load view
 function getPartyDetails(partyInfo) {
-    return `<div class="item-party">
-            <div class="row mb-4 justify-content-center">
-              <div class="col-4 text-center">
-                <img src="/static/img/partidos/${partyInfo.initials}.png" class="img-fluid gray" alt="${partyInfo.name}" />
-              </div>
-            </div>
+    return '<div class="item-party">' +
+            '<div class="row mb-4 justify-content-center">' +
+              '<div class="col-4 text-center">' +
+                '<img src="/static/img/partidos/'+partyInfo.initials+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+              '</div>' +
+            '</div>'+
 
-            <div class="row">
-              <div class="col-1 mt-1 p-1">
-                <img src="/static/img/icon_person.png" class="img-fluid" alt="Person" />
-              </div>
-              <div class="col-11">
-                <div class="arrow-progress">
-                  <div class="arrow-bar" role="progressbar" style="width: ${partyInfo.women_ptc}%" aria-valuenow="${partyInfo.women_ptc}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div> 
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div> 
-              </div>
-            </div>
+            '<div class="row">' +
+              '<div class="col-1 mt-1 p-1">' +
+                '<img src="/static/img/icon_person.png" class="img-fluid" alt="Person" />' +
+              '</div>'+
+              '<div class="col-11">'+
+                '<div class="arrow-progress">'+
+                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_ptc+'%" aria-valuenow="'+partyInfo.women_ptc+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                '</div>' +
+                '<div class="progress">' +
+                  '<div class="progress-bar" role="progressbar" style="width: '+partyInfo.money_women_pct+'%" aria-valuenow="'+partyInfo.money_women_pct+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
 
-            <hr>
+            '<hr>' +
 
-            <div class="row">
-              <div class="col-1 mt-1 p-1">
-                <img src="/static/img/icon_money.png" class="img-fluid" alt="Money" />
-              </div>
-              <div class="col-11">
-                <div class="arrow-progress">
-                  <div class="arrow-bar" role="progressbar" style="width: ${partyInfo.women_ptc}%" aria-valuenow="${partyInfo.women_ptc}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div> 
-                <div class="progress">
-                  <div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>
-                </div> 
-              </div>
-            </div>
+            '<div class="row">' +
+              '<div class="col-1 mt-1 p-1">' +
+                '<img src="/static/img/icon_money.png" class="img-fluid" alt="Money" />' +
+              '</div>' +
+              '<div class="col-11">' +
+                '<div class="arrow-progress">' +
+                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_ptc+'%" aria-valuenow="'+partyInfo.women_ptc+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                '</div>' +
+                '<div class="progress">' +
+                  '<div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
 
-            <hr>
-            </div>`; 
+            '<hr>'+
+            '</div>';
 }
 function showStore(partyDetails) {
     document.querySelector(".stores").innerHTML += partyDetails;
