@@ -1,4 +1,7 @@
 # coding: utf-8
+import json
+import requests
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -10,11 +13,22 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from .forms import CommentForm, ContactForm
-from .models import Candidate, PoliticalParty, Agenda, Comment, JobRole
-from .serializers import CandidateSerializer, JobRoleSerializer, PartySerializer, StateSerializer
+from .models import (
+    Candidate,
+    PoliticalParty,
+    Agenda,
+    Comment,
+    JobRole,
+    PartyJobRoleStats,
+)
+from .serializers import (
+    CandidateSerializer,
+    JobRoleSerializer,
+    PartySerializer,
+    StateSerializer,
+    StatsSerializer,
+)
 
-import json
-import requests
 
 class StateList(APIView):
     def get(self, request):
@@ -157,8 +171,8 @@ class PoliticalPartyListView(TemplateView):
 
         political_parties = PoliticalParty.objects.order_by('name')
 
+        # paginate
         paginator = Paginator(political_parties, self.page_size)
-
         page = self.request.GET.get('page', 1)
         try:
             object_list = paginator.page(page)
@@ -170,19 +184,24 @@ class PoliticalPartyListView(TemplateView):
 
         return context
 
-
-class PoliticalPartyDetail(TemplateView):
+    
+class PoliticalPartyTemplate(TemplateView):
     template_name = 'candidates/political_party_detail.html'
 
     def get_object(self):
         return PoliticalParty.objects.get(initials=self.kwargs['party_initials'])
 
     def get_context_data(self, **kwargs):
-        context = super(PoliticalPartyDetail, self).get_context_data(**kwargs)
-
+        context = super(PoliticalPartyTemplate, self).get_context_data(**kwargs)
         party = self.get_object()
+
+        stats = PartyJobRoleStats.objects.filter(political_party=party)
+        charts = StatsSerializer(stats, many=True).data
+        charts.append(PartySerializer(party).data)
+
         context['party'] = party
         context['party_img'] = party.initials.lower()
+        context['charts'] = charts
 
         return context
 
@@ -293,10 +312,10 @@ class PoliticalPartyMeta(View):
 
         for d in data:
 
-            party = PoliticalParty.objects.filter(
+            party = PoliticalParty.objects.get(
                 number=d['party_nb'],
                 initials=d['party_accr']
-            )[0]
+            )
 
             party.ranking = d['ranking']
             party.size = d['party_size']
@@ -307,4 +326,39 @@ class PoliticalPartyMeta(View):
             parties.append(party)
 
         serializer = PartySerializer(parties, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+
+class Stats(View):
+
+    def post(self, request, *args, **kwargs):
+
+        data = json.loads(request.body)
+
+        stats_array = []
+        for d in data:
+
+            print(d)
+
+            party = PoliticalParty.objects.get(
+                number=d['party_nb'],
+            )
+
+            job_role = JobRole.objects.get(
+                code=d['job_role_nb'],
+            )
+
+            stats, _ = PartyJobRoleStats.objects.get_or_create(
+                job_role=job_role,
+                political_party=party,
+            )
+
+            stats.size = d['nb_candidates']
+            stats.women_ptc = int(d['pct_women']*100)
+            # stats.money_women_pct = int(d['pct_money_women']*100)
+
+            stats.save()
+            stats_array.append(stats)
+
+        serializer = StatsSerializer(stats_array, many=True)
         return JsonResponse(serializer.data, safe=False)

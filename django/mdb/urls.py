@@ -21,10 +21,11 @@ urlpatterns = patterns(
     url(r'^api/job_roles/', views.JobRoleList.as_view()),
     url(r'^api/parties/', views.PartiesList.as_view()),
     url(r'^api/meta/parties/', csrf_exempt(views.PoliticalPartyMeta.as_view())),
+    url(r'^api/meta/stats/', csrf_exempt(views.Stats.as_view())),
 
     # political party
     url(r'^parties/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
-    url(r'^parties/(?P<party_initials>\w+)/$', views.PoliticalPartyDetail.as_view(), name='political_party_detail'),
+    url(r'^parties/(?P<party_initials>\w+)/$', views.PoliticalPartyTemplate.as_view(), name='political_party_template'),
 
     #  candidates
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),

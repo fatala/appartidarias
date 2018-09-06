@@ -25,7 +25,7 @@ class PoliticalParty(models.Model):
         verbose_name_plural = 'partidos políticos'
 
     def __str__(self):
-        return self.name
+        return f'{self.number} - {self.initials}'
 
 
 class Agenda(models.Model):
@@ -45,8 +45,8 @@ class State(models.Model):
 
 
 class JobRole(models.Model):
-    name = models.CharField('Cargo', max_length=128)
-    code = models.CharField('Código', max_length=128, null=True)
+    name = models.CharField('Cargo', max_length=128, unique=True)
+    code = models.CharField('Código', max_length=128, null=True, unique=True)
     initials = models.CharField('Sigla', max_length=128, null=True)
     counting = models.IntegerField('Contagem', default=0)
 
@@ -91,6 +91,7 @@ class Candidate(models.Model):
     elected = models.BooleanField(blank=True, verbose_name='Eleita antes de 2012?', default=False)
     state = models.CharField(default='BR', max_length=100, verbose_name='Estado')
 
+    year = models.CharField(max_length=4, verbose_name='Ano', default='2018')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=FEMALE, verbose_name='Sexo')
     birth_date = models.DateField(verbose_name='Data de nascimento', auto_now=False, auto_now_add=False, blank=True)
     marital_status = models.CharField(max_length=128, verbose_name='Estado civil')
@@ -147,3 +148,11 @@ class Expenses(models.Model):
     received = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total recebido')
     paid = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total Gasto')
     created_at = models.DateTimeField(default=timezone.now, verbose_name='Data')    
+
+
+class PartyJobRoleStats(models.Model):
+
+    political_party = models.ForeignKey(PoliticalParty, verbose_name='Partido')
+    job_role = models.ForeignKey(JobRole, verbose_name='Cargo')
+    size = models.IntegerField(null=True, verbose_name='Número de candidatos nesse cargo por partido')
+    women_pct = models.FloatField(null=True, verbose_name='porcentagem de mulheres')

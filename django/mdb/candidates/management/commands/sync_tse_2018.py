@@ -86,18 +86,22 @@ class Command(BaseCommand):
                 gender = 'F' if 'FEM.' == profile.get('descricaoSexo') else 'M'
 
                 political_party, created = PoliticalParty.objects.get_or_create(
-                    initials=profile.get('partido').get('sigla'),
-                    name=profile.get('partido').get('nome'),
-                    number=profile.get('partido').get('numero')
+                    number=profile.get('partido').get('numero'),
+                    defaults = {
+                        'initials': profile.get('partido').get('sigla').upper(),
+                        'name': profile.get('partido').get('nome'),
+                    }
                 )
 
                 job_role, created = JobRole.objects.get_or_create(
-                    name=profile.get('cargo').get('nome')
+                    name=profile.get('cargo').get('nome'),
+                    code=candidate['CD_CARGO'],
                 )
 
                 candidate_model, created = Candidate.objects.update_or_create(
                     number=profile.get('numero'),
                     defaults= {
+                        'year': '2018',
                         'id_tse': profile.get('id'),
                         'gender': gender,
                         'name' : profile.get('nomeCompleto'),

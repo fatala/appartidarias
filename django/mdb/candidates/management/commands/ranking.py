@@ -50,8 +50,28 @@ class Command(BaseCommand):
                 'received_total'
             ] = consolidado['totalRecebido'] if consolidado else None        
 
-        logger.debug('calculate party ranking')
+
         # CALCULATE RANKING
+        logger.debug('calculating stats')
+        df_cargo_genero = df_cand.groupby(['NR_PARTIDO', 'DS_CARGO', 'CD_CARGO', 'DS_GENERO']).agg({'SQ_CANDIDATO': 'count'})
+        df_cargo_genero = df_cargo_genero.reset_index().merge(
+            df_cargo_genero.groupby(['NR_PARTIDO', 'DS_CARGO', 'CD_CARGO']).sum().reset_index(),
+            how='left', on=(['NR_PARTIDO', 'DS_CARGO', 'CD_CARGO'])
+        )
+        df_cargo_genero['pct_women'] = df_cargo_genero['SQ_CANDIDATO_x'] / df_cargo_genero['SQ_CANDIDATO_y']
+        df_cargo_genero = df_cargo_genero.loc[
+            df_cargo_genero['DS_GENERO'] == 'FEMININO',
+            ['NR_PARTIDO', 'DS_CARGO', 'CD_CARGO', 'SQ_CANDIDATO_y', 'pct_women']
+        ]
+        df_cargo_genero.columns = ['party_nb', 'job_role', 'job_role_nb', 'nb_candidates', 'pct_women']
+        data = df_cargo_genero.to_json(orient='records')
+        logger.debug(f'stats data: {data}')
+        resp = requests.post(f'{settings.HOST}/api/meta/stats/', data=data)
+        logger.debug(f' => status_code: {resp.status_code} response: {resp.text}')
+
+
+        # CALCULATE RANKING
+        logger.debug('calculating party ranking')
         partidos = df_cand.groupby('NR_PARTIDO').agg({'SG_PARTIDO': 'max', 'NM_PARTIDO': 'min', 'SQ_CANDIDATO': 'count'})
         # women pct
         cand_sex_percent = (
@@ -70,8 +90,6 @@ class Command(BaseCommand):
         ranking = pd.merge(woman_money, partidos, on='NR_PARTIDO', how='inner')
         # ranking
         ranking['ranking'] = ranking['SQ_CANDIDATO_x'] / ranking['SQ_CANDIDATO_x'].max() * ranking['received_party'] / ranking['received_party'].max()
-
-        # RENAME RANKING
         ranking.sort_values('ranking', ascending=False, inplace=True)
         ranking['index'] = range(1, len(ranking) + 1)
         ranking = ranking.loc[:, ('index', 'NR_PARTIDO', 'SQ_CANDIDATO_x', 'received_party', 'SG_PARTIDO', 'SQ_CANDIDATO_y')]
@@ -79,8 +97,6 @@ class Command(BaseCommand):
 
         logger.debug('send data to app')
         data = ranking.to_json(orient='records', index=True)
-        logger.debug(data)
-
+        logger.debug(f'ranking data: {data}')
         resp = requests.post(f'{settings.HOST}/api/meta/parties/', data=data)
-
-        logger.debug(f'status_code: {resp.status_code} response: {resp.text}')
+        logger.debug(f'ranking => status_code: {resp.status_code} response: {resp.text}')
