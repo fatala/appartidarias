@@ -253,7 +253,7 @@ function getPartyDetails(partyInfo) {
               '</div>'+
               '<div class="col-11">'+
                 '<div class="arrow-progress">'+
-                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_ptc+'%" aria-valuenow="'+partyInfo.women_ptc+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_pct+'%" aria-valuenow="'+partyInfo.women_pct+'" aria-valuemin="0" aria-valuemax="100"></div>' +
                 '</div>' +
                 '<div class="progress">' +
                   '<div class="progress-bar" role="progressbar" style="width: '+partyInfo.money_women_pct+'%" aria-valuenow="'+partyInfo.money_women_pct+'" aria-valuemin="0" aria-valuemax="100"></div>' +
@@ -269,7 +269,7 @@ function getPartyDetails(partyInfo) {
               '</div>' +
               '<div class="col-11">' +
                 '<div class="arrow-progress">' +
-                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_ptc+'%" aria-valuenow="'+partyInfo.women_ptc+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_pct+'%" aria-valuenow="'+partyInfo.women_pct+'" aria-valuemin="0" aria-valuemax="100"></div>' +
                 '</div>' +
                 '<div class="progress">' +
                   '<div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>' +

@@ -17,7 +17,7 @@ class PoliticalParty(models.Model):
     # meta
     ranking = models.IntegerField(null=True, verbose_name='ranking to partido')
     size = models.IntegerField(null=True, verbose_name='tamanho do partido')
-    women_ptc = models.FloatField(null=True, verbose_name='porcentagem de mulheres')
+    women_pct = models.FloatField(null=True, verbose_name='porcentagem de mulheres')
     money_women_pct = models.FloatField(null=True, verbose_name='porcentagem de dinheiro destinado a mulheres')
 
     class Meta:
