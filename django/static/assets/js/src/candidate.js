@@ -91,6 +91,7 @@ function CandidateHandler($, host) {
     this.fetchCandidates = function(host, selects) {
         var query = this.readSelectStates(selects);
         query['page'] = this.page + 1;
+        query['sexo'] = 'F';
 
         console.log(query);
 
