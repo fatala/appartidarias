@@ -8,6 +8,5 @@ class Command(BaseCommand):
         Candidate.objects.all().delete()
         JobRole.objects.all().delete()
         Expenses.objects.all().delete()
-        Contact.objects.all().delete()
         Comment.objects.all().delete()
         PoliticalParty.objects.all().delete()

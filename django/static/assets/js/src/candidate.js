@@ -240,10 +240,11 @@ $.getJSON("/api/parties/", function (response) {
 
 // load view
 function getPartyDetails(partyInfo) {
+    console.log(partyInfo);
     return '<div class="item-party">' +
             '<div class="row mb-4 justify-content-center">' +
               '<div class="col-4 text-center">' +
-                '<img src="/static/img/partidos/'+partyInfo.initials+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+        '<img src="/static/img/partidos/'+partyInfo.initials.toUpperCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
               '</div>' +
             '</div>'+
 
@@ -253,10 +254,10 @@ function getPartyDetails(partyInfo) {
               '</div>'+
               '<div class="col-11">'+
                 '<div class="arrow-progress">'+
-                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_ptc+'%" aria-valuenow="'+partyInfo.women_ptc+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                  '<div class="arrow-bar" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>' +
                 '</div>' +
                 '<div class="progress">' +
-                  '<div class="progress-bar" role="progressbar" style="width: '+partyInfo.money_women_pct+'%" aria-valuenow="'+partyInfo.money_women_pct+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                  '<div class="progress-bar" role="progressbar" style="width: '+100*partyInfo.women_pct+'%" aria-valuenow="'+partyInfo.women_pct+'" aria-valuemin="0" aria-valuemax="100"></div>' +
                 '</div>' +
               '</div>' +
             '</div>' +
@@ -269,10 +270,10 @@ function getPartyDetails(partyInfo) {
               '</div>' +
               '<div class="col-11">' +
                 '<div class="arrow-progress">' +
-                  '<div class="arrow-bar" role="progressbar" style="width: '+partyInfo.women_ptc+'%" aria-valuenow="'+partyInfo.women_ptc+'" aria-valuemin="0" aria-valuemax="100"></div>' +
+                  '<div class="arrow-bar" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>' +
                 '</div>' +
                 '<div class="progress">' +
-                  '<div class="progress-bar" role="progressbar" style="width: ${partyInfo.money_women_pct}%" aria-valuenow="${partyInfo.money_women_pct}" aria-valuemin="0" aria-valuemax="100"></div>' +
+                  '<div class="progress-bar" role="progressbar" style="width: '+ 100 * partyInfo.money_women_pct + '%" aria-valuenow="' + partyInfo.money_women_pct + '" aria-valuemin="0" aria-valuemax="100"></div>' +
                 '</div>' +
               '</div>' +
             '</div>' +
