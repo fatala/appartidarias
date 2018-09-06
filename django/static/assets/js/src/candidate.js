@@ -244,7 +244,7 @@ function getPartyDetails(partyInfo) {
             '<div class="row mb-4 justify-content-center">' +
         '<div class="col-4 text-center">' +
         '<a href="/parties/' + partyInfo.initials.toUpperCase() + '">' +
-            '<img src="/static/img/partidos/'+partyInfo.initials.toUpperCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+          '<img src="/static/img/partidos/'+partyInfo.initials.toLowerCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
            '</a>' +
               '</div>' +
             '</div>'+
