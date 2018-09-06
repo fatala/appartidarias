@@ -24,7 +24,7 @@ urlpatterns = patterns(
 
     # political party
     url(r'^parties/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
-    url(r'^parties/(?P<party_id>[0-9]+)/$', views.PoliticalPartyDetail.as_view(), name='political_party_detail'),
+    url(r'^parties/(?P<party_initials>\w+)/$', views.PoliticalPartyDetail.as_view(), name='political_party_detail'),
 
     #  candidates
     url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),

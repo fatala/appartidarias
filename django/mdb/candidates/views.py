@@ -180,7 +180,6 @@ class PoliticalPartyDetail(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(PoliticalPartyDetail, self).get_context_data(**kwargs)
 
-        party_id = kwargs['party_id']
         party = self.get_object()
         context['party'] = party
         context['party_img'] = party.initials.lower()
