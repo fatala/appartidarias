@@ -136,9 +136,21 @@ select:focus {
 .candidates .media {
 	margin-bottom: 10px;
 	background-color: rgba(0,0,0,0.03);
+	border: 1px solid rgba(0,0,0,0.08);
 	padding: 10px;
 	display: table;
 	width: 100%;
+}
+.candidates a.media {
+	color: #454545;
+}
+.candidates .media:hover {
+	border: 1px solid rgba(0,0,0,0.15);
+	background-color: rgba(0,0,0,0.02);
+	box-shadow: 0 3px 5px rgba(0,0,0,0.09);
+	-moz-box-shadow: 0 3px 5px rgba(0,0,0,0.09);
+	-webkit-box-shadow: 0 3px 5px rgba(0,0,0,0.09);
+	text-decoration: none;
 }
 .candidates .align-center {
 	display: table-cell; 

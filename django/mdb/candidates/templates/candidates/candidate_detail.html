@@ -1,11 +1,11 @@
 <!-- header content -->
-<section class="container-fluid home">
+<section class="container-fluid inside-detail">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col col-12 col-sm-3 col-lg-3 text-center">
-        <img src="/static/img/logo_appartidarias.png" alt="appartidárias" />
+      <div class="col col-12 col-sm-3 col-lg-3 text-center head">
+        <a href="/"><img src="/static/img/logo_appartidarias.png" alt="appartidárias" /></a>
       </div>
-      <div class="col col-12 col-sm-6 col-lg-4 mt-4">
+      <div class="d-none d-sm-block col-sm-6 col-lg-4 mt-4">
         <h1>Por mais mulheres eleitas no legislativo</h1>
       </div>
     </div>
@@ -31,21 +31,21 @@
         <div class="panel-body">
 
             <div class="media">
-                <div class="mr-5">
+                <div class="mr-4">
                     <img class="media-object border" src="{{ candidate.picture_url }}">
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">{{ candidate.name }}</h4>
                     <br>
-                    <p><b>Cargo: </b>{{ candidate.job_role.name }}</p>
-                    <p><b>Número na urna: </b>{{ candidate.number }}</p>
-                    <p><b>Partido: </b>{{ candidate.political_party.name }} - {{ candidate.political_party.number }}</p>
-                    <p><b>Coligação: </b>{{ candidate.coalition }}</p>
-                    {% if candidate.elected %}<p><b>Eleita em 2012: </b>{% if candidate.elected == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
-                    {% if candidate.reelection %}<p><b>Reeleição: </b>{% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
-                    {% if candidate.twitter %}<p><b>Twitter:</b> <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
-                    {% if candidate.facebook %}<p><b>Facebook:</b> <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
-                    {% if candidate.instagram %}<p><b>Instagram:</b> <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
+                    <p>Cargo: {{ candidate.job_role.name }}</p>
+                    <p>Número na urna: {{ candidate.number }}</p>
+                    <p>Partido: {{ candidate.political_party.name }} - {{ candidate.political_party.number }}</p>
+                    <p>Coligação: {{ candidate.coalition }}</p>
+                    {% if candidate.elected %}<p>Eleita em 2012: {% if candidate.elected == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
+                    {% if candidate.reelection %}<p>Reeleição: {% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
+                    {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
+                    {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
+                    {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
                 </div>
             </div>
         </div>
@@ -53,29 +53,31 @@
 
     <div class="panel panel-default mt-5">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Perfil</h3>
+                    <h3 class="section_title"><span>Perfil</span></h3>
                 </div>
                 <div class="panel-body">
-                    <p><b>Data nascimento: </b>{{ candidate.birth_date }}</p>
-                    <p><b>Estado civil: </b>{{ candidate.marital_status }}</p>
-                    <p><b>Escolaridade: </b>{{ candidate.education }}</p>
-                    <p><b>Ocupação: </b>{{ candidate.job }}</p>
-                    <p><b>Total bens: </b>{{ candidate.property_value }}</p>
+                    <br>
+                    <p>Data nascimento: {{ candidate.birth_date }}</p>
+                    <p>Estado civil: {{ candidate.marital_status }}</p>
+                    <p>Escolaridade: {{ candidate.education }}</p>
+                    <p>Ocupação: {{ candidate.job }}</p>
+                    <p>Total bens: {{ candidate.property_value }}</p>
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Financiamento</h3>
+                    <h3 class="section_title"><span>Financiamento</span></h3>
                 </div>
                 <div class="panel-body">
-                    <p><b>Data última atualização: </b>{{ budget.dataUltimaAtualizacaoContas }}</p>
-                    <p><b>Recursos recebidos: </b>R$ {{ budget.dadosConsolidados.totalRecebido|default_if_none:"0" }}</p>
-                    <p><b>Despesas contratadas: </b>R$ {{ budget.despesas.totalDespesasContratadas|default_if_none:"0" }}</p>
-                    <p><b>Despesas pagas: </b>R$ {{ budget.despesas.totalDespesasPagas|default_if_none:"0" }}</p>
-                    <p><b>Limite de gasto: </b>R$ {{ budget.despesas.valorLimiteDeGastos|default_if_none:"0" }}</p>
+                    <br>
+                    <p>Data última atualização: {{ budget.dataUltimaAtualizacaoContas }}</p>
+                    <p>Recursos recebidos: R$ {{ budget.dadosConsolidados.totalRecebido|default_if_none:"0" }}</p>
+                    <p>Despesas contratadas: R$ {{ budget.despesas.totalDespesasContratadas|default_if_none:"0" }}</p>
+                    <p>Despesas pagas: R$ {{ budget.despesas.totalDespesasPagas|default_if_none:"0" }}</p>
+                    <p>Limite de gasto: R$ {{ budget.despesas.valorLimiteDeGastos|default_if_none:"0" }}</p>
                 </div>
             </div>
         </div>
@@ -83,9 +85,10 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">Pauta</h3>
+            <h3 class="section_title"><span>Pauta</span></h3>
         </div>
         <div class="panel-body">
+            <br>
             <h4>{{ candidate.agenda.name }}</h4>
             <p>{{ candidate.projects }}</p>
         </div>

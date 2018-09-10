@@ -129,7 +129,7 @@ function CandidateHandler($, host) {
 
 
     this.buildCandidateUI = function(id, candidateId, name, description, candidateImg, partyImg, status) {
-        var media = this.$('<a>', {class: 'media border', href: '/candidates/detail/' + candidateId});
+        var media = this.$('<a>', {class: 'media', href: '/candidates/detail/' + candidateId});
 
         // image
         media.append(this.$('<img>', {
