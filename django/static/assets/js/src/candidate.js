@@ -128,8 +128,8 @@ function CandidateHandler($, host) {
     };
 
 
-    this.buildCandidateUI = function(id, name, description, candidateImg, partyImg, status) {
-        var media = this.$('<div>', {class: 'media border'});
+    this.buildCandidateUI = function(id, candidateId, name, description, candidateImg, partyImg, status) {
+        var media = this.$('<a>', {class: 'media border', href: '/candidates/detail/' + candidateId});
 
         // image
         media.append(this.$('<img>', {
@@ -202,6 +202,10 @@ function CandidateHandler($, host) {
         return path;
     };
 
+    this.getCandidateId = function(candidate) {
+        return 1;
+    }
+
     this.displayCandidates = function(result) {
         console.log(result);
 
@@ -212,9 +216,11 @@ function CandidateHandler($, host) {
             var partyImg = this.getPartyImg(candidate);
             var img = this.getCandidateImg(candidate);
             var status = this.getCandidateStatus(candidate);
+            var id = this.getCandidateId(candidate);
 
             this.buildCandidateUI(
                 'candidates-list',
+                id,
                 name,
                 description,
                 img,
