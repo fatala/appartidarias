@@ -4,33 +4,18 @@ import time
 import logging
 import requests
 
-from utils import store_json, concat, download_file
+from utils import (
+    store_json,
+    concat,
+    download_file,
+    fetch_2018_candidate_expenses,
+    fetch_2018_candidate,
+)
 
 from django.core.management.base import BaseCommand
 from candidates.models import Candidate, PoliticalParty, JobRole, Expenses
 
 logger = logging.getLogger('mdb')
-
-
-def fetch_2018_candidate_expenses(**kwargs):
-    host = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2022802018/2018/'
-    path = '{estado}/{cargo}/{partido}/{urna}/{candidate}'
-    url = host + path.format(**kwargs)
-    logger.debug(f'fetch_expenses: {url}')
-    return requests.get(url).json()
-
-
-def fetch_2018_candidate(id_, state, year='2018', election='2022802018'):
-    host = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/'
-    path = '{year}/{state}/{election}/candidato/{id_}'
-    url = host + path.format(
-        id_=id_,
-        state=state,
-        election=election,
-        year=year,
-    )
-    logger.debug(f'fetch_candidate: {url}')
-    return requests.get(url).json()
 
 
 class Command(BaseCommand):
@@ -97,6 +82,10 @@ class Command(BaseCommand):
                     name=profile.get('cargo').get('nome'),
                     code=candidate['CD_CARGO'],
                 )
+
+                if not created and job_role.code is None:
+                    job_role.code = candidate['CD_CARGO']
+                    job_role.save()
 
                 candidate_model, created = Candidate.objects.update_or_create(
                     number=profile.get('numero'),

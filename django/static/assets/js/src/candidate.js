@@ -90,8 +90,10 @@ function CandidateHandler($, host) {
 
     this.fetchCandidates = function(host, selects) {
         var query = this.readSelectStates(selects);
-        query['page'] = this.page + 1;
+
+        query['ano'] = '2018';
         query['sexo'] = 'F';
+        query['page'] = this.page + 1;
 
         console.log(query);
 
@@ -128,8 +130,19 @@ function CandidateHandler($, host) {
     };
 
 
-    this.buildCandidateUI = function(id, candidateId, name, description, candidateImg, partyImg, status) {
-        var media = this.$('<a>', {class: 'media border', href: '/candidates/detail/' + candidateId});
+    this.buildCandidateUI = function(
+        id,
+        candidateId,
+        name,
+        description,
+        candidateImg,
+        partyImg,
+        status
+    ) {
+        var media = this.$('<a>', {
+            class: 'media border',
+            href: '/candidates/detail/' + candidateId
+        });
 
         // image
         media.append(this.$('<img>', {
@@ -203,8 +216,8 @@ function CandidateHandler($, host) {
     };
 
     this.getCandidateId = function(candidate) {
-        return 1;
-    }
+        return candidate.id;
+    };
 
     this.displayCandidates = function(result) {
         console.log(result);

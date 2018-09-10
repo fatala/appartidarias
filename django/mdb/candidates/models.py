@@ -47,7 +47,7 @@ class State(models.Model):
 class JobRole(models.Model):
     name = models.CharField('Cargo', max_length=128, unique=True)
     code = models.CharField('Código', max_length=128, null=True, unique=True)
-    initials = models.CharField('Sigla', max_length=128, null=True)
+    initials = models.CharField('Sigla', max_length=128, null=True, blank=True)
     counting = models.IntegerField('Contagem', default=0)
 
     class Meta:
