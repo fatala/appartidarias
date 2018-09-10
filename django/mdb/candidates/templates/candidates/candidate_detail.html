@@ -1,140 +1,97 @@
+<!-- header content -->
+<section class="container-fluid home">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-12 col-sm-3 col-lg-3 text-center">
+        <img src="/static/img/logo_appartidarias.png" alt="appartidárias" />
+      </div>
+      <div class="col col-12 col-sm-6 col-lg-4 mt-4">
+        <h1>Por mais mulheres eleitas no legislativo</h1>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /header content -->
+
 {% extends "base.html" %}
 
 {% block title %} - {{ candidate.name_ballot }} {{ candidate.number }}{% endblock title %}
 
 {% block content %}
 
-{% if success %}
-<div class="alert alert-success" role="alert">Obrigado! Seu comentário será publicado em alguns minutos.</div>
-{% endif %}
+<div class="container candidates-details mt-3">
 
-{% if errors %}
-<div class="alert alert-danger" role="alert">Erro! Não foi possível enviar seu comentário. Tente novamente.</div>
-{% endif %}
-
-
-<div class="page-header">
-  <h1>{{ candidate.name_ballot }} <small>{{ candidate.number }}</small></h1>
-</div>
-
-<div class="panel panel-default">
-<!-- Default panel contents -->
-    <div class="panel-heading">
-        <h3 class="panel-title">Dados pessoais</h3>
+    <div class="page-header">
+      <h1>{{ candidate.name_ballot }} <small>{{ candidate.number }}</small></h1>
+      <hr>
     </div>
-    <div class="panel-body">
 
-        <div class="media">
-            <div class="media-left media-top">
-                <a href="#">
-                <img class="media-object" src="{{ candidate.picture_url }}">
-                </a>
-            </div>
-            <div class="media-body">
-                <h4 class="media-heading">{{ candidate.name }}</h4>
-                <br>
-                <p><b>Cargo: </b>{{ candidate.job_role.name }}</p>
-                <p><b>Número na urna: </b>{{ candidate.number }}</p>
-                <p><b>Partido: </b>{{ candidate.political_party.name }} - {{ candidate.political_party.number }}</p>
-                <p><b>Coligação: </b>{{ candidate.coalition }}</p>
-                {% if candidate.elected %}<p><b>Eleita em 2012: </b>{% if candidate.elected == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
-                {% if candidate.reelection %}<p><b>Reeleição: </b>{% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
-                {% if candidate.twitter %}<p><b>Twitter:</b> <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
-                {% if candidate.facebook %}<p><b>Facebook:</b> <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
-                {% if candidate.instagram %}<p><b>Instagram:</b> <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
+    <div class="panel panel-default">
+    <!-- Default panel contents -->
+        <div class="panel-body">
+
+            <div class="media">
+                <div class="mr-5">
+                    <img class="media-object border" src="{{ candidate.picture_url }}">
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">{{ candidate.name }}</h4>
+                    <br>
+                    <p><b>Cargo: </b>{{ candidate.job_role.name }}</p>
+                    <p><b>Número na urna: </b>{{ candidate.number }}</p>
+                    <p><b>Partido: </b>{{ candidate.political_party.name }} - {{ candidate.political_party.number }}</p>
+                    <p><b>Coligação: </b>{{ candidate.coalition }}</p>
+                    {% if candidate.elected %}<p><b>Eleita em 2012: </b>{% if candidate.elected == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
+                    {% if candidate.reelection %}<p><b>Reeleição: </b>{% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
+                    {% if candidate.twitter %}<p><b>Twitter:</b> <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
+                    {% if candidate.facebook %}<p><b>Facebook:</b> <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
+                    {% if candidate.instagram %}<p><b>Instagram:</b> <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Perfil</h3>
-    </div>
-    <div class="panel-body">
-    <p><b>Data nascimento: </b>{{ candidate.birth_date }}</p>
-    <p><b>Estado civil: </b>{{ candidate.marital_status }}</p>
-    <p><b>Escolaridade: </b>{{ candidate.education }}</p>
-    <p><b>Ocupação: </b>{{ candidate.job }}</p>
-    <p><b>Total bens: </b>{{ candidate.property_value }}</p>
-    </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Pauta</h3>
-    </div>
-    <div class="panel-body">
-        <h4>{{ candidate.agenda.name }}</h4>
-        <p>{{ candidate.projects }}</p>
-    </div>
-</div>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Financiamento</h3>
-    </div>
-    <div class="panel-body">
-    <p><b>Data última atualização: </b>{{ budget.dataUltimaAtualizacaoContas }}</p>
-    <p><b>Recursos recebidos: </b>R$ {{ budget.dadosConsolidados.totalRecebido|default_if_none:"0" }}</p>
-    <p><b>Despesas contratadas: </b>R$ {{ budget.despesas.totalDespesasContratadas|default_if_none:"0" }}</p>
-    <p><b>Despesas pagas: </b>R$ {{ budget.despesas.totalDespesasPagas|default_if_none:"0" }}</p>
-    <p><b>Limite de gasto: </b>R$ {{ budget.despesas.valorLimiteDeGastos|default_if_none:"0" }}</p>
-    </div>
-</div>
-
-<h2>Comentários</h2>
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-Enviar comentário
-</button>
-<br><br>
-
-{% if comments %}
-    <ul class="list-group">
-        {% for comment in comments %}
-            <li class="list-group-item">
-                <h4 class="list-group-item-heading">{{ comment.name }} - <small>{{ comment.created_at }}</small></h4>
-                <p class="list-group-item-text">{{ comment.comment }}</p>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Enviar comentário</h4>
+    <div class="panel panel-default mt-5">
+        <div class="row">
+            <div class="col-6">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Perfil</h3>
+                </div>
+                <div class="panel-body">
+                    <p><b>Data nascimento: </b>{{ candidate.birth_date }}</p>
+                    <p><b>Estado civil: </b>{{ candidate.marital_status }}</p>
+                    <p><b>Escolaridade: </b>{{ candidate.education }}</p>
+                    <p><b>Ocupação: </b>{{ candidate.job }}</p>
+                    <p><b>Total bens: </b>{{ candidate.property_value }}</p>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="contact_form" method="post" action="#">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="id_name" class="control-label">Nome:</label>
-                        <input type="text" class="form-control" name="name" id="id_name">
-                    </div>
-                    <div class="form-group">
-                        <label for="id_email" class="control-label">Email:</label>
-                        <input type="text" class="form-control" name="email" id="id_email">
-                    </div>
-                    <div class="form-group">
-                        <label for="id_comment" class="control-label">Comentário:</label>
-                        <textarea class="form-control" id="id_comment" name="comment" rows="5"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary" id="submit_form">Enviar</button>
+
+            <div class="col-6">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Financiamento</h3>
+                </div>
+                <div class="panel-body">
+                    <p><b>Data última atualização: </b>{{ budget.dataUltimaAtualizacaoContas }}</p>
+                    <p><b>Recursos recebidos: </b>R$ {{ budget.dadosConsolidados.totalRecebido|default_if_none:"0" }}</p>
+                    <p><b>Despesas contratadas: </b>R$ {{ budget.despesas.totalDespesasContratadas|default_if_none:"0" }}</p>
+                    <p><b>Despesas pagas: </b>R$ {{ budget.despesas.totalDespesasPagas|default_if_none:"0" }}</p>
+                    <p><b>Limite de gasto: </b>R$ {{ budget.despesas.valorLimiteDeGastos|default_if_none:"0" }}</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Pauta</h3>
+        </div>
+        <div class="panel-body">
+            <h4>{{ candidate.agenda.name }}</h4>
+            <p>{{ candidate.projects }}</p>
+        </div>
+    </div>
+
+</div>
 {% endblock content %}
 
 
