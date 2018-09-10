@@ -359,6 +359,12 @@ footer .twitter {
 	top: 0.6em;
 	transform: rotate(-45deg);
 }
+.dropdown-item.active, 
+.dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #470c6e;
+}
 select::-ms-expand {
   /* for IE 11 */
   display: none;
