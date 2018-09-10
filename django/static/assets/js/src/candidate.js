@@ -129,7 +129,6 @@ function CandidateHandler($, host) {
         return img;
     };
 
-
     this.buildCandidateUI = function(
         id,
         candidateId,
@@ -140,7 +139,7 @@ function CandidateHandler($, host) {
         status
     ) {
         var media = this.$('<a>', {
-            class: 'media border',
+            class: 'media',
             href: '/candidates/detail/' + candidateId
         });
 
