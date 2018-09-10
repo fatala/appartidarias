@@ -282,6 +282,17 @@ select:focus {
   opacity: 1;
 }
 
+/* detalhes das candidatas */
+.candidates-details {
+	margin-top: 100px;
+}
+.candidates-details .profile{
+	background-color: rgba(0,0,0,0.05);
+}
+.candidates-details .section_title {
+	margin-top: 30px;
+}
+
 footer {
 	background: #fdfdfd;
 	font-weight: 300;
@@ -453,6 +464,9 @@ select::-ms-expand {
 	}
 	.inside-detail .head {
 		position: relative;
+	}
+	.candidates-details {
+		margin-top: 30px;
 	}
 }
 
