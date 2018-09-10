@@ -91,6 +91,7 @@ function CandidateHandler($, host) {
     this.fetchCandidates = function(host, selects) {
         var query = this.readSelectStates(selects);
         query['page'] = this.page + 1;
+        query['sexo'] = 'F';
 
         console.log(query);
 
@@ -236,6 +237,8 @@ function CandidateHandler($, host) {
 // load partidos
 $.getJSON("/api/parties/", function (response) {
     response.map(getPartyDetails).forEach(showStore);
+}).then(function() {
+    $(".item-party:hidden").slice(0, 4).slideDown();
 });
 
 // load view
@@ -244,7 +247,7 @@ function getPartyDetails(partyInfo) {
             '<div class="row mb-4 justify-content-center">' +
         '<div class="col-4 text-center">' +
         '<a href="/parties/' + partyInfo.initials.toUpperCase() + '">' +
-            '<img src="/static/img/partidos/'+partyInfo.initials.toUpperCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+          '<img src="/static/img/partidos/'+partyInfo.initials.toLowerCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
            '</a>' +
               '</div>' +
             '</div>'+
