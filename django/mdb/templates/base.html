@@ -56,25 +56,25 @@
     </div>
   </nav>
 
-    <!-- header content -->
-    <section class="container-fluid home">
+      {% block content %}
+
+      {% endblock content %}
+
+    <!-- achievement content -->
+    <section class="container-fluid achievement">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col col-12 col-sm-3 col-lg-3 text-center">
-            <img src="/static/img/logo_appartidarias.png" alt="appartidárias" />
-          </div>
-          <div class="col col-12 col-sm-6 col-lg-4 mt-4">
-            <h1>Por mais mulheres eleitas no legislativo</h1>
+          <div class="col-12 col-md-9 text-center">
+            <h1>Realização</h1>
+            <img src="/static/img/logo_mulheres.png" class="col-7 col-md-3 pb-3" alt="Mulheres do Brasil" />
+            <img src="/static/img/logo_luizalabs.png" class="col-5 col-md-2 pb-3" alt="LuizaLabs" />
+            <img src="/static/img/logo_dux.png" class="col-5 col-md-2 pb-3" alt="Dux Coworkers" />
+            <img src="/static/img/logo_gaturamo.png" class="col-6 col-md-2 pb-3" alt="Gaturamo" />
           </div>
         </div>
       </div>
     </section>
-    <!-- /header content -->
-
-
-      {% block content %}
-
-      {% endblock content %}
+    <!-- /achievement content -->
 
     <footer class="container-fluid">
       <div class="col-12 col-md-7 mx-auto">
