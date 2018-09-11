@@ -66,3 +66,24 @@ def download_file(url):
                 for name in zip_ref.namelist()
                 if name.split('.')[-1] == 'csv'
             }
+
+
+def fetch_2018_candidate_expenses(**kwargs):
+    host = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2022802018/2018/'
+    path = '{estado}/{cargo}/{partido}/{urna}/{candidate}'
+    url = host + path.format(**kwargs)
+    logger.debug(f'fetch_expenses: {url}')
+    return requests.get(url).json()
+
+
+def fetch_2018_candidate(id_, state, year='2018', election='2022802018'):
+    host = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/candidatura/buscar/'
+    path = '{year}/{state}/{election}/candidato/{id_}'
+    url = host + path.format(
+        id_=id_,
+        state=state,
+        election=election,
+        year=year,
+    )
+    logger.debug(f'fetch_candidate: {url}')
+    return requests.get(url).json()

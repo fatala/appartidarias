@@ -1,5 +1,6 @@
 # coding: utf-8
 import json
+import logging
 import requests
 
 from django.conf import settings
@@ -29,6 +30,8 @@ from .serializers import (
     StatsSerializer,
 )
 
+logger = logging.getLogger('mdb')
+
 
 class StateList(APIView):
     def get(self, request):
@@ -46,7 +49,7 @@ class JobRoleList(APIView):
 
 class PartiesList(APIView):
     def get(self, request):
-        parties = PoliticalParty.objects.all()
+        parties = PoliticalParty.objects.all().order_by('ranking')
         serializer = PartySerializer(parties, many=True)
         return Response(serializer.data)
 
@@ -63,6 +66,8 @@ class CandidateList(APIView):
         candidates = Candidate.objects.all()
 
         # filter candiadates
+        if 'ano' in query:
+            candidates = candidates.filter(year=query['ano'])
         if 'sexo' in query:
             candidates = candidates.filter(gender=query['sexo'])
         if 'estado' in query:
@@ -127,11 +132,13 @@ class CandidateDetail(TemplateView):
         while range(6):
             try:
                 url = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2/2016/71072/13/{}/{}/{}'.format(context['candidate'].political_party.number, context['candidate'].number, context['candidate'].id_tse)
-                print('Getting {} attempt #{}'.format(url, attempt))
+                logger.debug('Getting {} attempt #{}'.format(url, attempt))
                 context['budget'] = requests.get(url).json()
-                print('Response: {}'.format(context['budget']))
+                logger.debug('Response: {}'.format(context['budget']))
             except Exception as e:
-                print('Failed to fetch or decode budget: {}'.format(str(e)))
+                logger.exception(
+                    'Failed to fetch or decode budget: {}'.format(str(e))
+                )
                 attempt += 1
                 continue
             else:
@@ -338,27 +345,31 @@ class Stats(View):
         stats_array = []
         for d in data:
 
-            print(d)
+            logger.debug(f'stats data{d}')
 
-            party = PoliticalParty.objects.get(
-                number=d['party_nb'],
-            )
+            try:
+                party = PoliticalParty.objects.get(
+                    number=d['party_nb'],
+                )
 
-            job_role = JobRole.objects.get(
-                code=d['job_role_nb'],
-            )
+                job_role = JobRole.objects.get(
+                    code=d['job_role_nb'],
+                )
 
-            stats, _ = PartyJobRoleStats.objects.get_or_create(
-                job_role=job_role,
-                political_party=party,
-            )
+                stats, _ = PartyJobRoleStats.objects.get_or_create(
+                    job_role=job_role,
+                    political_party=party,
+                )
 
-            stats.size = d['nb_candidates']
-            stats.women_pct = d['pct_women']
-            # stats.money_women_pct = int(d['pct_money_women']*100)
+                stats.size = d['nb_candidates']
+                stats.women_pct = d['pct_women']
+                # stats.money_women_pct = d['pct_money_women']
 
-            stats.save()
-            stats_array.append(stats)
+                stats.save()
+                stats_array.append(stats)
+
+            except Exception:
+                logger.exception('Parsing stats')
 
         serializer = StatsSerializer(stats_array, many=True)
         return JsonResponse(serializer.data, safe=False)

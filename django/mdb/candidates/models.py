@@ -47,7 +47,7 @@ class State(models.Model):
 class JobRole(models.Model):
     name = models.CharField('Cargo', max_length=128, unique=True)
     code = models.CharField('Código', max_length=128, null=True, unique=True)
-    initials = models.CharField('Sigla', max_length=128, null=True)
+    initials = models.CharField('Sigla', max_length=128, null=True, blank=True)
     counting = models.IntegerField('Contagem', default=0)
 
     class Meta:
@@ -82,9 +82,9 @@ class Candidate(models.Model):
     job_role = models.ForeignKey(JobRole, verbose_name='Cargo')
     political_party = models.ForeignKey(PoliticalParty, verbose_name='Partido')
     coalition = models.CharField(max_length=128, verbose_name='Coligação')
-    picture_url = models.URLField(verbose_name='URL da foto')
-    budget_1t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 1.o turno')
-    budget_2t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 2.o turno')
+    picture_url = models.URLField(verbose_name='URL da foto', null=True, blank=True)
+    budget_1t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 1.o turno', null=True, blank=True)
+    budget_2t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 2.o turno', null=True, blank=True)
     agenda = models.ForeignKey(Agenda, verbose_name='Pauta', null=True)
     projects = models.TextField(verbose_name='Projetos', blank=True)
     reelection = models.BooleanField(blank=True, verbose_name='Re-eleição?', default=False)
@@ -98,6 +98,8 @@ class Candidate(models.Model):
     education = models.CharField(max_length=128, verbose_name='Nível escolaridade')
     job = models.CharField(max_length=128, verbose_name='Ocupação')
     property_value = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total de bens', default=0)
+
+    email = models.EmailField(verbose_name='Email', blank=True)
     twitter = models.URLField(verbose_name='Twitter', blank=True)
     facebook = models.URLField(verbose_name='Facebook', blank=True)
     instagram = models.URLField(verbose_name='Instagram', blank=True)

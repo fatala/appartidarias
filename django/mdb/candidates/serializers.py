@@ -11,10 +11,10 @@ class CandidateSerializer(serializers.ModelSerializer):
     obs = serializers.ReadOnlyField(source='political_party.obs')
     agenda = serializers.ReadOnlyField(source='agenda.name')
 
-
     class Meta:
         model = Candidate
         fields = (
+            'id',
             'name',
             'political_party_initials',
             'political_party_name',
