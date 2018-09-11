@@ -4,12 +4,104 @@ import glob
 import json
 import boto3
 import logging
+import requests
 
 import pandas as pd
+
+from django.conf import settings
 from django.core.management.base import BaseCommand
-from utils import s3_resource, concat, download_file
+
+from utils import (
+    s3_resource,
+    concat,
+    download_file,
+    fetch_2018_candidate_expenses,
+)
 
 logger = logging.getLogger('mdb')
+
+
+def append_expense_to_df(df_cand, expenses, sq_candidato):
+    assert 'SQ_CANDIDATO' in df_cand
+    if expenses:
+        consolidado = expenses.get('dadosConsolidados')
+        df_cand.loc[
+            df_cand.SQ_CANDIDATO == sq_candidato,
+            'received_party'
+        ] = consolidado['totalPartidos'] if consolidado else None
+        df_cand.loc[
+            df_cand.SQ_CANDIDATO == sq_candidato,
+            'received_total'
+        ] = consolidado['totalRecebido'] if consolidado else None
+
+
+def process_candidate(row):
+    try:
+        candidate = row[1]
+        sq_candidate=candidate['SQ_CANDIDATO']
+        expenses = fetch_2018_candidate_expenses(
+            estado=candidate['SG_UF'],
+            candidate=candidate['SQ_CANDIDATO'],
+            urna=candidate['NR_CANDIDATO'],
+            cargo=candidate['CD_CARGO'],
+            partido=candidate['NR_PARTIDO'],
+        )
+
+        return (sq_candidate, expenses)
+
+    except Exception:
+        logger.exception('ERROR: fetching candidate expenses')
+        return (sq_candidate, None)
+
+
+def fetch_expenses_from_tse_parallel(df_cand):
+
+    from multiprocessing.dummy import Pool as ThreadPool
+
+    pool = ThreadPool(settings.THREADS) 
+    results = pool.map(process_candidate, df_cand.iterrows())
+
+    for sq_candidate, expenses in results:
+
+        if expenses is None:
+            row = (None, next(
+                df_cand.loc[df_cand['SQ_CANDIDATO'] == sq_candidate].iterrows()
+            ))
+            _, expenses = process_candidate(row)
+
+        append_expense_to_df(df_cand, expenses, sq_candidate)
+
+
+def fetch_expenses_from_tse(df_cand):
+
+    df_cand['timestamp'] = 0
+    df_cand['received_party'] = None
+    df_cand['received_total'] = None
+
+    for row in df_cand.iterrows():
+        process_candidate(row)
+
+def fetch_expenses_from_s3(df_cand):
+    bucket = s3_resource.Bucket('appartidarias')
+
+    df_cand['timestamp'] = 0
+    df_cand['received_party'] = None
+    df_cand['received_total'] = None
+
+    logger.debug('fetching candidates expenses')
+    fetch_dict = {}
+    for obj in bucket.objects.all():
+        keys = obj.key.split('_')
+        if keys[1] not in fetch_dict or keys[-1] > fetch_dict[keys[1]].key.split('_')[-1]:
+            fetch_dict[keys[1]] = obj
+
+    for _, obj in fetch_dict.items():
+        keys = obj.key.split('_')
+        data = json.loads(obj.get()['Body'].read())
+        sq_candidato = int(keys[1])
+        timestamp = int(keys[-1])
+        logger.debug(f'keys: {keys}')
+        assert sum(df_cand.SQ_CANDIDATO == int(sq_candidato)) <= 1
 
 
 class Command(BaseCommand):
@@ -20,36 +112,9 @@ class Command(BaseCommand):
         download = download_file(base.format(ano=2018))
         df_cand = concat(download)
 
-        bucket = s3_resource.Bucket('appartidarias')
-
-        df_cand['timestamp'] = 0
-        df_cand['received_party'] = None
-        df_cand['received_total'] = None
-
-        logger.debug('fetching candidates expenses')
-        fetch_dict = {}
-        for obj in bucket.objects.all():
-            keys = obj.key.split('_')
-            if keys[1] not in fetch_dict or keys[-1] > fetch_dict[keys[1]].key.split('_')[-1]:
-                fetch_dict[keys[1]] = obj
-
-        for _, obj in fetch_dict.items():
-            keys = obj.key.split('_')
-            data = json.loads(obj.get()['Body'].read())
-            sq_candidato = int(keys[1])
-            timestamp = int(keys[-1])
-            print(keys)
-            assert sum(df_cand.SQ_CANDIDATO == int(sq_candidato)) <= 1
-            consolidado = data.get('dadosConsolidados')
-            df_cand.loc[
-                df_cand.SQ_CANDIDATO == sq_candidato,
-                'received_party'
-            ] = consolidado['totalPartidos'] if consolidado else None
-            df_cand.loc[
-                df_cand.SQ_CANDIDATO == sq_candidato,
-                'received_total'
-            ] = consolidado['totalRecebido'] if consolidado else None        
-
+        # fetch_expenses_from_s3(df_cand)
+        # fetch_expenses_from_tse(df_cand)
+        fetch_expenses_from_tse_parallel(df_cand)
 
         # CALCULATE RANKING
         logger.debug('calculating stats')
