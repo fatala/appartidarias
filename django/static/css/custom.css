@@ -281,6 +281,9 @@ select:focus {
   filter: grayscale(0);
   opacity: 1;
 }
+.legenda {
+	padding: 10px;
+}
 
 /* detalhes das candidatas */
 .candidates-details {
