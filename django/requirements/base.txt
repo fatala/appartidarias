@@ -3,7 +3,6 @@ Django==1.9
 djangorestframework==3.4.5
 coverage==3.7
 factory-boy==2.2.1
-gunicorn==19.6.0
 mock==1.0.1
 pandas==0.23.4
 requests==2.11.1
