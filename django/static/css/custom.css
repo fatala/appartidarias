@@ -94,8 +94,7 @@ select:focus {
 .home img{
 	width: 80%;
 }
-.inside-detail img,
-.inside-candidates .head img{
+.inside-detail img{
   width: 40%;
 }
 .inside-detail,
@@ -298,12 +297,15 @@ select:focus {
 	margin-top: 30px;
 	font-size: 1.5em;
 }
-
 .inside-candidates {
 	font-size: .9em;
 }
+.inside-candidates .head img{
+  width: 40%;
+}
 .inside-candidates .head {
 	border-bottom: 1px solid #FFF;
+	margin-bottom: 20px;
 	padding: 20px 0;
 }
 .inside-candidates .image-cropper {
@@ -312,6 +314,7 @@ select:focus {
   overflow: hidden;
   border-radius: 50%;
   margin: 0 auto;
+  margin-top: 10px;
 	box-shadow: 0px 6px 7px rgba(0,0,0,0.2);
 	-webkit-box-shadow: 0px 6px 7px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 6px 7px rgba(0,0,0,0.2);
@@ -509,6 +512,17 @@ select::-ms-expand {
 	}
 	.candidates-details {
 		margin-top: 30px;
+	}
+	.inside-candidates {
+	    font-size: 1.3em;
+	}
+	.inside-candidates .head img{
+	  width: 10%;
+	}
+	.inside-candidates .name {
+	    padding: 10px 0 0 30px;
+	    background: 0 18px transparent url(../img/icon_name.png) no-repeat;
+	    background-size: 16px;
 	}
 }
 
