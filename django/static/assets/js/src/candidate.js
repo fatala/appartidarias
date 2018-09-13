@@ -53,6 +53,7 @@ function CandidateHandler($, host) {
         });
     };
 
+
     this.setInfinityScroll = function(id, host, selects) {
         $(window).scroll(function() {
             if ($(window).scrollTop() >= $(document).height() - $(window).height() - 1000) {
