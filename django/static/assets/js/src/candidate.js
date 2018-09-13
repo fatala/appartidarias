@@ -44,7 +44,6 @@ function CandidateHandler($, host) {
             mode: 'cors',
             url: url,
             success: function(result) {
-                console.log(result);
                 this.fullfill(id, result);
             }.bind(this),
             error: function(xhr, opt, err) {
@@ -96,10 +95,8 @@ function CandidateHandler($, host) {
         query['sexo'] = 'F';
         query['page'] = this.page + 1;
 
-        console.log(query);
-
         var url = host + '?' +  this.$.param(query);
-        console.log(url);
+
         this.$.ajax({
             url: url,
             success: function(result) {
@@ -116,7 +113,6 @@ function CandidateHandler($, host) {
     this.getStatusImg = function(status) {
         var img = '';
 
-        console.log(`status: ${status}`);
         if (status === 'P') {
             img = '/static/img/pending.png';
         } else if (status == 'A') {
@@ -182,7 +178,7 @@ function CandidateHandler($, host) {
 
     this.onSelectRefresh = function(id, host, selects) {
         this.$('#'+id).change(function() {
-            this.page = 1;
+            this.page = 0;
             this.clearCandidates();
             this.fetchCandidates(host, selects);
         }.bind(this));
@@ -208,10 +204,13 @@ function CandidateHandler($, host) {
         return candidate.picture_url;
     };
 
+    this.processImgName = function(party) {
+        return party.toLowerCase().replace(/ /g, '');
+    };
+    
     this.getPartyImg = function(candidate) {
-        var p = candidate.political_party_initials.toLowerCase().replace(/ /g, '');
+        var p = this.processImgName(candidate.political_party_initials);
         var path = `/static/img/partidos/${p}.png`;
-        console.log(p);
         return path;
     };
 
@@ -220,7 +219,6 @@ function CandidateHandler($, host) {
     };
 
     this.displayCandidates = function(result) {
-        console.log(result);
 
         result.map(function(candidate) {
 
@@ -262,11 +260,13 @@ $.getJSON("/api/parties/", function (response) {
 
 // load view
 function getPartyDetails(partyInfo) {
+    var partyImg = this.processImgName(partyInfo.initials);
+    
     return '<div class="item-party">' +
             '<div class="row mb-4 justify-content-center">' +
         '<div class="col-4 text-center">' +
         '<a href="/parties/' + partyInfo.initials.toUpperCase() + '">' +
-          '<img src="/static/img/partidos/'+partyInfo.initials.toLowerCase()+'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
+          '<img src="/static/img/partidos/'+ partyImg +'.png" class="img-fluid gray" alt="'+partyInfo.name+'" />' +
            '</a>' +
               '</div>' +
             '</div>'+

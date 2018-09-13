@@ -13,6 +13,7 @@ from django.views.generic import View
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from utils import fetch_2018_candidate_expenses
 from .forms import CommentForm, ContactForm
 from .models import (
     Candidate,
@@ -128,21 +129,18 @@ class CandidateDetail(TemplateView):
         candidate_id = kwargs['candidate_id']
         context['candidate'] = self.get_object()
 
-        attempt = 1
-        while range(6):
-            try:
-                url = 'http://divulgacandcontas.tse.jus.br/divulga/rest/v1/prestador/consulta/2/2016/71072/13/{}/{}/{}'.format(context['candidate'].political_party.number, context['candidate'].number, context['candidate'].id_tse)
-                logger.debug('Getting {} attempt #{}'.format(url, attempt))
-                context['budget'] = requests.get(url).json()
-                logger.debug('Response: {}'.format(context['budget']))
-            except Exception as e:
-                logger.exception(
-                    'Failed to fetch or decode budget: {}'.format(str(e))
-                )
-                attempt += 1
-                continue
-            else:
-                break
+        try:
+            context['budget'] = fetch_2018_candidate_expenses(
+                urna=context['candidate'].number,
+                partido=context['candidate'].political_party.number,
+                estado=context['candidate'].state,
+                cargo=context['candidate'].job_role.code,
+                candidate=context['candidate'].id_tse,
+            )
+            logger.debug(f'budget: {context["budget"]}')
+
+        except Exception:
+            logger.exception('Failed to fetch expenses')
 
         context['comments'] = Comment.objects.filter(
             candidate_id=candidate_id,
