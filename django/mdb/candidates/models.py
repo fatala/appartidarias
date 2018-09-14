@@ -29,8 +29,8 @@ class PoliticalParty(models.Model):
 
 
 class Agenda(models.Model):
-    name = models.CharField('Pauta', max_length=128)
-
+    name = models.CharField('Pauta', max_length=128, unique=True)
+    icon = models.CharField(max_length=255, verbose_name='ícone', blank=True)
     class Meta:
         verbose_name = 'Pauta'
         verbose_name_plural = 'Pautas'
@@ -85,7 +85,7 @@ class Candidate(models.Model):
     picture_url = models.URLField(verbose_name='URL da foto', null=True, blank=True)
     budget_1t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 1.o turno', null=True, blank=True)
     budget_2t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 2.o turno', null=True, blank=True)
-    agenda = models.ForeignKey(Agenda, verbose_name='Pauta', null=True)
+    agenda = models.ManyToManyField(Agenda, verbose_name='Pauta')
     projects = models.TextField(verbose_name='Projetos', blank=True)
     reelection = models.BooleanField(blank=True, verbose_name='Re-eleição?', default=False)
     elected = models.BooleanField(blank=True, verbose_name='Eleita antes de 2012?', default=False)

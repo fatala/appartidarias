@@ -24,40 +24,24 @@
         </div>
       </div>
 
-        <div class="row text-center details">
-            <div class="col-12">
-                <div class="col-3 border-right info">{{ candidate.coalition }}</div>
-                <div class="col-3 border-right info">{{ candidate.number }}</div>
-                <div class="col-3 border-right info">idade</div>
-                <div class="col-3 info">{{ candidate.job }}</div>
-            </div>
+      <div class="col-12 col-md-8 p-0">
+        <div class="d-flex justify-content-center text-center details">
+            <div class="col-3 border-right info">{{ candidate.political_party.initials }}</div>
+            <div class="col-3 border-right info">{{ candidate.number }}</div>
+            <div class="col-3 border-right info">idade</div>
+            <div class="col-3 info job"><span>{{ candidate.job }}</span></div>
         </div>
+      </div>
         <div class="col-10 col-md-6 icons_guides">
-            <div class="row text-center">
-                <div class="col-4 col-md-2">
-                    <img src="/static/img/icons/icon_agua.png" alt="Água para todos" class="img-fluid mb-1">
-                    <p>Água para todos</p>
-                </div>
-                <div class="col-4 col-md-2">
-                    <img src="/static/img/icons/icon_cotas.png" alt="Cotas" class="img-fluid mb-1">
-                    <p>Cotas</p>
-                </div>
-                <div class="col-4 col-md-2">
-                    <img src="/static/img/icons/icon_igualdade.png" alt="Igualdade Racial" class="img-fluid mb-1">
-                    <p>Igualdade Racial</p>
-                </div>
-                <div class="col-4 col-md-2">
-                    <img src="/static/img/icons/icon_violencia.png" alt="Violência contra mulher" class="img-fluid mb-1">
-                    <p>Violência contra mulher</p>
-                </div>
-                <div class="col-4 col-md-2">
-                    <img src="/static/img/icons/icon_mulher.png" alt="Mulher na política" class="img-fluid mb-1">
-                    <p>Mulher na política</p>
-                </div>
-                <div class="col-4 col-md-2">
-                    <img src="/static/img/icons/icon_privilegio.png" alt="Contra privilégios políticos" class="img-fluid mb-1">
-                    <p>Contra privilégios</p>
-                </div>
+          <div class="row text-center">
+
+            {% for pauta in pautas %}
+              <div class="col-4 col-md-2">
+                <img src="{{ pauta.icon }}" alt="{{ pauta.name }}" class="img-fluid mb-1">
+                <p>{{ pauta.name }}</p>
+              </div>
+            {% endfor %}
+
             </div>
         </div>
 
@@ -70,59 +54,6 @@
     <div class="candidates-details text-center">
         <div class="container">
             <div class="row justify-content-center">
-
-                <div class="col-10">
-                    <h3 class="section_title"><span>Pautas</span></h3>
-                    <br>
-                    <h4>{{ candidate.agenda.name }}</h4>
-                    <p>{{ candidate.projects }}</p>
-                </div>
-  
-                <div class="col-10">
-                    <h3 class="section_title"><span>Curta e compartilhe esse perfil</span></h3>
-                    {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
-                    {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
-                    {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
-                </div>
-
-                <!-- candidatas com o mesmo perfil -->
-                <div class="col-12 col-md-6">
-                    <h3 class="section_title"><span>Conheça outras candidatas com o mesmo perfil</span></h3>
-
-                    <div class="row">
-                        <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ candidate.picture_url }}" alt="{{ candidate.name }}" class="profile-pic">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ candidate.picture_url }}" alt="{{ candidate.name }}" class="profile-pic">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ candidate.picture_url }}" alt="{{ candidate.name }}" class="profile-pic">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ candidate.picture_url }}" alt="{{ candidate.name }}" class="profile-pic">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ candidate.picture_url }}" alt="{{ candidate.name }}" class="profile-pic">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ candidate.picture_url }}" alt="{{ candidate.name }}" class="profile-pic">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /candidatas com o mesmo perfil -->
 
                 <div class="col-10">
                     <h3 class="section_title"><span>Perfil</span></h3>
@@ -142,11 +73,31 @@
                     <p>Despesas pagas: R$ {{ budget.despesas.totalDespesasPagas|default_if_none:"0" }}</p>
                     <p>Limite de gasto: R$ {{ budget.despesas.valorLimiteDeGastos|default_if_none:"0" }}</p>
                 </div>
+
                 <div class="col-10 profile">
                     {% if candidate.elected %}<p>Eleita em 2012: {% if candidate.elected == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
                     {% if candidate.reelection %}<p>Reeleição: {% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
                 </div>
 
+                <div class="col-12 col-md-6">
+                  <h3 class="section_title"><span>Conheça outras candidatas com o mesmo perfil</span></h3>
+
+                  <div class="row mb-5 p-2 d-flex justify-content-center">
+                    {% for similar in similar_candidates %}
+                      <a href="/candidates/detail/{{ similar.id }}">
+                        <div class="col-2 p-1">
+                          <div class="image-cropper">
+                            <img src="{{ similar.picture_url }}" alt="{{ similar.name }}" class="profile-pic">
+                          </div>
+                        </div>
+                      </a>
+                    {% endfor %}
+                  </div>
+
+                  <h3 class="section_title"><span>Curta e compartilhe esse perfil</span></h3>
+                  {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
+                  {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
+                  {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
             </div>
         </div>
     </div>
