@@ -24,14 +24,14 @@
         </div>
       </div>
 
-        <div class="row text-center details">
-            <div class="col-12">
-                <div class="col-3 border-right info">{{ candidate.political_party.initials }}</div>
-                <div class="col-3 border-right info">{{ candidate.number }}</div>
-                <div class="col-3 border-right info">idade</div>
-                <div class="col-3 info">{{ candidate.job }}</div>
-            </div>
+      <div class="col-12 col-md-8 p-0">
+        <div class="d-flex justify-content-center text-center details">
+            <div class="col-3 border-right info">{{ candidate.political_party.initials }}</div>
+            <div class="col-3 border-right info">{{ candidate.number }}</div>
+            <div class="col-3 border-right info">idade</div>
+            <div class="col-3 info job"><span>{{ candidate.job }}</span></div>
         </div>
+      </div>
         <div class="col-10 col-md-6 icons_guides">
           <div class="row text-center">
 
@@ -79,30 +79,25 @@
                     {% if candidate.reelection %}<p>Reeleição: {% if candidate.reelection == True %} Sim {% else %} Não {% endif %}</p>{% endif %}
                 </div>
 
-                <!-- candidatas com o mesmo perfil -->
                 <div class="col-12 col-md-6">
-                    <h3 class="section_title"><span>Conheça outras candidatas com o mesmo perfil</span></h3>
+                  <h3 class="section_title"><span>Conheça outras candidatas com o mesmo perfil</span></h3>
 
-                    <div class="row">
-                      {% for similar in similar_candidates %}
-                        <a href="/candidates/detail/{{ similar.id }}">
-                          <div class="col-2">
-                            <div class="image-cropper">
-                              <img src="{{ similar.picture_url }}" alt="{{ similar.name }}" class="profile-pic">
-                            </div>
+                  <div class="row mb-5 p-2 d-flex justify-content-center">
+                    {% for similar in similar_candidates %}
+                      <a href="/candidates/detail/{{ similar.id }}">
+                        <div class="col-2 p-1">
+                          <div class="image-cropper">
+                            <img src="{{ similar.picture_url }}" alt="{{ similar.name }}" class="profile-pic">
                           </div>
-                        </a>
-                      {% endfor %}
-                    </div>
-                <!-- /candidatas com o mesmo perfil -->
+                        </div>
+                      </a>
+                    {% endfor %}
+                  </div>
 
-                <div class="col-10">
-                    <h3 class="section_title"><span>Curta e compartilhe esse perfil</span></h3>
-                    {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
-                    {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
-                    {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
-                </div>
-
+                  <h3 class="section_title"><span>Curta e compartilhe esse perfil</span></h3>
+                  {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
+                  {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
+                  {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
             </div>
         </div>
     </div>

@@ -358,6 +358,13 @@ select:focus {
 	text-transform: uppercase;
 	font-size: 0.5em;
 }
+.job {
+  max-width: 100%px;
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 footer {
 	background: #fdfdfd;
