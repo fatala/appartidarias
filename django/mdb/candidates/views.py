@@ -31,6 +31,7 @@ from .serializers import (
     PartySerializer,
     StateSerializer,
     StatsSerializer,
+    AgendaSerializer,
 )
 
 logger = logging.getLogger('mdb')
@@ -40,6 +41,13 @@ class StateList(APIView):
     def get(self, request):
         states = []
         serializer = StateSerializer(states, many=True)
+        return Response(serializer.data)
+
+
+class AgendaList(APIView):
+    def get(self, request):
+        agenda = Agenda.objects.all()
+        serializer = AgendaSerializer(agenda, many=True)
         return Response(serializer.data)
 
 
@@ -79,6 +87,8 @@ class CandidateList(APIView):
             candidates = candidates.filter(political_party__initials=query['partido'])
         if 'cargo' in query:
             candidates = candidates.filter(job_role__name=query['cargo'])
+        if 'pauta' in query:
+            candidates = candidates.filter(agenda__name=query['pauta'])
 
         paginated_candidates = candidates[(page-1)*page_size:page*page_size]
         serializer = CandidateSerializer(paginated_candidates, many=True)

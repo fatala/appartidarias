@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import Candidate, PoliticalParty, JobRole, State, PartyJobRoleStats
+from .models import (
+    Agenda,
+    Candidate,
+    PoliticalParty,
+    JobRole,
+    State,
+    PartyJobRoleStats,
+)
 
 
 class CandidateSerializer(serializers.ModelSerializer):
@@ -71,4 +78,11 @@ class StatsSerializer(serializers.ModelSerializer):
             'job_role_name',
             'size',
             'women_pct',
+        )
+
+class AgendaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agenda
+        fields = (
+            'name',
         )

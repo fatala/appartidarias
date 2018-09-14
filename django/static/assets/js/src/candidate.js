@@ -4,21 +4,22 @@ function CandidateHandler($, host) {
 
         var selects = [
             {
-                name: 'estado',
-                path: '/api/states/'
+                name: 'estado'
             },
             {
-                name: 'partido',
-                path: '/api/parties/'
+                name: 'partido'
             },
             {
-                name: 'cargo',
-                path: '/api/job_roles'
+                name: 'cargo'
+            },
+            {
+                name: 'pauta',
+                path: '/api/agenda'
             }
         ];
 
         selects.map(function(select) {
-            this.fetchSelectData(host + select.path, select.name);
+            this.fetchSelectData(host, select.path, select.name);
         });
 
         selects.map(function(select) {
@@ -39,17 +40,19 @@ function CandidateHandler($, host) {
         console.error(err);
     };
 
-    this.fetchSelectData = function(url, id) {
-        this.$.ajax({
-            mode: 'cors',
-            url: url,
-            success: function(result) {
-                this.fullfill(id, result);
-            }.bind(this),
-            error: function(xhr, opt, err) {
-                this.logError(xhr, err);
-            }.bind(this)
-        });
+    this.fetchSelectData = function(host, path, id) {
+        if (path != undefined) {
+            this.$.ajax({
+                mode: 'cors',
+                url: host + path,
+                success: function(result) {
+                    this.fullfill(id, result);
+                }.bind(this),
+                error: function(xhr, opt, err) {
+                    this.logError(xhr, err);
+                }.bind(this)
+            });
+        }
     };
 
 
@@ -64,6 +67,10 @@ function CandidateHandler($, host) {
         });
     };
 
+    this.refreshSelectPicker = function() {
+        $('.selectpicker').selectpicker('refresh');
+    };
+
     this.fullfill = function(id, data) {
         var length = data.length;
         var picker = this.$('#'+id);
@@ -75,6 +82,7 @@ function CandidateHandler($, host) {
             });
             picker.append(option);
         }
+        this.refreshSelectPicker();
     };
 
     this.readSelectStates = function(selects){

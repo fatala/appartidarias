@@ -19,6 +19,7 @@ urlpatterns = patterns(
     url(r'^api/candidates/', views.CandidateList.as_view()),
     url(r'^api/states/', views.StateList.as_view()),
     url(r'^api/job_roles/', views.JobRoleList.as_view()),
+    url(r'^api/agenda/', csrf_exempt(views.AgendaList.as_view())),
     url(r'^api/parties/', views.PartiesList.as_view()),
     url(r'^api/meta/parties/', csrf_exempt(views.PoliticalPartyMeta.as_view())),
     url(r'^api/meta/stats/', csrf_exempt(views.Stats.as_view())),

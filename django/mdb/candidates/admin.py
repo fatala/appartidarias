@@ -11,9 +11,9 @@ class PoliticalPartyAdmin(admin.ModelAdmin):
 
 
 class CandidateAdmin(admin.ModelAdmin):
-    list_display = ('name_ballot', 'political_party', 'number', 'job_role')
+    list_display = ('name_ballot', 'state', 'political_party', 'number', 'job_role')
     search_fields = ('name_ballot', 'number')
-    list_filter = ('political_party', 'job_role')
+    list_filter = ('political_party', 'job_role', 'state')
 
     readonly_fields = ('picture',)
 
