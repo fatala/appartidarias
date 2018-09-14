@@ -8,12 +8,12 @@ self.addEventListener('install', function (event) {
         '../../css/bootstrap4.min.css',
         '../../css/custom.css',
         '../../css/bootstrap-select.min.css',
-        '/manifest.json',
-        '/jquery.min.js',
-        '/bootstrap.min.js',
-        '/vendor/bootstrap-select.js',
+        '../manifest.json',
+        'jquery.min.js',
+        'bootstrap.min.js',
+        'vendor/bootstrap-select.js',
         'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js',
-        '/src/candidate.js'
+        'src/candidate.js'
       ]);
     })
   )
