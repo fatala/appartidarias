@@ -353,6 +353,12 @@ select:focus {
   margin: 0 auto;
   width: 100%;
 }
+.icons_guides {
+	margin-top: 20px;
+	text-transform: uppercase;
+	font-size: 0.5em;
+}
+
 footer {
 	background: #fdfdfd;
 	font-weight: 300;
