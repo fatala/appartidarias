@@ -148,6 +148,16 @@ class CandidateDetail(TemplateView):
         )
         context['form'] = CommentForm()
 
+        context['similar_candidates'] = Candidate.objects.filter(
+            gender='F'
+        ).filter(
+            political_party=context['candidate'].political_party
+        ).exclude(
+            id_tse=context['candidate'].id_tse
+        )[:6]
+
+        context['pautas'] = context['candidate'].agenda.all()
+
         return context
 
     def post(self, request, *args, **kwargs):
@@ -313,6 +323,7 @@ class PoliticalPartyMeta(View):
     def post(self, request, *args, **kwargs):
 
         data = json.loads(request.body)
+        logger.debug(f'PoliticalPartyMeta: {data}')
         parties = []
 
         for d in data:
@@ -339,6 +350,8 @@ class Stats(View):
     def post(self, request, *args, **kwargs):
 
         data = json.loads(request.body)
+
+        logger.debug(f'Stats: {data}')
 
         stats_array = []
         for d in data:
