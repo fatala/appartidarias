@@ -3,6 +3,8 @@ import json
 import logging
 import requests
 
+from datetime import date
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -155,6 +157,14 @@ class CandidateDetail(TemplateView):
         ).exclude(
             id_tse=context['candidate'].id_tse
         )[:6]
+
+        try:
+            context['age'] = (
+                date.today() - context['candidate'].birth_date
+            ).years()
+
+        except Exception:
+            logger.exception('error calculating age')
 
         context['pautas'] = context['candidate'].agenda.all()
 
