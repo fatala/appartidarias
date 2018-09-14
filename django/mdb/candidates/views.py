@@ -3,7 +3,7 @@ import json
 import logging
 import requests
 
-from datetime import date
+from datetime import date, timedelta
 
 from django.conf import settings
 from django.core.mail import send_mail
@@ -159,9 +159,9 @@ class CandidateDetail(TemplateView):
         )[:6]
 
         try:
-            context['age'] = (
-                date.today() - context['candidate'].birth_date
-            ).years()
+            birth_date = context['candidate'].birth_date
+            year = timedelta(days=365.2425)
+            context['age'] = (date.today() - birth_date) // year
 
         except Exception:
             logger.exception('error calculating age')
