@@ -1,0 +1,32 @@
+{
+  "name": "AppartidáriAs 2.0",
+  "short_name": "Appart2.0",
+  "theme_color": "#682496",
+  "background_color": "#682496",
+  "display": "standalone",
+  "start_url": "/utm_source=homescreen",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/static/img/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/img/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
