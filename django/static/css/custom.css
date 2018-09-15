@@ -573,3 +573,13 @@ select::-ms-expand {
 .load_more_candidates {
   display: none;
 }
+
+.share {
+    margin: 10px;
+    width: 50px;
+}
+
+.share:hover {
+    text-decoration: none;
+    opacity: 0.7;
+}

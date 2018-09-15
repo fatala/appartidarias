@@ -1,5 +1,4 @@
 
-
 {% extends "base.html" %}
 
 {% block title %} - {{ candidate.name_ballot }} {{ candidate.number }}{% endblock title %}
@@ -62,6 +61,9 @@
                     <p>Estado civil: {{ candidate.marital_status }}</p>
                     <p>Escolaridade: {{ candidate.education }}</p>
                     <p>E-mail: {{ candidate.email }}</p>
+                    {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
+                    {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
+                    {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
                     <p>Ocupação: {{ candidate.job }}</p>
                     <p>Total bens: {{ candidate.property_value }}</p>
     
@@ -95,9 +97,14 @@
                   </div>
 
                   <h3 class="section_title"><span>Curta e compartilhe esse perfil</span></h3>
-                  {% if candidate.twitter %}<p>Twitter: <a href="{{ candidate.twitter }}" target="_blank">{{ candidate.twitter }}</a></p> {% endif %}
-                  {% if candidate.facebook %}<p>Facebook: <a href="{{ candidate.facebook }}" target="_blank">{{ candidate.facebook }}</a></p> {% endif %}
-                  {% if candidate.instagram %}<p>Instagram: <a href="{{ candidate.instagram }}" target="_blank">{{ candidate.instagram }}</a></p> {% endif %}
+
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=appartidarias.com.br/candidates/detail/{{ candidate.id }}" target="_blank">
+                    <img src="/static/img/facebook.png" class="share facebook"style="width: 50px; height: 50px;"/>
+                  </a>
+
+                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" target="_blank">
+                    <img src="/static/img/twitter.png" class="share twitter"/>
+                  </a>
             </div>
         </div>
     </div>
