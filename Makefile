@@ -17,6 +17,12 @@ deploy:
 	fab -f django/fabfile.py deploy
 
 clean:
-	rm -f .coverage
-	rm -rf htmlcov/
-	rm -rf docs/build/
+	@find . -name "*.pyc" | xargs rm -f
+	@find . -name "*.log" | xargs rm -f
+	@find . -name "*.pyo" | xargs rm -rf
+	@find . -name "__pycache__" -type d | xargs rm -rf
+	@find . -name "*.DS_Store" | xargs rm -rf
+	@find . -name "*.coverage" | xargs rm -f
+	@find . -name "htmlcov" | xargs rm -rf
+	@find . -name "docs/build" | xargs rm -rf
+	@find . -name "*~" | xargs rm -f

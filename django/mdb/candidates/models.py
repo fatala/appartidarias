@@ -4,25 +4,33 @@ from django.utils import timezone
 
 
 class PoliticalParty(models.Model):
-    initials = models.CharField(max_length=128, verbose_name='sigla')
+
+    initials = models.CharField(max_length=128, verbose_name='sigla', unique=True)
     name = models.CharField(max_length=128, verbose_name='nome')
-    number = models.IntegerField(verbose_name='numero')
-    directory_national = models.TextField(verbose_name='diretório nacional', null=True)
-    directory_state = models.TextField(verbose_name='diretório estadual', null=True)
-    directory_city = models.TextField(verbose_name='diretório municipal', null=True)
-    obs = models.TextField(null=True)
+    number = models.IntegerField(verbose_name='numero', unique=True)
+    directory_national = models.TextField(verbose_name='diretório nacional', null=True, blank=True)
+    directory_state = models.TextField(verbose_name='diretório estadual', null=True, blank=True)
+    directory_city = models.TextField(verbose_name='diretório municipal', null=True, blank=True)
+    about = models.TextField(verbose_name='sobre', null=True)
+    obs = models.TextField(null=True, blank=True)
+
+    # meta
+    ranking = models.IntegerField(null=True, verbose_name='ranking to partido')
+    size = models.IntegerField(null=True, verbose_name='tamanho do partido')
+    women_pct = models.FloatField(null=True, verbose_name='porcentagem de mulheres')
+    money_women_pct = models.FloatField(null=True, verbose_name='porcentagem de dinheiro destinado a mulheres')
 
     class Meta:
         verbose_name = 'partido político'
         verbose_name_plural = 'partidos políticos'
 
     def __str__(self):
-        return self.name
+        return f'{self.number} - {self.initials}'
 
 
 class Agenda(models.Model):
-    name = models.CharField('Pauta', max_length=128)
-
+    name = models.CharField('Pauta', max_length=128, unique=True)
+    icon = models.CharField(max_length=255, verbose_name='ícone', blank=True)
     class Meta:
         verbose_name = 'Pauta'
         verbose_name_plural = 'Pautas'
@@ -31,10 +39,15 @@ class Agenda(models.Model):
         return self.name
 
 
+class State(models.Model):
+    uf = models.CharField('UF', max_length=128)
+    name = models.CharField('nome', max_length=128)
+
+
 class JobRole(models.Model):
-    name = models.CharField('Cargo', max_length=128)
-    code = models.CharField('Código', max_length=128, null=True)
-    initials = models.CharField('Sigla', max_length=128, null=True)
+    name = models.CharField('Cargo', max_length=128, unique=True)
+    code = models.CharField('Código', max_length=128, null=True, unique=True)
+    initials = models.CharField('Sigla', max_length=128, null=True, blank=True)
     counting = models.IntegerField('Contagem', default=0)
 
     class Meta:
@@ -69,20 +82,24 @@ class Candidate(models.Model):
     job_role = models.ForeignKey(JobRole, verbose_name='Cargo')
     political_party = models.ForeignKey(PoliticalParty, verbose_name='Partido')
     coalition = models.CharField(max_length=128, verbose_name='Coligação')
-    picture_url = models.URLField(verbose_name='URL da foto')
-    budget_1t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 1.o turno')
-    budget_2t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 2.o turno')
-    agenda = models.ForeignKey(Agenda, verbose_name='Pauta', null=True)
+    picture_url = models.URLField(verbose_name='URL da foto', null=True, blank=True)
+    budget_1t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 1.o turno', null=True, blank=True)
+    budget_2t = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Limite de gasto 2.o turno', null=True, blank=True)
+    agenda = models.ManyToManyField(Agenda, verbose_name='Pauta')
     projects = models.TextField(verbose_name='Projetos', blank=True)
     reelection = models.BooleanField(blank=True, verbose_name='Re-eleição?', default=False)
     elected = models.BooleanField(blank=True, verbose_name='Eleita antes de 2012?', default=False)
+    state = models.CharField(default='BR', max_length=100, verbose_name='Estado')
 
+    year = models.CharField(max_length=4, verbose_name='Ano', default='2018')
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default=FEMALE, verbose_name='Sexo')
     birth_date = models.DateField(verbose_name='Data de nascimento', auto_now=False, auto_now_add=False, blank=True)
     marital_status = models.CharField(max_length=128, verbose_name='Estado civil')
     education = models.CharField(max_length=128, verbose_name='Nível escolaridade')
     job = models.CharField(max_length=128, verbose_name='Ocupação')
     property_value = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total de bens', default=0)
+
+    email = models.EmailField(verbose_name='Email', blank=True)
     twitter = models.URLField(verbose_name='Twitter', blank=True)
     facebook = models.URLField(verbose_name='Facebook', blank=True)
     instagram = models.URLField(verbose_name='Instagram', blank=True)
@@ -126,3 +143,18 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Expenses(models.Model):
+    candidate = models.ForeignKey(Candidate, verbose_name='Candidata')
+    received = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total recebido')
+    paid = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='Total Gasto')
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Data')    
+
+
+class PartyJobRoleStats(models.Model):
+
+    political_party = models.ForeignKey(PoliticalParty, verbose_name='Partido')
+    job_role = models.ForeignKey(JobRole, verbose_name='Cargo')
+    size = models.IntegerField(null=True, verbose_name='Número de candidatos nesse cargo por partido')
+    women_pct = models.FloatField(null=True, verbose_name='porcentagem de mulheres')

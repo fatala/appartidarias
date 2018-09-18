@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from candidates import views
@@ -13,13 +14,27 @@ urlpatterns = patterns(
     url(r'^elections2012/', views.Elections2012View.as_view(), name='elections2012'),
     url(r'^contact/', views.ContactView.as_view(), name='contact'),
     url(r'^admin/', include(admin.site.urls)),
+
+    # api
     url(r'^api/candidates/', views.CandidateList.as_view()),
-    url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
-    url(r'^candidates/list/(?P<type>\w+)/(?P<id>\d+)/$', views.CandidateListFilter.as_view(), name='candidates_list_filter'),
+    url(r'^api/states/', views.StateList.as_view()),
+    url(r'^api/job_roles/', views.JobRoleList.as_view()),
+    url(r'^api/agenda/', csrf_exempt(views.AgendaList.as_view())),
+    url(r'^api/parties/', views.PartiesList.as_view()),
+    url(r'^api/meta/parties/', csrf_exempt(views.PoliticalPartyMeta.as_view())),
+    url(r'^api/meta/stats/', csrf_exempt(views.Stats.as_view())),
+
+    # political party
+    url(r'^parties/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
+    url(r'^parties/(?P<party_initials>\w+)/$', views.PoliticalPartyTemplate.as_view(), name='political_party_template'),
+
+    #  candidates
+    # url(r'^candidates/political_party/$', views.PoliticalPartyListView.as_view(), name='political_party_list'),
+    # url(r'^candidates/list/(?P<type>\w+)/(?P<id>\d+)/$', views.CandidateListFilter.as_view(), name='candidates_list_filter'),
     url(r'^candidates/detail/(?P<candidate_id>[0-9]+)/$', views.CandidateDetail.as_view(), name='candidate_detail'),
-    url(r'^candidates/search/', views.CandidateSearchView.as_view(), name='candidate_search'),
-    url(r'^candidates/agendas/', views.AgendaListView.as_view(), name='agenda_list'),
-    url(r'^candidates/agendas/(?P<agenda_id>[0-9]+)/$', views.AgendaCandidates.as_view(), name='agenda_candidates'),
+    # url(r'^candidates/search/', views.CandidateSearchView.as_view(), name='candidate_search'),
+    # url(r'^candidates/agendas/', views.AgendaListView.as_view(), name='agenda_list'),
+    # url(r'^candidates/agendas/(?P<agenda_id>[0-9]+)/$', views.AgendaCandidates.as_view(), name='agenda_candidates'),
 )
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,4 +1,5 @@
 import os
+import sys
 
 DEBUG = True
 
@@ -156,6 +157,12 @@ LOGGING = {
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         },
+        'stdout': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'stream': sys.stdout
+        },
         'mdb_logfile': {
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -172,9 +179,16 @@ LOGGING = {
             'propagate': True,
         },
         'mdb': {
-            'handlers': ['mdb_logfile'],
+            'handlers': ['mdb_logfile', 'stdout'],
             'level': 'DEBUG',
             'propagate': True,
         },
     }
 }
+
+HOST = os.environ.get('HOST') or 'http://localhost:8000'
+THREADS = os.environ.get('THREADS') or 4
+PAGE_SIZE = os.environ.get('PAGE_SIZE') or 15
+
+AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
+AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')

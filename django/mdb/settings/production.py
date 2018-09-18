@@ -1,6 +1,9 @@
 from settings.base import *
 import os
 
+DEBUG = False
+
+ALLOWED_HOSTS = '*'
 
 DEBUG = False
 
@@ -15,7 +18,6 @@ DATABASES = {
         'PORT': os.environ.get('MYSQL_PORT', '3306'),
     }
 }
-
 
 CACHES = {
     'default': {

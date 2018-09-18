@@ -1,32 +1,201 @@
+<!-- header content -->
+<section class="container-fluid home">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-12 col-sm-3 col-lg-3 text-center">
+        <img src="/static/img/logo_appartidarias.png" alt="appartidárias" />
+      </div>
+      <div class="col col-12 col-sm-6 col-lg-4 mt-4">
+        <h1>Por mais mulheres eleitas no legislativo</h1>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /header content -->
+
 {% extends "base.html" %}
 
+{% block js %}
+<script type="text/javascript" src="/static/assets/js/src/candidate.js"></script>
+<script type="text/javascript">CandidateHandler($, "{{host}}")</script>
+{% endblock js %}
 
 {% block content %}
 
-<div class="jumbotron">
-    <h1>AppartidariAs</h1>
-    <p>“Acreditamos que é necessário reformular os espaços partidários e garantir a melhor representação de todos os setores da sociedade na formulação das políticas, como um dos meios adequados para a construção de uma nova sociedade, mais inclusiva, mais democrática e mais justa”</p>
-</div>
+<section class="candidates">
 
-<div class="container">
-<!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Candidatas</h2>
-            <p>Estão a disposição a lista das candidatas por nome, as informações sobre suas candidaturas (extraídas do site do TSE) e campos para que todos cidadãos e cidadãs possam inserir informações sobre as candidatas.</p>
-            <p><a class="btn btn-primary" href="{% url 'candidate_search' %}" role="button">Clique aqui &raquo;</a></p>
+  <div class="filter-box">
+    <div class="container">
+
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6 text-center">
+          <p class="section_text">Nós, mulheres, somos 51,5% da população brasileira e 52% de todo o eleitorado do país,  mas somos apenas 10% no legislativo. Políticas públicas para mulheres são melhor pensadas e elaboradas por mulheres. Busque sua candidata por aqui</p>
+
+          <h2 class="section_title mb-4"><span>Veja as candidaturas femininas deste ano</span></h2>
+
+          <!-- lista estado -->
+          <div class="form-group mt-4">
+            <select class="selectpicker form-control" data-live-search="true" id="estado">
+              <option value="">Selecione UF</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF"=>Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
+            </select>
+          </div>
+          <!-- /lista estado -->
+
+          <!-- lista partidos -->
+          <div class="form-group">
+            <select class="selectpicker form-control" data-live-search="true" id="partido">
+              <option value="">Selecione Partido</option>
+              <option>MDB</option>
+              <option>PTB</option>
+              <option>PDT</option>
+              <option>PT</option>
+              <option>DEM</option>
+              <option>PCdoB</option>
+              <option>PSB</option>
+              <option>PSDB</option>
+              <option>PTC</option>
+              <option>PSC</option>
+              <option>PMN</option>
+              <option>PRP</option>
+              <option>PPS</option>
+              <option>PV</option>
+              <option>AVANTE</option>
+              <option>PP</option>
+              <option>PSTU</option>
+              <option>PCB</option>
+              <option>PRTB</option>
+              <option>PHS</option>
+              <option>DC</option>
+              <option>PCO</option>
+              <option>PODE</option>
+              <option>PSL</option>
+              <option>PRB</option>
+              <option>PSOL</option>
+              <option>PR</option>
+              <option>PSD</option>
+              <option>PPL</option>
+              <option>Patri</option>
+              <option>PROS</option>
+              <option>SOLIDARIEDADE</option>
+              <option>NOVO</option>
+              <option>REDE</option>
+              <option>PMB</option>
+            </select>
+          </div>
+          <!-- /lista partidos -->
+
+          <!-- lista cargo -->
+          <div class="form-group">
+            <select class="selectpicker form-control" id="cargo">
+              <option value="">Selecione Cargo</option>
+              <option value="Presidente">Presidente</option>
+              <option value="Senador">Senadora</option>
+              <option value="Governador">Governadora</option>
+              <option value="Vice-governador">Vice-governadora</option>
+              <option value="Deputado Estadual">Deputada Estadual</option>
+              <option value="Deputado Federal">Deputada Federal</option>
+              <option value="Deputado Distrital">Deputada Distrital</option>
+            </select>
+          </div>
+          <!-- /lista cargo -->
+
+          <!-- lista pauta -->
+          <div class="form-group">
+            <select class="selectpicker form-control" data-live-search="true" id="pauta">
+              <option value="">Selecione a Pauta</option>
+            </select>
+          </div>
+          <!-- /lista pauta -->
+
         </div>
-        <div class="col-md-4">
-            <h2>Partidos</h2>
-            <p>Você poderá monitorar suas candidatas por partido ou coligação, observar os dados de suas campanhas e nos auxiliar a inserir suas pautas e projetos.</p>
-            <p><a class="btn btn-primary" href="{% url 'political_party_list' %}" role="button">Clique aqui &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Pautas</h2>
-            <p>Você poderá monitorar suas candidatas a partir de pautas que sejam caras a você. Se você tiver dados sobre as campanhas de candidatas que apresentam essas pautas, por favor, nos informe!</p>
-            <p><a class="btn btn-primary" href="{% url 'agenda_list' %}" role="button">Clique aqui &raquo;</a></p>
+      </div>
+      
+
+    </div>
+  </div><!--/filterbox-->
+
+  <!-- candidates -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-9" id="candidates-list">
+      </div>
+    </div>
+    <!--load more-->
+    <div class="row justify-content-center">
+      <a href="#" class="load_more load_more_candidates" id="loadMoreCandidates"></a>
+    </div>
+    <!--/load more-->
+  </div>
+  <!-- /candidates -->
+
+</section><!--/candidates-->
+
+<!-- ranking -->
+<section class="ranking">
+  <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+          <h1 class="section_title text-center mt-5"><span>Veja os partidos que mais apoiam candidaturas femininas</span></h1>
+          <p class="bullet">mínimo de candidaturas femininas por lei / mínimo de repasse financeiro dos partidos às candidatas</p>
+
+          <div class="row legenda">
+            <div class="col-1 mt-1 p-2">
+              <img src="/static/img/icon_person.png" class="img-fluid" alt="Person" />
+            </div>
+            <div class="col-5 mt-2">
+              <p>% de mulheres no partido.</p>
+            </div>
+            <div class="col-1 mt-1 p-2">
+              <img src="/static/img/icon_money.png" class="img-fluid" alt="Money" />
+            </div>
+            <div class="col-5 mt-2">
+              <p>% de dinheiro destinado às mulheres pelo partido.</p>
+            </div>
+          </div>
+
+          <div class="container mt-5">
+            <div class="stores">
+            </div>
+
+            <!--load more-->
+            <div class="row justify-content-center">
+              <a href="#" class="load_more" id="loadMore"></a>
+            </div>
+            <!--/load more-->
+          </div>
+
         </div>
     </div>
-</div>
+  </div>
+</section>
+<!-- /ranking -->
+
 
 {% endblock content %}
