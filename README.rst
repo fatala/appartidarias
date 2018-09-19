@@ -22,8 +22,6 @@ Configuração
 
 ::
 
-    export DJANGO_SETTINGS_MODULE=settings.{env_name}
-
 
 Criar virtualenv (use ``virtualenvwrapper``): ::
 
@@ -37,14 +35,12 @@ Install requirements via ``pip``: ::
 
 Criar tabelas do banco de dados: ::
 
-    # no diretório django/mdb
-    ./manage.py migrate --settings=settings.development
+    $ python django/mdb/manage.py migrate
 
 
 Rodar o projeto: ::
 
-    # no diretório django/mdb
-    ./manage.py runserver --settings=settings.development
+    $ python django/mdb/manage.py runserver
 
 
 Comandos úteis
@@ -52,12 +48,42 @@ Comandos úteis
 
 Remover todas as candidatas: ::
 
-    # no diretório django/mdb
-    ./manage.py clear_models
+    $ python django/mdb/manage.py clear_models
 
 
 Importar candidatas do TSE: ::
 
-    # no diretório django/mdb
-    ./manage.py sync_tse
-    ./manage.py sync_tse_2018
+    $ python django/mdb/manage.py sync_tse_2018
+
+
+Deploy
+------
+
+Instalar o teresa via `homebrew`: ::
+
+  $ brew tap luizalabs/teresa-cli
+  $ brew install teresa
+
+Apontar para o endereço do cluster onde deseja fazer o deploy: ::
+
+  $ teresa config set-cluster [nome_cluster] --server [cluster_host] --tls --current
+
+Criar um usuário: ::
+
+  Pedir no canal #firefighting do slack a criação de um usuário
+
+Fazer login no teresa: ::
+
+  $ teresa login --user [email]
+
+Criar applicação se não existir: ::
+
+  $ teresa app create [app] --team [team]
+
+Configurar as env vars disponíveis nesse [link] (https://docs.google.com/document/d/1f4Ajcw0iNdbWnr_pRhpwELOLQqLamytjV3e91lFGA3U/edit?usp=sharing): ::
+
+  $ teresa app env-set --app appartidarias [env vars]
+
+Fazer o deploy da applicação: ::
+
+  $ teresa deploy create . --app [app] --description '[versão] [Descrição]'
